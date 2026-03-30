@@ -26,11 +26,13 @@ h2 { margin: 0 0 10px; font-size: 1.02rem; }
 
 .carousel { display: grid; grid-template-columns: 40px 1fr 40px; align-items: center; gap: 10px; }
 .carousel.joined.top { margin-bottom: 0; }
-.carousel.joined.body { margin-top: -4px; }
+.carousel.joined.body { margin-top: -10px; }
 .viewport { overflow: hidden; border-radius: 14px; background: linear-gradient(145deg,#f8fbff,#e9eef5); border: 1px solid #d3dae6; }
 .carousel.joined.top .viewport { border-bottom-left-radius: 0; border-bottom-right-radius: 0; }
 .carousel.joined.body .viewport { border-top-left-radius: 0; border-top-right-radius: 0; border-top: 0; }
 .track { display: flex; gap: 10px; padding: 10px; transition: transform .26s ease-out; will-change: transform; }
+.carousel.joined.top .track { padding-bottom: 0; }
+.carousel.joined.body .track { padding-top: 0; }
 
 .carousel-card {
   min-width: 152px;
@@ -53,6 +55,12 @@ h2 { margin: 0 0 10px; font-size: 1.02rem; }
 }
 .carousel-card img { width: 96px; height: 96px; object-fit: contain; border-radius: 10px; background: #fff; }
 .carousel-card span { font-size: .84rem; font-weight: 600; }
+
+.cap-card { padding-bottom: 0; gap: 2px; }
+.cap-card img { margin-bottom: -4px; }
+.cap-card .name.top { font-size: .82rem; font-weight: 700; color: #4b5563; margin-top: 2px; }
+.body-card { padding-top: 0; }
+
 
 .nav-btn {
   border: 1px solid #cdd5e0;

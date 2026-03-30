@@ -232,8 +232,11 @@ function renderTrack(track, items, activeId, type, onClick) {
   track.innerHTML = "";
   items.forEach((item) => {
     const card = document.createElement("button");
-    card.className = `carousel-card ${activeId === item.id ? "active" : ""}`;
-    card.innerHTML = `<img src="${getIcon(type, item.id)}" alt="" aria-hidden="true"/><span>${item.label}</span>`;
+    const typeClass = type === "capType" ? "cap-card" : "body-card";
+    card.className = `carousel-card ${typeClass} ${activeId === item.id ? "active" : ""}`;
+    card.innerHTML = type === "capType"
+      ? `<span class="name top">${item.label}</span><img src="${getIcon(type, item.id)}" alt="" aria-hidden="true"/>`
+      : `<img src="${getIcon(type, item.id)}" alt="" aria-hidden="true"/><span>${item.label}</span>`;
     card.addEventListener("click", () => onClick(item.id));
     track.appendChild(card);
   });

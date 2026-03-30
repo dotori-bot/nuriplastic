@@ -1,17 +1,18 @@
 :root {
-  --bg: #f7f7f9;
-  --card: #ffffff;
-  --line: #d9dde3;
+  --bg: #eceff3;
+  --card: #f4f6fa;
+  --line: #cfd5de;
   --text: #1f2937;
-  --subtle: #6b7280;
+  --subtle: #677384;
   --brand: #00a88d;
 }
 
 * { box-sizing: border-box; }
+
 body {
   margin: 0;
   font-family: "Noto Sans KR", system-ui, -apple-system, sans-serif;
-  background: var(--bg);
+  background: linear-gradient(145deg, #e4e8ee, #f6f9fc);
   color: var(--text);
 }
 
@@ -32,9 +33,10 @@ body {
 }
 
 .quick-finder {
-  background: var(--card);
-  border: 1px solid var(--line);
-  border-radius: 16px;
+  background: linear-gradient(150deg, #f8faff, #eef2f8);
+  border: 1px solid #d8deea;
+  border-radius: 18px;
+  box-shadow: 10px 10px 24px #d5dbe6, -10px -10px 24px #ffffff;
   padding: 20px;
   margin-top: 16px;
 }
@@ -48,28 +50,134 @@ h2 {
 
 .option-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(110px, 1fr));
-  gap: 10px;
+  grid-template-columns: repeat(auto-fill, minmax(128px, 1fr));
+  gap: 12px;
 }
 
 .option-btn {
-  border: 1px solid var(--line);
-  background: #f9fafb;
-  border-radius: 10px;
-  padding: 12px 8px;
+  border: 1px solid #d3dae6;
+  background: linear-gradient(145deg, #f8fbff, #e9eef5);
+  box-shadow: inset 1px 1px 0 #fff, inset -1px -1px 0 #d7deea, 6px 6px 12px #d8deea;
+  border-radius: 14px;
+  padding: 10px 8px;
   cursor: pointer;
-  font-size: .9rem;
+  font-size: .85rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  min-height: 106px;
+  color: #394150;
 }
 
-.option-btn[aria-pressed="true"] {
-  border-color: var(--brand);
-  background: #e7fffb;
+.option-btn span {
   font-weight: 600;
 }
 
+.option-btn[aria-pressed="true"] {
+  border-color: #86d8c8;
+  background: linear-gradient(145deg, #f1fffc, #ddf8f2);
+  box-shadow: inset 1px 1px 0 #ffffff, inset -1px -1px 0 #bbefe4, 0 0 0 2px #c8f6ec;
+}
+
 .option-btn:disabled {
-  opacity: .4;
+  opacity: .45;
   cursor: not-allowed;
+}
+
+.option-icon {
+  width: 58px;
+  height: 58px;
+  border-radius: 14px;
+  background: linear-gradient(165deg, #f6f8fc, #dde4ef);
+  box-shadow: inset 2px 2px 3px #fff, inset -2px -2px 4px #c9d1dd;
+  position: relative;
+}
+
+.option-icon::before,
+.option-icon::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #606a78;
+}
+
+/* 기본 바디 */
+.option-icon::before {
+  width: 26px;
+  height: 30px;
+  bottom: 9px;
+  border-radius: 10px;
+}
+
+/* 기본 캡 */
+.option-icon::after {
+  width: 16px;
+  height: 8px;
+  top: 10px;
+  border-radius: 3px;
+}
+
+/* cap variants */
+.option-icon.capType.pump_lotion::after {
+  width: 24px;
+  height: 6px;
+  top: 8px;
+  border-radius: 6px;
+}
+
+.option-icon.capType.pump_lotion::before {
+  width: 22px;
+  height: 32px;
+}
+
+.option-icon.capType.pump_foam::after {
+  width: 24px;
+  height: 10px;
+  top: 8px;
+  border-radius: 6px;
+}
+
+.option-icon.capType.spray_mist::after {
+  width: 22px;
+  height: 12px;
+  top: 7px;
+  border-radius: 5px;
+}
+
+.option-icon.capType.dropper::after {
+  width: 10px;
+  height: 14px;
+  top: 6px;
+  border-radius: 8px;
+}
+
+.option-icon.capType.one_touch::after {
+  width: 19px;
+  height: 8px;
+  top: 9px;
+  border-radius: 2px;
+}
+
+.option-icon.capType.screw_cap::after {
+  width: 21px;
+  height: 10px;
+  top: 9px;
+  border-radius: 8px;
+}
+
+/* body variants (용기 모양 강조 + 기본 캡 유지) */
+.option-icon.bodyShape.round::before { border-radius: 13px; width: 24px; }
+.option-icon.bodyShape.slim_round::before { border-radius: 13px; width: 18px; height: 34px; }
+.option-icon.bodyShape.square::before { border-radius: 4px; width: 24px; }
+.option-icon.bodyShape.oval::before { border-radius: 14px / 10px; width: 28px; }
+.option-icon.bodyShape.jar::before { border-radius: 8px; width: 30px; height: 20px; bottom: 12px; }
+.option-icon.bodyShape.tube::before {
+  width: 18px;
+  height: 34px;
+  border-radius: 6px;
+  clip-path: polygon(15% 0, 85% 0, 100% 100%, 0 100%);
 }
 
 .chips h3 {
@@ -85,18 +193,20 @@ h2 {
 }
 
 .chip {
-  border: 1px solid var(--line);
+  border: 1px solid #d3dae6;
   border-radius: 999px;
-  padding: 6px 10px;
-  background: white;
+  padding: 7px 12px;
+  background: linear-gradient(145deg, #f8fbff, #e9eef5);
+  box-shadow: inset 1px 1px 0 #fff, inset -1px -1px 0 #d7deea;
   cursor: pointer;
   font-size: .85rem;
+  color: #445062;
 }
 
 .chip[aria-pressed="true"] {
-  background: var(--brand);
+  background: linear-gradient(140deg, #09b799, #009f86);
   color: white;
-  border-color: var(--brand);
+  border-color: #07aa8f;
 }
 
 .summary {
@@ -117,19 +227,20 @@ h2 {
 
 button {
   border: 0;
-  border-radius: 8px;
+  border-radius: 10px;
   padding: 10px 12px;
   cursor: pointer;
 }
 
 button.primary {
-  background: var(--brand);
+  background: linear-gradient(145deg, #08b799, #009e86);
   color: white;
 }
 
 button.secondary {
-  background: #eceff3;
+  background: linear-gradient(145deg, #f8fbff, #e9eef5);
   color: var(--text);
+  border: 1px solid #d2d8e3;
 }
 
 .results {
@@ -145,9 +256,10 @@ button.secondary {
 }
 
 .product-card {
-  border: 1px solid var(--line);
+  border: 1px solid #d8dfea;
   border-radius: 12px;
-  background: white;
+  background: linear-gradient(150deg, #f9fbff, #eef2f8);
+  box-shadow: 4px 4px 10px #d7ddea, -3px -3px 8px #ffffff;
   padding: 12px;
 }
 

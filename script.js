@@ -61,10 +61,14 @@ const resultCount = document.getElementById("result-count");
 const resultGrid = document.getElementById("result-grid");
 const resetButton = document.getElementById("reset-button");
 
+function iconMarkup(type, id) {
+  return `<div class="option-icon ${type} ${id}" aria-hidden="true"></div>`;
+}
+
 function makeChoiceButton(item, type) {
   const button = document.createElement("button");
   button.className = "option-btn";
-  button.textContent = item.label;
+  button.innerHTML = `${iconMarkup(type, item.id)}<span>${item.label}</span>`;
   button.setAttribute("aria-pressed", "false");
   button.dataset.id = item.id;
   button.dataset.type = type;

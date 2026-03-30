@@ -57,6 +57,10 @@ const summary = document.getElementById("selection-summary");
 const resultButton = document.getElementById("result-button");
 const resultCount = document.getElementById("result-count");
 const resultGrid = document.getElementById("result-grid");
+const styleNoteInput = document.getElementById("style-note");
+const generateBtn = document.getElementById("generate-image");
+const generateStatus = document.getElementById("generate-status");
+const generatedImage = document.getElementById("generated-image");
 
 function glossyGlass(ctx, x, y, w, h, r) {
   const g = ctx.createLinearGradient(x, y, x, y + h);
@@ -255,6 +259,37 @@ function renderCarousels() {
   syncPreview();
 }
 
+
+async function generateImageWithApi() {
+  generateBtn.disabled = true;
+  generateStatus.textContent = "생성 중...";
+  try {
+    const res = await fetch("/api/generate-image", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        capType: state.capType,
+        bodyShape: state.bodyShape,
+        styleNote: styleNoteInput.value?.trim() || ""
+      })
+    });
+
+    const data = await res.json();
+    if (!res.ok) throw new Error(data.error || "이미지 생성 실패");
+
+    const img = data?.data?.[0]?.b64_json ? `data:image/png;base64,${data.data[0].b64_json}` : data?.data?.[0]?.url;
+    if (!img) throw new Error("응답에 이미지가 없습니다.");
+
+    generatedImage.src = img;
+    generatedImage.style.display = "block";
+    generateStatus.textContent = "생성 완료";
+  } catch (err) {
+    generateStatus.textContent = `오류: ${String(err.message || err)}`;
+  } finally {
+    generateBtn.disabled = false;
+  }
+}
+
 function render() {
   renderCarousels();
   renderChips();
@@ -304,5 +339,7 @@ document.getElementById("reset-button").addEventListener("click", () => {
 document.getElementById("result-button").addEventListener("click", () => {
   document.querySelector(".results").scrollIntoView({ behavior: "smooth" });
 });
+
+generateBtn.addEventListener("click", generateImageWithApi);
 
 render();

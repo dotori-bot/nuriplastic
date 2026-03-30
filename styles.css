@@ -1,0 +1,170 @@
+:root {
+  --bg: #f7f7f9;
+  --card: #ffffff;
+  --line: #d9dde3;
+  --text: #1f2937;
+  --subtle: #6b7280;
+  --brand: #00a88d;
+}
+
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  font-family: "Noto Sans KR", system-ui, -apple-system, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+}
+
+.container {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 24px;
+}
+
+.hero h1 {
+  margin: 0;
+  font-size: clamp(1.5rem, 3vw, 2rem);
+}
+
+.hero p {
+  margin-top: 8px;
+  color: var(--subtle);
+}
+
+.quick-finder {
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  padding: 20px;
+  margin-top: 16px;
+}
+
+.block + .block { margin-top: 18px; }
+
+h2 {
+  font-size: 1.05rem;
+  margin: 0 0 10px;
+}
+
+.option-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(110px, 1fr));
+  gap: 10px;
+}
+
+.option-btn {
+  border: 1px solid var(--line);
+  background: #f9fafb;
+  border-radius: 10px;
+  padding: 12px 8px;
+  cursor: pointer;
+  font-size: .9rem;
+}
+
+.option-btn[aria-pressed="true"] {
+  border-color: var(--brand);
+  background: #e7fffb;
+  font-weight: 600;
+}
+
+.option-btn:disabled {
+  opacity: .4;
+  cursor: not-allowed;
+}
+
+.chips h3 {
+  margin: 0 0 8px;
+  font-size: .95rem;
+  color: var(--subtle);
+}
+
+.chip-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.chip {
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  padding: 6px 10px;
+  background: white;
+  cursor: pointer;
+  font-size: .85rem;
+}
+
+.chip[aria-pressed="true"] {
+  background: var(--brand);
+  color: white;
+  border-color: var(--brand);
+}
+
+.summary {
+  margin-top: 20px;
+  border-top: 1px dashed var(--line);
+  padding-top: 14px;
+  display: flex;
+  gap: 10px;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.summary-actions {
+  display: flex;
+  gap: 8px;
+}
+
+button {
+  border: 0;
+  border-radius: 8px;
+  padding: 10px 12px;
+  cursor: pointer;
+}
+
+button.primary {
+  background: var(--brand);
+  color: white;
+}
+
+button.secondary {
+  background: #eceff3;
+  color: var(--text);
+}
+
+.results {
+  margin-top: 18px;
+}
+
+.count { color: var(--subtle); }
+
+.result-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: 10px;
+}
+
+.product-card {
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: white;
+  padding: 12px;
+}
+
+.product-card h3 {
+  margin: 0 0 6px;
+  font-size: 0.95rem;
+}
+
+.meta {
+  color: var(--subtle);
+  font-size: .8rem;
+}
+
+.empty {
+  border: 1px dashed var(--line);
+  border-radius: 12px;
+  padding: 20px;
+  background: #fff;
+  color: var(--subtle);
+}

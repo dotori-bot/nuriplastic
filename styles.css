@@ -25,6 +25,8 @@ body {
 .hero h1 { margin: 0; font-size: clamp(1.5rem, 3vw, 2rem); }
 .hero p { margin-top: 8px; color: var(--subtle); }
 
+.asset-note { display: block; margin-top: 4px; color: #7a8798; font-size: .8rem; }
+
 .quick-finder {
   background: linear-gradient(150deg, #f8faff, #eef2f8);
   border: 1px solid #d8deea;

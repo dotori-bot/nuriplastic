@@ -44,6 +44,7 @@ const compatibility = {
 
 const state = { capType: null, bodyShape: null, volume: null, material: null, neck: null };
 const iconCache = new Map();
+// 아이콘은 외부 이미지를 직접 사용하지 않고, 캔버스로 자체 생성한 data URL을 사용합니다.
 
 const capWrap = document.getElementById("cap-options");
 const bodyWrap = document.getElementById("body-options");

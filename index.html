@@ -10,35 +10,43 @@
     <main class="container">
       <section class="hero">
         <h1>원하는 용기를 10초 안에 찾기</h1>
-        <p>캡 + 용기 형태를 선택하면 조건에 맞는 제품만 빠르게 보여드려요.</p>
-        <small class="asset-note">※ 아이콘 이미지는 외부 원본을 저장하지 않고 자체 생성한 시각 자산입니다.</small>
+        <p>캡과 용기 형태를 위아래 조합으로 보고 좌우로 빠르게 탐색하세요.</p>
+        <small class="asset-note">※ 아이콘 이미지는 외부 원본 저장 없이 자체 생성 이미지입니다.</small>
       </section>
 
       <section class="quick-finder" aria-label="빠른 제품 찾기">
-        <div class="block">
+        <div class="combo-stage">
           <h2>1) 캡 선택</h2>
-          <div id="cap-options" class="option-grid" role="list"></div>
-        </div>
+          <div class="carousel">
+            <button id="cap-prev" class="nav-btn" aria-label="이전 캡">◀</button>
+            <div class="viewport"><div id="cap-track" class="track"></div></div>
+            <button id="cap-next" class="nav-btn" aria-label="다음 캡">▶</button>
+          </div>
 
-        <div class="block">
           <h2>2) 용기 형태 선택</h2>
-          <div id="body-options" class="option-grid" role="list"></div>
+          <div class="carousel body">
+            <button id="body-prev" class="nav-btn" aria-label="이전 용기">◀</button>
+            <div class="viewport"><div id="body-track" class="track"></div></div>
+            <button id="body-next" class="nav-btn" aria-label="다음 용기">▶</button>
+          </div>
+
+          <div class="combo-preview">
+            <div class="preview-col">
+              <span>선택 캡</span>
+              <img id="preview-cap" class="preview-img" alt="선택 캡 미리보기" />
+            </div>
+            <div class="preview-col">
+              <span>선택 용기</span>
+              <img id="preview-body" class="preview-img" alt="선택 용기 미리보기" />
+            </div>
+          </div>
         </div>
 
         <div class="block">
           <h2>3) 추가 필터</h2>
-          <div class="chips">
-            <h3>용량</h3>
-            <div id="volume-chips" class="chip-row"></div>
-          </div>
-          <div class="chips">
-            <h3>소재</h3>
-            <div id="material-chips" class="chip-row"></div>
-          </div>
-          <div class="chips">
-            <h3>넥사이즈</h3>
-            <div id="neck-chips" class="chip-row"></div>
-          </div>
+          <div class="chips"><h3>용량</h3><div id="volume-chips" class="chip-row"></div></div>
+          <div class="chips"><h3>소재</h3><div id="material-chips" class="chip-row"></div></div>
+          <div class="chips"><h3>넥사이즈</h3><div id="neck-chips" class="chip-row"></div></div>
         </div>
 
         <div class="summary" aria-live="polite">

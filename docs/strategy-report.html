@@ -1,0 +1,973 @@
+<title>누리플라스틱 사업 전략 보고서</title>
+<style>
+  :root {
+    --bg:        #F4F6F5;
+    --surface:   #FFFFFF;
+    --surface-2: #EAEEEC;
+    --ink:       #171C1E;
+    --ink-2:     #454F51;
+    --ink-3:     #6B7679;
+    --rule:      #D3DAD8;
+    --rule-soft: #E3E8E6;
+    --accent:    #0E6A64;
+    --accent-2:  #0A4F4A;
+    --accent-wash:#DDECEA;
+    --fail:      #A6301C;
+    --fail-wash: #F6E1DC;
+    --warn:      #96650F;
+    --warn-wash: #F6EBD6;
+    --pass:      #2F6A38;
+    --pass-wash: #DFEDE0;
+
+    --font-sans: "Pretendard Variable", Pretendard, -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", "Malgun Gothic", "Noto Sans KR", system-ui, sans-serif;
+    --font-mono: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, "Liberation Mono", monospace;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg:        #101413;
+      --surface:   #171C1B;
+      --surface-2: #1E2523;
+      --ink:       #E8EDEB;
+      --ink-2:     #B3BDBA;
+      --ink-3:     #8A9694;
+      --rule:      #2C3634;
+      --rule-soft: #232B2A;
+      --accent:    #4FB5AC;
+      --accent-2:  #7FD0C8;
+      --accent-wash:#12302E;
+      --fail:      #E0785F;
+      --fail-wash: #331B15;
+      --warn:      #D6A344;
+      --warn-wash: #2F2513;
+      --pass:      #6FB077;
+      --pass-wash: #172A19;
+    }
+  }
+
+  :root[data-theme="dark"] {
+    --bg:        #101413;
+    --surface:   #171C1B;
+    --surface-2: #1E2523;
+    --ink:       #E8EDEB;
+    --ink-2:     #B3BDBA;
+    --ink-3:     #8A9694;
+    --rule:      #2C3634;
+    --rule-soft: #232B2A;
+    --accent:    #4FB5AC;
+    --accent-2:  #7FD0C8;
+    --accent-wash:#12302E;
+    --fail:      #E0785F;
+    --fail-wash: #331B15;
+    --warn:      #D6A344;
+    --warn-wash: #2F2513;
+    --pass:      #6FB077;
+    --pass-wash: #172A19;
+  }
+
+  :root[data-theme="light"] {
+    --bg:        #F4F6F5;
+    --surface:   #FFFFFF;
+    --surface-2: #EAEEEC;
+    --ink:       #171C1E;
+    --ink-2:     #454F51;
+    --ink-3:     #6B7679;
+    --rule:      #D3DAD8;
+    --rule-soft: #E3E8E6;
+    --accent:    #0E6A64;
+    --accent-2:  #0A4F4A;
+    --accent-wash:#DDECEA;
+    --fail:      #A6301C;
+    --fail-wash: #F6E1DC;
+    --warn:      #96650F;
+    --warn-wash: #F6EBD6;
+    --pass:      #2F6A38;
+    --pass-wash: #DFEDE0;
+  }
+
+  body {
+    background: var(--bg);
+    color: var(--ink);
+    font-family: var(--font-sans);
+    font-size: 16.5px;
+    line-height: 1.75;
+    -webkit-font-smoothing: antialiased;
+    word-break: keep-all;
+  }
+
+  .wrap {
+    max-width: 47rem;
+    margin: 0 auto;
+    padding: 4rem 1.5rem 6rem;
+    display: flex;
+    flex-direction: column;
+    gap: 3.5rem;
+  }
+
+  /* ---------- masthead ---------- */
+  .masthead { display: flex; flex-direction: column; gap: 1rem; }
+  .kicker {
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--accent);
+  }
+  h1 {
+    font-size: clamp(1.9rem, 5.5vw, 2.7rem);
+    line-height: 1.22;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    text-wrap: balance;
+    margin: 0;
+  }
+  .standfirst {
+    font-size: 1.06rem;
+    color: var(--ink-2);
+    max-width: 38rem;
+  }
+  .meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem 1.5rem;
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    color: var(--ink-3);
+    border-top: 1px solid var(--rule);
+    padding-top: 1rem;
+  }
+
+  /* ---------- summary ---------- */
+  .summary {
+    background: var(--surface);
+    border: 1px solid var(--rule);
+    border-radius: 3px;
+    padding: 1.75rem 1.75rem 1.9rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1.1rem;
+  }
+  .summary h2 {
+    font-size: 0.74rem;
+    font-family: var(--font-mono);
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--ink-3);
+    margin: 0;
+    font-weight: 500;
+  }
+  .findings { display: flex; flex-direction: column; gap: 0.9rem; margin: 0; padding: 0; list-style: none; }
+  .findings li {
+    display: grid;
+    grid-template-columns: 1.6rem 1fr;
+    gap: 0.75rem;
+    align-items: start;
+  }
+  .findings .n {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    color: var(--accent);
+    padding-top: 0.32rem;
+  }
+  .findings strong { font-weight: 650; }
+
+  /* ---------- sections ---------- */
+  section { display: flex; flex-direction: column; gap: 1.4rem; }
+  .sec-head {
+    display: flex;
+    flex-direction: column;
+    gap: 0.45rem;
+    border-top: 2px solid var(--ink);
+    padding-top: 0.9rem;
+  }
+  .sec-num {
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    letter-spacing: 0.14em;
+    color: var(--accent);
+  }
+  h2.sec-title {
+    font-size: clamp(1.35rem, 3.6vw, 1.72rem);
+    line-height: 1.3;
+    font-weight: 680;
+    letter-spacing: -0.015em;
+    margin: 0;
+    text-wrap: balance;
+  }
+  h3 {
+    font-size: 1.06rem;
+    font-weight: 650;
+    margin: 0.9rem 0 0;
+    letter-spacing: -0.005em;
+  }
+  h4 {
+    font-size: 0.79rem;
+    font-family: var(--font-mono);
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--ink-3);
+    margin: 0.5rem 0 0;
+  }
+  p { margin: 0; max-width: 40rem; }
+  section > p, section > ul, section > ol { max-width: 40rem; }
+  ul, ol { margin: 0; padding-left: 1.15rem; display: flex; flex-direction: column; gap: 0.45rem; }
+  li::marker { color: var(--ink-3); }
+  strong { font-weight: 650; }
+  em { font-style: normal; background: var(--accent-wash); padding: 0.05em 0.3em; border-radius: 2px; }
+
+  /* ---------- callout ---------- */
+  .callout {
+    background: var(--surface);
+    border: 1px solid var(--rule);
+    border-left: 3px solid var(--accent);
+    border-radius: 2px;
+    padding: 1.15rem 1.3rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+  }
+  .callout.alarm { border-left-color: var(--fail); }
+  .callout .label {
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--accent);
+  }
+  .callout.alarm .label { color: var(--fail); }
+
+  /* ---------- mechanism formula ---------- */
+  .formula {
+    background: var(--surface-2);
+    border: 1px solid var(--rule-soft);
+    border-radius: 3px;
+    padding: 1.4rem 1.2rem;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem 0.9rem;
+    font-family: var(--font-mono);
+    font-size: 0.87rem;
+  }
+  .term {
+    background: var(--surface);
+    border: 1px solid var(--rule);
+    border-radius: 2px;
+    padding: 0.45rem 0.8rem;
+    color: var(--ink);
+  }
+  .term.miss { border-color: var(--fail); color: var(--fail); background: var(--fail-wash); }
+  .op { color: var(--ink-3); }
+
+  /* ---------- tables ---------- */
+  .scroller { overflow-x: auto; border: 1px solid var(--rule); border-radius: 3px; background: var(--surface); }
+  table { border-collapse: collapse; width: 100%; font-size: 0.86rem; min-width: 34rem; }
+  th, td { padding: 0.62rem 0.8rem; text-align: left; border-bottom: 1px solid var(--rule-soft); vertical-align: top; }
+  thead th {
+    font-family: var(--font-mono);
+    font-size: 0.68rem;
+    letter-spacing: 0.09em;
+    text-transform: uppercase;
+    color: var(--ink-3);
+    font-weight: 500;
+    background: var(--surface-2);
+    border-bottom: 1px solid var(--rule);
+    white-space: nowrap;
+  }
+  tbody tr:last-child td { border-bottom: none; }
+  td.num, th.num { font-family: var(--font-mono); font-variant-numeric: tabular-nums; white-space: nowrap; }
+
+  /* ---------- matrix ---------- */
+  .matrix table { min-width: 40rem; font-size: 0.8rem; }
+  .matrix th.rowh { font-family: var(--font-mono); font-size: 0.75rem; color: var(--ink); background: var(--surface-2); white-space: nowrap; font-weight: 500; text-transform: none; letter-spacing: 0; }
+  .matrix td { text-align: center; font-family: var(--font-mono); font-size: 0.72rem; padding: 0.5rem 0.4rem; }
+  .cell-x { background: var(--fail-wash); color: var(--fail); font-weight: 600; }
+  .cell-c { background: var(--warn-wash); color: var(--warn); font-weight: 600; }
+  .cell-o { background: var(--pass-wash); color: var(--pass); font-weight: 600; }
+  .legend { display: flex; flex-wrap: wrap; gap: 0.5rem 1.2rem; font-family: var(--font-mono); font-size: 0.72rem; color: var(--ink-3); }
+  .legend span { display: inline-flex; align-items: center; gap: 0.4rem; }
+  .swatch { width: 0.75rem; height: 0.75rem; border-radius: 2px; display: inline-block; }
+
+  /* ---------- field list ---------- */
+  .fields { display: grid; grid-template-columns: repeat(auto-fill, minmax(15rem, 1fr)); gap: 0.5rem; }
+  .field {
+    background: var(--surface);
+    border: 1px solid var(--rule);
+    border-radius: 2px;
+    padding: 0.6rem 0.75rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.15rem;
+  }
+  .field .fname { font-family: var(--font-mono); font-size: 0.73rem; color: var(--accent); }
+  .field .fdesc { font-size: 0.8rem; color: var(--ink-2); line-height: 1.5; }
+  .field.crit { border-color: var(--accent); }
+
+  /* ---------- tiers ---------- */
+  .tiers { display: flex; flex-direction: column; gap: 0.75rem; }
+  .tier {
+    background: var(--surface);
+    border: 1px solid var(--rule);
+    border-radius: 3px;
+    padding: 1.1rem 1.25rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.7rem;
+  }
+  .tier-top { display: flex; flex-wrap: wrap; align-items: baseline; gap: 0.5rem 0.9rem; }
+  .tier-name { font-weight: 680; font-size: 1.02rem; }
+  .tier-when { font-family: var(--font-mono); font-size: 0.72rem; color: var(--ink-3); }
+  .tier-body { display: grid; grid-template-columns: repeat(auto-fit, minmax(13rem, 1fr)); gap: 0.9rem; }
+  .tier-col { display: flex; flex-direction: column; gap: 0.35rem; }
+  .tier-col h5 { margin: 0; font-family: var(--font-mono); font-size: 0.67rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink-3); font-weight: 500; }
+  .tier-col ul { padding-left: 1rem; gap: 0.25rem; font-size: 0.86rem; color: var(--ink-2); }
+
+  /* ---------- verdict ---------- */
+  .verdict {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 0.6rem 0.9rem;
+    align-items: baseline;
+    background: var(--surface);
+    border: 1px solid var(--rule);
+    border-radius: 3px;
+    padding: 1.1rem 1.25rem;
+    font-size: 0.9rem;
+  }
+  .verdict dt { font-family: var(--font-mono); font-size: 0.72rem; color: var(--ink-3); white-space: nowrap; }
+  .verdict dd { margin: 0; color: var(--ink-2); }
+
+  /* ---------- roadmap ---------- */
+  .roadmap { display: flex; flex-direction: column; gap: 0; border: 1px solid var(--rule); border-radius: 3px; overflow: hidden; }
+  .phase { display: grid; grid-template-columns: 4.5rem 1fr; gap: 1rem; padding: 1rem 1.2rem; background: var(--surface); border-bottom: 1px solid var(--rule-soft); }
+  .phase:last-child { border-bottom: none; }
+  .phase .when { font-family: var(--font-mono); font-size: 0.72rem; color: var(--accent); padding-top: 0.15rem; }
+  .phase .what { display: flex; flex-direction: column; gap: 0.3rem; }
+  .phase .what b { font-weight: 650; font-size: 0.95rem; }
+  .phase .what span { font-size: 0.86rem; color: var(--ink-2); }
+  .cost { font-family: var(--font-mono); font-size: 0.7rem; color: var(--ink-3); }
+
+  /* ---------- footer ---------- */
+  footer { border-top: 1px solid var(--rule); padding-top: 1.5rem; display: flex; flex-direction: column; gap: 1rem; font-size: 0.83rem; color: var(--ink-3); }
+  footer h4 { margin: 0; }
+  footer ul { padding-left: 1.1rem; gap: 0.3rem; }
+  footer a { color: var(--accent); text-decoration: none; border-bottom: 1px solid var(--rule); }
+  footer a:hover, footer a:focus-visible { border-bottom-color: var(--accent); }
+  a:focus-visible, [tabindex]:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+</style>
+
+<div class="wrap">
+
+  <header class="masthead">
+    <div class="kicker">누리플라스틱 · 전략 검토</div>
+    <h1>클레임을 자산으로 바꾸는 포지셔닝</h1>
+    <p class="standfirst">
+      화학적 상용성 예측을 사업의 중심에 놓는 전략, 부자재 원스톱 구성안,
+      브랜드 성장 패키지 설계, 그리고 ODM 부자재 조달 구조 조사 결과.
+    </p>
+    <div class="meta">
+      <span>2026-08-04</span>
+      <span>대상: 화장품 부자재 유통</span>
+      <span>근거: 업계·정부·학술 공개자료</span>
+    </div>
+  </header>
+
+  <div class="summary">
+    <h2>핵심 결론</h2>
+    <ul class="findings">
+      <li><span class="n">01</span><span><strong>샘플 테스트가 실패하는 이유는 과학적으로 규명되어 있습니다.</strong> 환경응력균열(ESC)은 응력·화학물질·시간 세 조건이 동시에 있을 때만 발생합니다. 고객의 샘플 테스트는 이 중 응력과 시간을 재현하지 않아 통과합니다.</span></li>
+      <li><span class="n">02</span><span><strong>누리는 이미 예측에 필요한 데이터를 갖고 있습니다.</strong> 지금까지의 클레임이 곧 학습 데이터입니다. 문제는 데이터가 없는 것이 아니라 기록 형식이 없는 것입니다.</span></li>
+      <li><span class="n">03</span><span><strong>부자재는 화장품 원가의 약 10%로 원료(5%)의 두 배입니다.</strong> 단 부자재 밸류체인 성장률은 5.7%로 ODM(10.2%)에 뒤집니다. 물량이 아니라 부가가치로 올라서야 하는 구조입니다.</span></li>
+      <li><span class="n">04</span><span><strong>부자재 조달 주체는 OEM·ODM 방식에 따라 갈립니다.</strong> 브랜드사와 ODM 양쪽 모두 고객이며, 영업은 이중 트랙으로 설계해야 합니다.</span></li>
+    </ul>
+  </div>
+
+  <!-- ============ 01 ============ -->
+  <section>
+    <div class="sec-head">
+      <div class="sec-num">01 / 최우선 과제</div>
+      <h2 class="sec-title">화학적 상용성을 데이터로 예측한다</h2>
+    </div>
+
+    <h3>진단 — 왜 샘플은 통과하고 양산은 터지는가</h3>
+
+    <p>
+      지금 겪고 계신 현상에는 이름이 있습니다. <strong>환경응력균열(ESC, Environmental Stress Cracking)</strong>입니다.
+      표면활성물질이 응력을 받고 있는 폴리머에 침투·확산하면서 고분자 사슬의 이동을 윤활시켜 균열을 만드는 현상입니다.
+      학계 추정으로 <strong>서비스 중 플라스틱 부품 파손의 약 15~30%</strong>가 여기에 해당합니다.
+      즉 이건 누리의 품질 관리 실패가 아니라, 플라스틱 산업 전체의 구조적 실패 유형입니다.
+    </p>
+
+    <p>결정적인 건 발생 조건입니다. ESC는 세 가지가 <em>동시에</em> 있어야 일어납니다.</p>
+
+    <div class="formula">
+      <span class="term">화학물질</span>
+      <span class="op">+</span>
+      <span class="term miss">응력</span>
+      <span class="op">+</span>
+      <span class="term miss">시간</span>
+      <span class="op">→</span>
+      <span class="term">균열 · 누액</span>
+    </div>
+
+    <div class="callout alarm">
+      <div class="label">샘플 테스트가 놓치는 것</div>
+      <p>
+        고객이 샘플로 시험할 때 재현되는 건 <strong>화학물질뿐</strong>입니다.
+        붉게 표시된 두 조건 — 응력과 시간 — 이 빠져 있습니다.
+        그래서 샘플은 멀쩡하고 양산은 터집니다. 고객의 시험이 부실해서가 아니라,
+        시험 설계가 이 메커니즘을 반영하지 않아서입니다.
+      </p>
+    </div>
+
+    <h4>양산품에만 존재하는 응력</h4>
+    <ul>
+      <li><strong>성형 잔류응력</strong> — 사출·블로우 성형 시 냉각 속도 차이로 내부에 남는 응력. 샘플과 양산 로트가 다를 수 있습니다.</li>
+      <li><strong>캡 체결 토크</strong> — 자동 캡핑기의 토크는 손으로 잠근 샘플보다 훨씬 높고 일정합니다. 넥 부위에 지속 응력을 겁니다.</li>
+      <li><strong>적재 하중</strong> — 팔레트 적재 단수만큼 하부 용기에 압축 응력이 걸립니다.</li>
+      <li><strong>운송 진동과 열이력</strong> — 컨테이너 내부 온도, 특히 수출 시 적도 통과 구간.</li>
+    </ul>
+
+    <h3>같은 "향료"가 5배 차이를 만든다</h3>
+
+    <p>
+      고결정성 폴리프로필렌(HCPP)에 대한 ESC 연구에서, <strong>리모넨의 확산계수가 라벤더유의 약 5배</strong>로 측정됐고
+      그만큼 용기 수명이 짧아졌습니다. 두 물질 모두 발주서에는 그냥 <em>"향료 함유"</em>로 적힙니다.
+    </p>
+
+    <p>
+      <strong>이 지점이 사업 기회의 정확한 위치입니다.</strong>
+      현재 업계는 "향료가 들어갔다"는 수준으로만 정보를 주고받습니다.
+      누리가 <strong>어떤 향료인지</strong>까지 기록하기 시작하면, 경쟁사가 못 하는 예측을 하게 됩니다.
+      설비 투자가 아니라 기록 양식의 문제입니다.
+    </p>
+
+    <h3>데이터 모델 — 세 축으로 기록한다</h3>
+
+    <p>예측을 하려면 실패와 성공을 같은 형식으로 쌓아야 합니다. 축은 셋입니다.</p>
+
+    <div class="scroller">
+      <table>
+        <thead>
+          <tr><th>축</th><th>기록 항목</th><th>왜 필요한가</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>내용물</strong></td>
+            <td>제형 유형 · 에탄올 함량(%) · 향료 종류(리모넨/시트러스 계열 여부) · 계면활성제 유무 · pH · 오일상 비율</td>
+            <td>ESC를 유발하는 화학 인자</td>
+          </tr>
+          <tr>
+            <td><strong>용기</strong></td>
+            <td>수지 종류 · 성형 방식(사출/블로우) · 두께 · 제조사 · 로트 · 재생원료 함량</td>
+            <td>같은 PP라도 성형법에 따라 잔류응력이 다름</td>
+          </tr>
+          <tr>
+            <td><strong>응력</strong></td>
+            <td>캡 체결 토크 · 적재 단수 · 유통 경로(내수/수출) · 보관 온도 · 경과 기간</td>
+            <td>지금 아무도 기록하지 않는, 그래서 차별화되는 축</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3>클레임 기록 표준 — 1단계, 비용 0원</h3>
+
+    <p>
+      가장 먼저 하실 일은 <strong>클레임이 들어올 때 받아 적는 항목을 고정하는 것</strong>입니다.
+      아래 12개 필드를 클레임 접수 양식에 넣으십시오. 강조 표시된 넷은 현재 업계가 기록하지 않는 항목이고,
+      그래서 누리만 갖게 될 데이터입니다.
+    </p>
+
+    <div class="fields">
+      <div class="field"><span class="fname">product_type</span><span class="fdesc">제형 유형 (토너/에센스/크림/오일/클렌저/미스트)</span></div>
+      <div class="field crit"><span class="fname">ethanol_pct</span><span class="fdesc">에탄올 함량 구간 (0 / ~10 / 10~30 / 30%+)</span></div>
+      <div class="field crit"><span class="fname">fragrance_type</span><span class="fdesc">향료 계열 — 시트러스·리모넨 계열 여부를 반드시 분리</span></div>
+      <div class="field"><span class="fname">surfactant</span><span class="fdesc">계면활성제 유무 및 계열</span></div>
+      <div class="field"><span class="fname">ph</span><span class="fdesc">pH 구간 (산성 제형은 금속 부품도 함께 확인)</span></div>
+      <div class="field"><span class="fname">resin</span><span class="fdesc">수지 (PET/PETG/PP/HDPE/LDPE/AS/ABS/PCR-PP)</span></div>
+      <div class="field"><span class="fname">molding</span><span class="fdesc">성형 방식 (사출 / 블로우 / 압출블로우)</span></div>
+      <div class="field"><span class="fname">supplier_lot</span><span class="fdesc">제조사 및 로트 번호</span></div>
+      <div class="field crit"><span class="fname">cap_torque</span><span class="fdesc">캡 체결 토크 또는 캡핑 방식 (수동/자동)</span></div>
+      <div class="field crit"><span class="fname">stack_route</span><span class="fdesc">적재 단수 및 유통 경로 (내수 / 수출 · 선적)</span></div>
+      <div class="field"><span class="fname">days_to_fail</span><span class="fdesc">충전일로부터 이상 발생까지 경과일</span></div>
+      <div class="field"><span class="fname">failure_mode</span><span class="fdesc">파손 양상 (크랙 / 누액 / 변형 / 백화 / 헛돎 / 변색)</span></div>
+    </div>
+
+    <div class="callout">
+      <div class="label">가장 자주 놓치는 지점</div>
+      <p>
+        <strong>성공한 건도 똑같이 기록해야 합니다.</strong>
+        실패 사례만 모으면 "PP가 위험하다"는 결론밖에 안 나옵니다.
+        문제 없이 유통된 조합이 함께 있어야 <em>어떤 조건에서 안전한지</em>를 말할 수 있고,
+        그래야 고객에게 대안을 제시할 수 있습니다. 납품 건 전체를 같은 양식으로 남기십시오.
+      </p>
+    </div>
+
+    <h3>상용성 매트릭스 — 2단계, 6개월 후</h3>
+
+    <p>
+      데이터가 쌓이면 이런 형태로 정리됩니다. 아래는 <strong>공개된 재료 특성에 근거한 초기 가설표</strong>이며,
+      누리의 실제 클레임 데이터로 각 칸을 채워 교체하는 것이 목표입니다.
+      가설표 자체는 참고용이고, <strong>자사 데이터로 검증된 칸만이 고객에게 제시할 수 있는 값</strong>입니다.
+    </p>
+
+    <div class="scroller matrix">
+      <table>
+        <thead>
+          <tr>
+            <th class="rowh">수지</th>
+            <th class="num">고에탄올<br>토너·미스트</th>
+            <th class="num">시트러스<br>리모넨 향료</th>
+            <th class="num">고계면활성제<br>클렌저</th>
+            <th class="num">유분·에멀전<br>크림</th>
+            <th class="num">저pH<br>AHA·BHA</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><th class="rowh">PET</th><td class="cell-x">고위험</td><td class="cell-x">고위험</td><td class="cell-c">주의</td><td class="cell-o">양호</td><td class="cell-c">주의</td></tr>
+          <tr><th class="rowh">PETG</th><td class="cell-c">주의</td><td class="cell-x">고위험</td><td class="cell-c">주의</td><td class="cell-o">양호</td><td class="cell-c">주의</td></tr>
+          <tr><th class="rowh">PP</th><td class="cell-o">양호</td><td class="cell-x">고위험</td><td class="cell-c">주의</td><td class="cell-o">양호</td><td class="cell-o">양호</td></tr>
+          <tr><th class="rowh">HDPE</th><td class="cell-o">양호</td><td class="cell-c">주의</td><td class="cell-x">고위험</td><td class="cell-o">양호</td><td class="cell-o">양호</td></tr>
+          <tr><th class="rowh">AS · SAN</th><td class="cell-x">고위험</td><td class="cell-x">고위험</td><td class="cell-c">주의</td><td class="cell-c">주의</td><td class="cell-c">주의</td></tr>
+          <tr><th class="rowh">ABS</th><td class="cell-x">고위험</td><td class="cell-x">고위험</td><td class="cell-c">주의</td><td class="cell-c">주의</td><td class="cell-c">주의</td></tr>
+          <tr><th class="rowh">PCR-PP</th><td class="cell-c">주의</td><td class="cell-x">고위험</td><td class="cell-c">주의</td><td class="cell-c">주의</td><td class="cell-c">주의</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="legend">
+      <span><i class="swatch" style="background:var(--fail)"></i> 고위험 — 대안 제시 필수</span>
+      <span><i class="swatch" style="background:var(--warn)"></i> 주의 — 가혹시험 권고</span>
+      <span><i class="swatch" style="background:var(--pass)"></i> 양호 — 통상 조건 문제 없음</span>
+    </div>
+
+    <p>
+      PCR-PP 행을 전반적으로 낮게 잡은 이유는, 재생원료는 이물·이종수지 혼입으로
+      버진 대비 ESC 저항이 떨어질 수 있기 때문입니다. 재생원료 요구가 늘어나는 흐름을 고려하면
+      <strong>이 행의 데이터를 먼저 확보하는 것이 가장 가치가 큽니다.</strong>
+    </p>
+
+    <h3>가혹시험 프로토콜 — 응력을 걸고 시험한다</h3>
+
+    <p>
+      식약처 「화장품 안정성시험 가이드라인」은 장기보존시험·가속시험·가혹시험 체계를 제시합니다.
+      누리가 고객에게 권할 시험은 이 중 <strong>가속·가혹 조건에 응력 항목을 추가한</strong> 형태여야 합니다.
+      기존 샘플 제공 방식과의 차이는 단 하나, <strong>응력을 건 상태로 시험한다</strong>는 것입니다.
+    </p>
+
+    <div class="scroller">
+      <table>
+        <thead>
+          <tr><th>항목</th><th>기존 샘플 제공</th><th>제안 프로토콜</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>충전</td><td>내용물 담아 보관</td><td>실제 충전량 · 헤드스페이스 동일하게</td></tr>
+          <tr><td><strong>체결</strong></td><td>손으로 잠금</td><td><strong>양산 규정 토크로 체결</strong></td></tr>
+          <tr><td><strong>하중</strong></td><td>없음</td><td><strong>적재 단수 상당 하중 부가</strong></td></tr>
+          <tr><td>온도</td><td>상온</td><td>가속 45℃ · 가혹 온도 사이클 병행</td></tr>
+          <tr><td>기간</td><td>수일~수주</td><td>최소 4주, 수출 건 8주</td></tr>
+          <tr><td>판정</td><td>육안</td><td>중량 감소율 · 크랙 · 누액 · 변형 · 토크 유지</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3>사업화 경로</h3>
+
+    <div class="scroller">
+      <table>
+        <thead>
+          <tr><th>단계</th><th>형태</th><th>누리가 얻는 것</th></tr>
+        </thead>
+        <tbody>
+          <tr><td class="num">1</td><td>클레임 방어 — 사전 경고 기록으로 책임 소재 명확화</td><td>클레임 비용 감소, 데이터 축적 시작</td></tr>
+          <tr><td class="num">2</td><td>무료 사전 진단 — 견적 시 위험 등급 자동 표시</td><td>수주 전환율 상승, 경쟁 차별화</td></tr>
+          <tr><td class="num">3</td><td>유료 가혹시험 대행 — 프로토콜 기반 리포트 발행</td><td>신규 수익원, 제형 데이터 확보</td></tr>
+          <tr><td class="num">4</td><td>호환성 보증 세트 — 검증된 조합에 한해 품질 보증</td><td>가격 방어력, 제조사가 못 따라오는 자리</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="callout">
+      <div class="label">전략적 의미</div>
+      <p>
+        4단계에 도달하면 누리가 파는 것은 용기가 아니라 <strong>"이 조합은 터지지 않는다"는 확신</strong>입니다.
+        병 제조사는 자기 병만, 펌프사는 자기 펌프만 압니다.
+        <strong>여러 제조사에서 사오는 유통업자만이 조합을 검증할 수 있습니다.</strong>
+        공장이 없다는 것이 여기서는 유일한 자격 요건이 됩니다.
+      </p>
+    </div>
+  </section>
+
+  <!-- ============ 02 ============ -->
+  <section>
+    <div class="sec-head">
+      <div class="sec-num">02 / 구색 확장</div>
+      <h2 class="sec-title">내용물 빼고 전부 — 롱테일을 어떻게 감당할 것인가</h2>
+    </div>
+
+    <p>
+      후가공까지는 이미 연결되어 있으니, 남은 건 완충재·단상자·테이프·파우치 같은
+      <strong>단가는 낮고 부피는 큰 품목</strong>입니다. 이걸 전부 직접 재고로 가져가면
+      창고와 운전자본이 먼저 무너집니다. 품목을 세 등급으로 나누어 취급 방식을 달리하는 것이 안전합니다.
+    </p>
+
+    <div class="scroller">
+      <table>
+        <thead>
+          <tr><th>등급</th><th>품목</th><th>취급 방식</th><th>재고 부담</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>A</strong></td>
+            <td>용기 · 펌프 · 캡 · 스포이드 · 이너캡</td>
+            <td>직접 재고. 호환성 검증 세트에 들어가는 규격만 깊게</td>
+            <td>있음 — 핵심 자산</td>
+          </tr>
+          <tr>
+            <td><strong>B</strong></td>
+            <td>단상자 · 라벨 · 후가공</td>
+            <td>제휴 직배송. 누리 견적서에 함께 올리되 재고는 파트너가 보유</td>
+            <td>없음</td>
+          </tr>
+          <tr>
+            <td><strong>C</strong></td>
+            <td>완충재 · 에어캡 · 테이프 · 택배박스 · 소모품</td>
+            <td>범용품. 규격 안내 + 외부 구매 경로 제공</td>
+            <td>없음</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <p>
+      <strong>원스톱의 실제 무기는 재고가 아니라 견적서 한 장입니다.</strong>
+      A는 직접 팔고 B는 제휴로 얹고 C는 경로만 알려주더라도, 고객 입장에서는
+      "누리에 물어보면 다 해결된다"가 됩니다. 소유하지 않고 매개하는 것이 유통업의 본래 형태입니다.
+    </p>
+
+    <h3>쿠팡파트너스 — 검토 결과와 권고</h3>
+
+    <p>
+      C등급 범용 소모품을 제휴 링크로 돌려 수수료를 얻는 안을 검토했습니다.
+      결론부터 말씀드리면 <strong>주력 수익원으로는 부적합하고, 보조 장치로는 쓸 만합니다.</strong>
+    </p>
+
+    <dl class="verdict">
+      <dt>수익 규모</dt>
+      <dd>제휴 수수료는 통상 판매가의 한 자릿수 %입니다. 부자재 유통 마진과 자릿수가 다릅니다. 매출 항목으로 잡을 규모가 되기 어렵습니다.</dd>
+      <dt>고객 성격</dt>
+      <dd>누리 고객은 사업자이고 세금계산서·대량구매·정기납품을 필요로 합니다. 개인 소비자용 커머스로 보내면 정산과 증빙이 맞지 않습니다.</dd>
+      <dt>브랜드 리스크</dt>
+      <dd>B2B 공급사가 외부 쇼핑몰 링크를 안내하면 "이 회사는 이것도 없나"로 읽힐 수 있습니다. 전문성 인식을 깎습니다.</dd>
+      <dt>이탈 위험</dt>
+      <dd>고객을 한 번 외부 플랫폼으로 보내면 다음 구매도 거기서 합니다. 원스톱을 만들려는 목적과 정면으로 충돌합니다.</dd>
+    </dl>
+
+    <h4>그래서 이렇게 쓰십시오</h4>
+    <ul>
+      <li><strong>고객 유도 수단이 아니라 콘텐츠 부산물로.</strong> "화장품 창업 부자재 체크리스트" 같은 자료를 만들고, 그 안의 범용 소모품 항목에만 링크를 답니다. 견적서나 주문 화면에는 넣지 않습니다.</li>
+      <li><strong>A·B 등급에는 절대 걸지 않습니다.</strong> 용기·펌프·캡·라벨은 누리의 매출 영역입니다. 여기에 외부 링크가 붙으면 본업을 스스로 잠식합니다.</li>
+      <li><strong>수익보다 데이터를 보십시오.</strong> 어떤 소모품 링크가 눌리는지가 <em>고객이 아직 누리에서 못 사고 있는 것</em>의 목록입니다. 클릭이 몰리는 품목은 B등급 제휴로 끌어올릴 후보입니다.</li>
+    </ul>
+
+    <p>
+      정리하면 쿠팡파트너스는 <strong>매출 계획이 아니라 수요 탐지기</strong>로 쓰는 것이 맞습니다.
+      기대 수익은 낮게 잡으시고, 대신 클릭 데이터를 B등급 확장 판단에 쓰십시오.
+    </p>
+  </section>
+
+  <!-- ============ 03 ============ -->
+  <section>
+    <div class="sec-head">
+      <div class="sec-num">03 / 고객 전략</div>
+      <h2 class="sec-title">브랜드 성장 패키지</h2>
+    </div>
+
+    <p>
+      대기업 직납 경쟁사와 매출이 다섯 배 벌어지는 구조는 영업으로 좁힐 수 없습니다.
+      좁힐 수 있는 유일한 경로는 <strong>지금 작은 고객이 커질 때 함께 커지는 것</strong>입니다.
+      실제로 유럽 시장을 뚫은 건 대기업이 아니라 아누아·스킨1004·믹순·티르티르 같은 인디브랜드였습니다.
+      경쟁사는 MOQ가 맞지 않아 이 브랜드들의 창업기에 관심이 없었습니다. 누리는 있습니다.
+    </p>
+
+    <p>
+      패키지는 브랜드의 성장 단계에 맞춰 세 층으로 설계합니다.
+      각 층에서 누리가 주는 것과 받는 것을 함께 정의하는 것이 핵심입니다 —
+      <strong>지원은 호의가 아니라 데이터와 락인을 얻는 거래여야 지속됩니다.</strong>
+    </p>
+
+    <div class="tiers">
+      <div class="tier">
+        <div class="tier-top">
+          <span class="tier-name">시드 — 창업기</span>
+          <span class="tier-when">기성용기 · 소량 · 첫 제품 출시 전</span>
+        </div>
+        <div class="tier-body">
+          <div class="tier-col">
+            <h5>누리가 제공</h5>
+            <ul>
+              <li>상용성 사전 진단 (무료)</li>
+              <li>호환성 검증 세트 추천</li>
+              <li>부자재 체크리스트 · 원가 시뮬레이터</li>
+              <li>후가공 파트너 연결</li>
+            </ul>
+          </div>
+          <div class="tier-col">
+            <h5>누리가 얻는 것</h5>
+            <ul>
+              <li>제형 데이터 (매트릭스 학습)</li>
+              <li>첫 거래 선점</li>
+              <li>성장 후보 조기 식별</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="tier">
+        <div class="tier-top">
+          <span class="tier-name">그로스 — 히트 직후</span>
+          <span class="tier-when">재주문 발생 · 차별화 요구 시작</span>
+        </div>
+        <div class="tier-body">
+          <div class="tier-col">
+            <h5>누리가 제공</h5>
+            <ul>
+              <li>QDM 금형 설계·제조사 매칭</li>
+              <li>유료 가혹시험 리포트</li>
+              <li>안전재고 확보 (품절 방지)</li>
+              <li>단가 구간 재협상</li>
+            </ul>
+          </div>
+          <div class="tier-col">
+            <h5>누리가 얻는 것</h5>
+            <ul>
+              <li>객단가 상승</li>
+              <li>금형 귀속에 따른 전환비용 발생</li>
+              <li>시험 수수료 수익</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="tier">
+        <div class="tier-top">
+          <span class="tier-name">스케일 — 수출기</span>
+          <span class="tier-when">유럽·미국 진출 · 전용 금형 검토</span>
+        </div>
+        <div class="tier-body">
+          <div class="tier-col">
+            <h5>누리가 제공</h5>
+            <ul>
+              <li>부자재 재질·PCR 함량 자료 패키지</li>
+              <li>국내 등급평가 대응 규격 제안</li>
+              <li>전용 금형 제조사 매칭·관리</li>
+              <li>수출 물류 조건 대응 (열·진동 시험)</li>
+            </ul>
+          </div>
+          <div class="tier-col">
+            <h5>누리가 얻는 것</h5>
+            <ul>
+              <li>장기 계약 · 물량 안정화</li>
+              <li>레퍼런스 브랜드 확보</li>
+              <li>수출 대응 역량 자산화</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="callout alarm">
+      <div class="label">자료 패키지의 경계를 지키십시오</div>
+      <p>
+        스케일 단계의 수출 자료는 <strong>인증 대행이 아닙니다.</strong>
+        EU PPWR의 의무주체는 EU 역내 제조업체·수입자·유통업체이며 한국 부자재 공급사는 규제 의무자가 아닙니다.
+        누리가 제공하는 것은 <strong>브랜드가 자기 EU 수입자에게 넘길 재질·함량 자료</strong>입니다.
+        이 선을 넘어 "인증해 드린다"고 말하는 순간 감당할 수 없는 책임이 생깁니다.
+        비용은 거의 문서 작업이고, 차별화 효과는 그것만으로 충분합니다.
+      </p>
+    </div>
+
+    <p>
+      과금은 시드를 무료로 열되 <strong>그로스부터 유료로 전환</strong>하는 구조를 권합니다.
+      시드에서 받는 건 돈이 아니라 제형 데이터입니다.
+      그 데이터가 매트릭스를 채우고, 매트릭스가 다음 고객의 클레임을 막습니다.
+    </p>
+  </section>
+
+  <!-- ============ 04 ============ -->
+  <section>
+    <div class="sec-head">
+      <div class="sec-num">04 / 조사 결과</div>
+      <h2 class="sec-title">부자재는 누가 발주하는가 — 브랜드사인가 ODM인가</h2>
+    </div>
+
+    <p>
+      지난 검토에서 미확인으로 남겨두었던 항목입니다. 조사 결과 <strong>양쪽 다 존재하며,
+      생산 방식이 무엇이냐에 따라 갈립니다.</strong>
+    </p>
+
+    <div class="scroller">
+      <table>
+        <thead>
+          <tr><th>방식</th><th>설계 주체</th><th>부자재 결정·발주</th><th>누리의 고객</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>OEM</strong></td>
+            <td>브랜드사</td>
+            <td>브랜드사가 원료·포뮬러·패키징을 직접 결정하고 제조사에 맡김</td>
+            <td><strong>브랜드사</strong> (직접 영업)</td>
+          </tr>
+          <tr>
+            <td><strong>ODM</strong></td>
+            <td>제조사</td>
+            <td>제조사가 설계부터 생산까지 주도, 브랜드는 완제품을 일괄 구매</td>
+            <td><strong>ODM</strong> (벤더 등록 필요)</td>
+          </tr>
+          <tr>
+            <td><strong>ODM 원스톱</strong></td>
+            <td>제조사</td>
+            <td>생산계획에 따라 원·부자재 소요량을 산출·발주하고 입고 시 품질검사 수행</td>
+            <td><strong>ODM 구매부서</strong></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3>영업에 미치는 함의</h3>
+
+    <ul>
+      <li><strong>이중 트랙이 불가피합니다.</strong> 브랜드 직거래와 ODM 벤더 등록은 영업 사이클·의사결정자·심사 기준이 전부 다릅니다. 하나의 조직으로 둘 다 하려 하면 어느 쪽도 안 됩니다.</li>
+      <li><strong>상용성 데이터는 ODM 쪽에서 더 강하게 먹힙니다.</strong> ODM은 입고 부자재에 품질검사를 수행하는 주체이므로, 검증 데이터를 함께 주는 공급사를 구조적으로 선호합니다. 벤더 등록 심사에서 직접적인 가점 요인이 됩니다.</li>
+      <li><strong>브랜드 성장 패키지는 OEM 트랙에서 작동합니다.</strong> 브랜드가 패키징을 직접 결정하는 방식일 때만 누리가 개입할 여지가 있습니다. 시드 단계 고객이 어느 트랙인지 초기에 분류하십시오.</li>
+    </ul>
+
+    <h3>같이 확인된 원가 구조 — 두 가지 시사점</h3>
+
+    <div class="scroller">
+      <table>
+        <thead>
+          <tr><th>항목</th><th class="num">수치</th><th>해석</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>부자재 원가 비중</td><td class="num">약 10%</td><td>원료(약 5%)의 <strong>두 배</strong>. 제조원가 25% 중 최대 항목</td></tr>
+          <tr><td>원료 원가 비중</td><td class="num">약 5%</td><td>—</td></tr>
+          <tr><td>기타 생산비</td><td class="num">약 10%</td><td>공장운영비·인건비</td></tr>
+          <tr><td>ODM/OEM 성장률 (15~23)</td><td class="num">10.2%</td><td>밸류체인 내 최고</td></tr>
+          <tr><td>원료 성장률</td><td class="num">6.6%</td><td>—</td></tr>
+          <tr><td><strong>부자재 성장률</strong></td><td class="num">5.7%</td><td><strong>ODM의 절반 수준</strong></td></tr>
+          <tr><td>대형 브랜드 성장률</td><td class="num">2.6%</td><td>—</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="callout alarm">
+      <div class="label">냉정하게 읽어야 할 숫자</div>
+      <p>
+        부자재는 원가에서 가장 큰 항목이면서 <strong>밸류체인 성장률은 5.7%로 하위권</strong>입니다.
+        원가 비중이 크다는 건 곧 <strong>고객이 가장 먼저 깎으려 드는 항목</strong>이라는 뜻이고,
+        낮은 성장률은 그 압박이 실제로 작동해 왔다는 증거입니다.
+      </p>
+      <p>
+        <strong>물량으로 경쟁하면 이 압박을 정면으로 맞습니다.</strong>
+        경쟁사가 대기업 대량 납품으로 매출 다섯 배를 내고 있더라도, 그 매출이 다섯 배의 이익을 뜻하지 않을 가능성이 높습니다.
+        누리가 가야 할 방향은 같은 물량 게임이 아니라, 깎이지 않는 근거 — 즉 상용성 데이터 — 를 얹는 쪽입니다.
+      </p>
+    </div>
+  </section>
+
+  <!-- ============ 로드맵 ============ -->
+  <section>
+    <div class="sec-head">
+      <div class="sec-num">실행</div>
+      <h2 class="sec-title">비용 순 실행 로드맵</h2>
+    </div>
+
+    <div class="roadmap">
+      <div class="phase">
+        <span class="when">즉시</span>
+        <span class="what">
+          <b>클레임 기록 양식 12필드 도입</b>
+          <span>접수 양식만 바꾸면 됩니다. 오늘부터 쌓이는 건이 곧 학습 데이터입니다. 과거 클레임도 기억나는 범위에서 소급 입력하십시오.</span>
+          <span class="cost">비용 0원 · 가장 시급</span>
+        </span>
+      </div>
+      <div class="phase">
+        <span class="when">즉시</span>
+        <span class="what">
+          <b>납품 성공 건도 같은 양식으로 기록</b>
+          <span>실패만 모으면 예측이 아니라 공포가 됩니다. 정상 유통된 조합이 있어야 대안을 제시할 수 있습니다.</span>
+          <span class="cost">비용 0원</span>
+        </span>
+      </div>
+      <div class="phase">
+        <span class="when">1개월</span>
+        <span class="what">
+          <b>기존 고객 성장 분석</b>
+          <span>지난 2년간 주문이 늘어난 고객을 추려 무엇을 샀고 왜 남았는지 확인합니다. 성장 패키지의 시드 대상 정의가 여기서 나옵니다.</span>
+          <span class="cost">비용 0원 · 내부 데이터</span>
+        </span>
+      </div>
+      <div class="phase">
+        <span class="when">1~3개월</span>
+        <span class="what">
+          <b>가혹시험 프로토콜 정립 및 자체 시험 개시</b>
+          <span>규정 토크 체결 + 하중 + 45℃. 고위험으로 의심되는 조합부터 자체적으로 돌려 매트릭스 초기값을 채웁니다.</span>
+          <span class="cost">소액 · 항온기 수준</span>
+        </span>
+      </div>
+      <div class="phase">
+        <span class="when">3~6개월</span>
+        <span class="what">
+          <b>호환성 검증 세트 10~20종 출시</b>
+          <span>검증이 끝난 조합만 세트로 묶어 판매합니다. 보증 문구는 데이터가 뒷받침하는 범위 안에서만 씁니다.</span>
+          <span class="cost">소액 · 재고 일부</span>
+        </span>
+      </div>
+      <div class="phase">
+        <span class="when">6개월+</span>
+        <span class="what">
+          <b>ODM 벤더 등록 추진 · B등급 제휴 확장</b>
+          <span>축적된 상용성 데이터를 벤더 심사 자료로 사용합니다. 이 시점 이전의 등록 시도는 근거가 부족합니다.</span>
+          <span class="cost">중간</span>
+        </span>
+      </div>
+      <div class="phase">
+        <span class="when">이후</span>
+        <span class="what">
+          <b>재고·설비 투자 판단</b>
+          <span>앞 단계의 반응을 보고 결정합니다. 앵커 고객 확보 전 설비 투자는 권하지 않습니다 — 가동률 50% 미만은 곧 적자입니다.</span>
+          <span class="cost">큼 · 조건부</span>
+        </span>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div>
+      <h4>확인이 더 필요한 항목</h4>
+      <ul>
+        <li>영동프라텍 매출 규모 — 공개자료로 확인되지 않았습니다. 신용평가 리포트 등 유료 자료가 필요합니다.</li>
+        <li>매트릭스 초기 가설표의 각 칸 — 재료 일반 특성에 근거한 추정이며, 자사 데이터로 검증 후 사용해야 합니다.</li>
+        <li>주요 ODM의 부자재 벤더 등록 요건 — 코스맥스·한국콜마 구매부서에 직접 문의가 필요합니다.</li>
+      </ul>
+    </div>
+    <div>
+      <h4>주요 출처</h4>
+      <ul>
+        <li><a href="https://www.sciencedirect.com/science/article/abs/pii/S0142941815002378">Observation and modeling of environmental stress cracking behaviors of high crystalline polypropylene due to scent oils — Polymer Testing</a></li>
+        <li><a href="https://www.prestogroup.com/articles/environmental-stress-crack-resistance-escr-testing-of-plastics/">Environmental Stress Crack Resistance (ESCR) Testing of Plastics</a></li>
+        <li><a href="https://www.ineos.com/globalassets/ineos-group/businesses/ineos-olefins-and-polymers-usa/products/technical-information--patents/ineos-environmental-stress-crack-resistance-of-pe.pdf">Environmental Stress Crack Resistance of Polyethylene — INEOS</a></li>
+        <li><a href="https://www.korea.kr/archive/expDocView.do?docId=27986">화장품 안정성시험 가이드라인 — 식품의약품안전처</a></li>
+        <li><a href="https://www.pwc.com/kr/ko/insights/industry-focus/samilpwc_k-beauty-guidebook.pdf">K-뷰티 산업 현황 및 회계·세무 Guide Book — 삼일PwC</a></li>
+        <li><a href="https://branit.kr/account/contents/insight/trend-info/6eac4408-d3f7-4ce0-8521-464bf75e5fba">초보 사장님을 위한 화장품 ODM OEM 가이드 — 브랜잇</a></li>
+        <li><a href="https://www.cosmax.com/new/beautiful/sub_beauty_01_business.asp">COSMAX ONE-STOP SOLUTION</a></li>
+        <li><a href="https://www.bloter.net/news/articleViewAmp.html?idxno=665180">인디 브랜드는 한국콜마엔 날개, 연우엔 숙제 — 블로터</a></li>
+      </ul>
+    </div>
+  </footer>
+
+</div>

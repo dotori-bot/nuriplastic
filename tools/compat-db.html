@@ -1,0 +1,682 @@
+<title>누리플라스틱 상용성 데이터베이스</title>
+<style>
+  :root {
+    --bg:#F4F6F5; --surface:#FFFFFF; --surface-2:#EAEEEC; --surface-3:#DFE5E3;
+    --ink:#171C1E; --ink-2:#454F51; --ink-3:#6B7679;
+    --rule:#D3DAD8; --rule-soft:#E3E8E6;
+    --accent:#0E6A64; --accent-ink:#FFFFFF; --accent-wash:#DDECEA;
+    --fail:#A6301C; --fail-wash:#F6E1DC;
+    --warn:#96650F; --warn-wash:#F6EBD6;
+    --pass:#2F6A38; --pass-wash:#DFEDE0;
+    --none:#9AA5A3; --none-wash:#EDF0EF;
+    --font-sans:"Pretendard Variable",Pretendard,-apple-system,BlinkMacSystemFont,"Apple SD Gothic Neo","Malgun Gothic","Noto Sans KR",system-ui,sans-serif;
+    --font-mono:ui-monospace,SFMono-Regular,"SF Mono",Menlo,Consolas,"Liberation Mono",monospace;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg:#101413; --surface:#171C1B; --surface-2:#1E2523; --surface-3:#27302E;
+      --ink:#E8EDEB; --ink-2:#B3BDBA; --ink-3:#8A9694;
+      --rule:#2C3634; --rule-soft:#232B2A;
+      --accent:#4FB5AC; --accent-ink:#0B1413; --accent-wash:#12302E;
+      --fail:#E0785F; --fail-wash:#331B15;
+      --warn:#D6A344; --warn-wash:#2F2513;
+      --pass:#6FB077; --pass-wash:#172A19;
+      --none:#5A6664; --none-wash:#1C2221;
+    }
+  }
+  :root[data-theme="dark"] {
+    --bg:#101413; --surface:#171C1B; --surface-2:#1E2523; --surface-3:#273230;
+    --ink:#E8EDEB; --ink-2:#B3BDBA; --ink-3:#8A9694;
+    --rule:#2C3634; --rule-soft:#232B2A;
+    --accent:#4FB5AC; --accent-ink:#0B1413; --accent-wash:#12302E;
+    --fail:#E0785F; --fail-wash:#331B15;
+    --warn:#D6A344; --warn-wash:#2F2513;
+    --pass:#6FB077; --pass-wash:#172A19;
+    --none:#5A6664; --none-wash:#1C2221;
+  }
+  :root[data-theme="light"] {
+    --bg:#F4F6F5; --surface:#FFFFFF; --surface-2:#EAEEEC; --surface-3:#DFE5E3;
+    --ink:#171C1E; --ink-2:#454F51; --ink-3:#6B7679;
+    --rule:#D3DAD8; --rule-soft:#E3E8E6;
+    --accent:#0E6A64; --accent-ink:#FFFFFF; --accent-wash:#DDECEA;
+    --fail:#A6301C; --fail-wash:#F6E1DC;
+    --warn:#96650F; --warn-wash:#F6EBD6;
+    --pass:#2F6A38; --pass-wash:#DFEDE0;
+    --none:#9AA5A3; --none-wash:#EDF0EF;
+  }
+
+  body { background:var(--bg); color:var(--ink); font-family:var(--font-sans); font-size:15px; line-height:1.6; -webkit-font-smoothing:antialiased; word-break:keep-all; }
+  .app { max-width:64rem; margin:0 auto; padding:2rem 1.25rem 5rem; display:flex; flex-direction:column; gap:1.5rem; }
+
+  /* header */
+  .hd { display:flex; flex-direction:column; gap:.5rem; }
+  .hd .eyebrow { font-family:var(--font-mono); font-size:.7rem; letter-spacing:.15em; text-transform:uppercase; color:var(--accent); }
+  .hd h1 { margin:0; font-size:clamp(1.5rem,4vw,2rem); font-weight:700; letter-spacing:-.02em; line-height:1.25; }
+  .hd p { margin:0; color:var(--ink-2); max-width:44rem; font-size:.94rem; }
+
+  /* stat strip */
+  .stats { display:grid; grid-template-columns:repeat(auto-fit,minmax(8rem,1fr)); gap:.5rem; }
+  .stat { background:var(--surface); border:1px solid var(--rule); border-radius:3px; padding:.7rem .85rem; display:flex; flex-direction:column; gap:.15rem; }
+  .stat .v { font-family:var(--font-mono); font-size:1.35rem; font-variant-numeric:tabular-nums; line-height:1.1; }
+  .stat .k { font-size:.72rem; color:var(--ink-3); font-family:var(--font-mono); letter-spacing:.06em; }
+  .stat.alarm .v { color:var(--fail); }
+
+  /* tabs */
+  .tabs { display:flex; gap:.25rem; border-bottom:1px solid var(--rule); flex-wrap:wrap; }
+  .tab { appearance:none; background:none; border:none; border-bottom:2px solid transparent; margin-bottom:-1px;
+         padding:.6rem .9rem; font-family:var(--font-sans); font-size:.88rem; font-weight:550; color:var(--ink-3); cursor:pointer; }
+  .tab:hover { color:var(--ink); }
+  .tab[aria-selected="true"] { color:var(--accent); border-bottom-color:var(--accent); }
+  .tab:focus-visible { outline:2px solid var(--accent); outline-offset:-2px; }
+  .panel { display:none; flex-direction:column; gap:1.1rem; }
+  .panel.on { display:flex; }
+
+  /* form */
+  .card { background:var(--surface); border:1px solid var(--rule); border-radius:4px; padding:1.1rem 1.15rem; display:flex; flex-direction:column; gap:.9rem; }
+  .card > h2 { margin:0; font-size:1rem; font-weight:650; }
+  .card > .hint { margin:0; font-size:.84rem; color:var(--ink-3); }
+  .grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(11rem,1fr)); gap:.7rem; }
+  .f { display:flex; flex-direction:column; gap:.25rem; }
+  .f label { font-family:var(--font-mono); font-size:.68rem; letter-spacing:.07em; text-transform:uppercase; color:var(--ink-3); }
+  .f label .req { color:var(--accent); }
+  .f input, .f select, .f textarea {
+    font-family:var(--font-sans); font-size:.88rem; color:var(--ink);
+    background:var(--bg); border:1px solid var(--rule); border-radius:3px; padding:.45rem .55rem; width:100%;
+  }
+  .f input:focus, .f select:focus, .f textarea:focus { outline:2px solid var(--accent); outline-offset:-1px; border-color:var(--accent); }
+  .f.wide { grid-column:1/-1; }
+
+  .row { display:flex; flex-wrap:wrap; gap:.5rem; align-items:center; }
+  button.btn {
+    appearance:none; font-family:var(--font-sans); font-size:.86rem; font-weight:600; cursor:pointer;
+    background:var(--accent); color:var(--accent-ink); border:1px solid var(--accent); border-radius:3px; padding:.5rem 1rem;
+  }
+  button.btn.ghost { background:transparent; color:var(--ink-2); border-color:var(--rule); font-weight:500; }
+  button.btn.ghost:hover { color:var(--ink); border-color:var(--ink-3); }
+  button.btn.danger { background:transparent; color:var(--fail); border-color:var(--fail); font-weight:500; }
+  button.btn:focus-visible { outline:2px solid var(--accent); outline-offset:2px; }
+  .note { font-size:.8rem; color:var(--ink-3); }
+
+  /* table */
+  .scroller { overflow-x:auto; border:1px solid var(--rule); border-radius:4px; background:var(--surface); }
+  table { border-collapse:collapse; width:100%; font-size:.82rem; }
+  th,td { padding:.5rem .6rem; text-align:left; border-bottom:1px solid var(--rule-soft); white-space:nowrap; }
+  thead th { font-family:var(--font-mono); font-size:.66rem; letter-spacing:.07em; text-transform:uppercase; color:var(--ink-3); font-weight:500; background:var(--surface-2); border-bottom:1px solid var(--rule); position:sticky; top:0; }
+  tbody tr:last-child td { border-bottom:none; }
+  td.mono { font-family:var(--font-mono); font-variant-numeric:tabular-nums; }
+  .pill { display:inline-block; padding:.1rem .45rem; border-radius:2px; font-family:var(--font-mono); font-size:.7rem; }
+  .pill.ok { background:var(--pass-wash); color:var(--pass); }
+  .pill.bad { background:var(--fail-wash); color:var(--fail); }
+  .pill.src { background:var(--surface-2); color:var(--ink-3); }
+  button.del { appearance:none; background:none; border:none; color:var(--ink-3); cursor:pointer; font-size:.9rem; padding:.1rem .3rem; border-radius:2px; }
+  button.del:hover { color:var(--fail); }
+
+  /* matrix */
+  .matrix table { font-size:.78rem; }
+  .matrix th.rowh { font-family:var(--font-mono); font-size:.74rem; color:var(--ink); background:var(--surface-2); font-weight:500; text-transform:none; letter-spacing:0; position:sticky; left:0; z-index:1; }
+  .matrix thead th { font-size:.64rem; }
+  .matrix td { text-align:center; padding:0; }
+  .cell { width:100%; height:100%; min-height:2.9rem; border:none; background:none; cursor:pointer; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:.1rem; padding:.4rem .3rem; font-family:var(--font-mono); }
+  .cell .rate { font-size:.82rem; font-weight:600; font-variant-numeric:tabular-nums; }
+  .cell .n { font-size:.62rem; opacity:.75; }
+  .cell:focus-visible { outline:2px solid var(--accent); outline-offset:-2px; }
+  .c-x { background:var(--fail-wash); color:var(--fail); }
+  .c-c { background:var(--warn-wash); color:var(--warn); }
+  .c-o { background:var(--pass-wash); color:var(--pass); }
+  .c-n { background:var(--none-wash); color:var(--none); cursor:default; }
+  .prov { position:relative; }
+  .prov::after { content:""; position:absolute; inset:0; pointer-events:none;
+    background:repeating-linear-gradient(45deg,transparent 0 5px,rgba(128,128,128,.16) 5px 10px); }
+
+  .legend { display:flex; flex-wrap:wrap; gap:.4rem 1.1rem; font-family:var(--font-mono); font-size:.7rem; color:var(--ink-3); }
+  .legend span { display:inline-flex; align-items:center; gap:.35rem; }
+  .sw { width:.72rem; height:.72rem; border-radius:2px; display:inline-block; }
+
+  /* verdict */
+  .verdict { border:1px solid var(--rule); border-radius:4px; padding:1.1rem 1.2rem; display:flex; flex-direction:column; gap:.7rem; background:var(--surface); }
+  .verdict.v-x { border-left:4px solid var(--fail); }
+  .verdict.v-c { border-left:4px solid var(--warn); }
+  .verdict.v-o { border-left:4px solid var(--pass); }
+  .verdict.v-n { border-left:4px solid var(--none); }
+  .verdict .grade { font-size:1.15rem; font-weight:700; }
+  .verdict.v-x .grade { color:var(--fail); }
+  .verdict.v-c .grade { color:var(--warn); }
+  .verdict.v-o .grade { color:var(--pass); }
+  .verdict.v-n .grade { color:var(--ink-3); }
+  .verdict .basis { font-family:var(--font-mono); font-size:.76rem; color:var(--ink-3); }
+  .verdict p { margin:0; font-size:.88rem; color:var(--ink-2); }
+
+  .empty { padding:2rem 1rem; text-align:center; color:var(--ink-3); font-size:.88rem; }
+  .warnbox { background:var(--warn-wash); border:1px solid var(--warn); border-radius:3px; padding:.7rem .9rem; font-size:.83rem; color:var(--ink); }
+  .warnbox b { color:var(--warn); }
+  @media (prefers-reduced-motion: reduce) { * { transition:none !important; animation:none !important; } }
+</style>
+
+<div class="app">
+
+  <header class="hd">
+    <div class="eyebrow">누리플라스틱 · 내부 도구</div>
+    <h1>상용성 데이터베이스</h1>
+    <p>납품 이력과 클레임을 같은 형식으로 쌓아 수지 × 제형 위험도를 계산합니다. 데이터는 이 브라우저에만 저장되며 서버로 전송되지 않습니다. 반드시 정기적으로 CSV로 내보내 백업하십시오.</p>
+  </header>
+
+  <div class="stats">
+    <div class="stat"><span class="v" id="s-total">0</span><span class="k">총 이력</span></div>
+    <div class="stat alarm"><span class="v" id="s-fail">0</span><span class="k">이상 발생</span></div>
+    <div class="stat"><span class="v" id="s-rate">—</span><span class="k">전체 실패율</span></div>
+    <div class="stat"><span class="v" id="s-cells">0</span><span class="k">판정 가능 조합</span></div>
+    <div class="stat"><span class="v" id="s-mem">0</span><span class="k">기억 기반 건</span></div>
+  </div>
+
+  <div class="tabs" role="tablist">
+    <button class="tab" role="tab" aria-selected="true" data-p="p-add">이력 입력</button>
+    <button class="tab" role="tab" aria-selected="false" data-p="p-matrix">상용성 매트릭스</button>
+    <button class="tab" role="tab" aria-selected="false" data-p="p-check">사전 진단</button>
+    <button class="tab" role="tab" aria-selected="false" data-p="p-list">전체 이력</button>
+    <button class="tab" role="tab" aria-selected="false" data-p="p-data">백업 · 초기화</button>
+  </div>
+
+  <!-- ADD -->
+  <div class="panel on" id="p-add">
+    <div class="card">
+      <h2>이력 한 건 입력</h2>
+      <p class="hint">정상 납품 건도 반드시 입력하십시오. 실패만 모으면 위험도를 계산할 수 없고 "전부 위험하다"는 결론만 나옵니다. <b>표시 항목만 필수</b>이고 모르는 값은 불명으로 두면 됩니다.</p>
+      <form id="form">
+        <div class="grid">
+          <div class="f"><label>납품·충전 시기</label><input type="month" name="date"></div>
+          <div class="f"><label>고객사</label><input type="text" name="customer" placeholder="선택 입력"></div>
+          <div class="f"><label>근거 <span class="req">*</span></label>
+            <select name="source" required>
+              <option value="기억">기억 (담당자 경험)</option>
+              <option value="기록">기록 (문서·명세서)</option>
+              <option value="시험">시험 (자체 시험)</option>
+            </select></div>
+
+          <div class="f"><label>제형 <span class="req">*</span></label>
+            <select name="product" required>
+              <option value="">선택</option>
+              <option>토너·미스트</option><option>에센스·세럼</option><option>로션·에멀전</option>
+              <option>크림</option><option>오일·밤</option><option>클렌저·폼</option>
+              <option>선케어</option><option>색조</option><option>헤어·바디</option><option>기타</option>
+            </select></div>
+          <div class="f"><label>수지 <span class="req">*</span></label>
+            <select name="resin" required>
+              <option value="">선택</option>
+              <option>PET</option><option>PETG</option><option>PP</option><option>HDPE</option>
+              <option>LDPE</option><option>AS·SAN</option><option>ABS</option><option>PCR-PP</option>
+              <option>PCR-PET</option><option>아크릴</option><option>유리</option><option>기타</option>
+            </select></div>
+          <div class="f"><label>결과 <span class="req">*</span></label>
+            <select name="outcome" required>
+              <option value="정상">정상 (문제 없음)</option>
+              <option value="크랙">크랙 · 파손</option>
+              <option value="누액">누액 · 새어나옴</option>
+              <option value="변형">변형 · 수축 팽윤</option>
+              <option value="백화">백화 · 흐림</option>
+              <option value="헛돎">캡 헛돎 · 체결 불량</option>
+              <option value="변색">변색 · 이취</option>
+              <option value="기타이상">기타 이상</option>
+            </select></div>
+
+          <div class="f"><label>에탄올 함량</label>
+            <select name="ethanol"><option>불명</option><option>없음</option><option>~10%</option><option>10~30%</option><option>30%+</option></select></div>
+          <div class="f"><label>향료 계열</label>
+            <select name="fragrance"><option>불명</option><option>없음</option><option>시트러스·리모넨</option><option>플로럴</option><option>우디·허브</option><option>기타 향료</option></select></div>
+          <div class="f"><label>계면활성제</label>
+            <select name="surfactant"><option>불명</option><option>없음</option><option>있음</option><option>고농도</option></select></div>
+          <div class="f"><label>pH</label>
+            <select name="ph"><option>불명</option><option>산성 (4 미만)</option><option>약산성 (4~6)</option><option>중성 (6~8)</option><option>알칼리 (8+)</option></select></div>
+
+          <div class="f"><label>성형 방식</label>
+            <select name="molding"><option>불명</option><option>사출</option><option>블로우</option><option>압출블로우</option><option>사출블로우</option></select></div>
+          <div class="f"><label>용기 제조사</label><input type="text" name="supplier" placeholder="선택 입력"></div>
+          <div class="f"><label>캡핑</label>
+            <select name="capping"><option>불명</option><option>수동</option><option>자동</option></select></div>
+          <div class="f"><label>유통 경로</label>
+            <select name="route"><option>불명</option><option>내수</option><option>수출·해상</option><option>수출·항공</option></select></div>
+          <div class="f"><label>이상 발생까지 (일)</label><input type="number" name="days" min="0" placeholder="정상이면 비움"></div>
+
+          <div class="f wide"><label>비고</label><textarea name="note" rows="2" placeholder="기억나는 정황, 로트 특이사항, 고객 클레임 내용 등"></textarea></div>
+        </div>
+        <div class="row" style="margin-top:.9rem">
+          <button type="submit" class="btn">이력 추가</button>
+          <button type="reset" class="btn ghost">폼 비우기</button>
+          <span class="note" id="saved"></span>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- MATRIX -->
+  <div class="panel" id="p-matrix">
+    <div class="card">
+      <h2>수지 × 제형 상용성 매트릭스</h2>
+      <p class="hint">칸의 숫자는 <b>실패율</b>, 아래 작은 숫자는 <b>근거 건수(n)</b>입니다. 빗금이 쳐진 칸은 n이 3 미만이라 아직 고객에게 제시하면 안 되는 참고값입니다. 칸을 누르면 해당 이력만 볼 수 있습니다.</p>
+      <div class="legend">
+        <span><i class="sw" style="background:var(--fail)"></i> 고위험 · 실패율 30%+</span>
+        <span><i class="sw" style="background:var(--warn)"></i> 주의 · 10~30%</span>
+        <span><i class="sw" style="background:var(--pass)"></i> 양호 · 10% 미만</span>
+        <span><i class="sw" style="background:var(--none)"></i> 데이터 없음</span>
+        <span>빗금 = n&lt;3, 참고용</span>
+      </div>
+    </div>
+    <div class="scroller matrix" id="matrix-wrap"></div>
+    <div id="cell-detail"></div>
+  </div>
+
+  <!-- CHECK -->
+  <div class="panel" id="p-check">
+    <div class="card">
+      <h2>사전 진단</h2>
+      <p class="hint">견적 단계에서 조합을 넣어보십시오. 축적된 이력에서 조건이 겹치는 건을 찾아 판정합니다. 조건을 더 넣을수록 정확해지지만 근거 건수는 줄어듭니다.</p>
+      <div class="grid">
+        <div class="f"><label>수지</label><select id="q-resin"><option value="">전체</option></select></div>
+        <div class="f"><label>제형</label><select id="q-product"><option value="">전체</option></select></div>
+        <div class="f"><label>에탄올</label><select id="q-ethanol"><option value="">무관</option><option>없음</option><option>~10%</option><option>10~30%</option><option>30%+</option></select></div>
+        <div class="f"><label>향료</label><select id="q-fragrance"><option value="">무관</option><option>없음</option><option>시트러스·리모넨</option><option>플로럴</option><option>우디·허브</option><option>기타 향료</option></select></div>
+        <div class="f"><label>계면활성제</label><select id="q-surfactant"><option value="">무관</option><option>없음</option><option>있음</option><option>고농도</option></select></div>
+        <div class="f"><label>유통 경로</label><select id="q-route"><option value="">무관</option><option>내수</option><option>수출·해상</option><option>수출·항공</option></select></div>
+      </div>
+    </div>
+    <div id="q-result"></div>
+    <div id="q-alt"></div>
+  </div>
+
+  <!-- LIST -->
+  <div class="panel" id="p-list">
+    <div class="card">
+      <h2>전체 이력</h2>
+      <div class="row">
+        <input type="search" id="filter" placeholder="고객사·수지·제형·비고 검색" style="flex:1; min-width:12rem; font-family:var(--font-sans); font-size:.88rem; color:var(--ink); background:var(--bg); border:1px solid var(--rule); border-radius:3px; padding:.45rem .55rem;">
+        <span class="note" id="list-count"></span>
+      </div>
+    </div>
+    <div class="scroller" id="list-wrap"></div>
+  </div>
+
+  <!-- DATA -->
+  <div class="panel" id="p-data">
+    <div class="card">
+      <h2>백업</h2>
+      <p class="hint">이 도구는 브라우저 저장소만 사용합니다. 브라우저 데이터를 지우면 <b>이력도 함께 사라집니다.</b> 입력이 끝날 때마다 CSV로 내보내 사내 서버나 드라이브에 보관하십시오. 건수가 수백 건을 넘어가면 스프레드시트나 DB로 옮기는 것이 맞습니다.</p>
+      <div class="row">
+        <button class="btn" id="export">CSV 내보내기</button>
+        <button class="btn ghost" id="import-btn">CSV 가져오기</button>
+        <input type="file" id="import" accept=".csv,text/csv" hidden>
+      </div>
+    </div>
+    <div class="card">
+      <h2>구조 살펴보기</h2>
+      <p class="hint">도구가 어떻게 작동하는지 보려면 예시 데이터를 넣어볼 수 있습니다. <b>이 데이터는 실제 근거가 아닌 가상의 값</b>이므로, 실제 입력을 시작하기 전에 반드시 전체 삭제하십시오.</p>
+      <div class="row">
+        <button class="btn ghost" id="demo">예시 데이터 40건 넣기</button>
+        <button class="btn danger" id="clear">전체 삭제</button>
+      </div>
+    </div>
+    <div class="warnbox">
+      <b>판정 기준</b> — 실패율 30% 이상은 고위험, 10~30%는 주의, 10% 미만은 양호로 표시합니다.
+      근거 건수 n이 3 미만이면 참고값으로만 취급하고 고객 대상 자료에는 쓰지 마십시오.
+      n이 10건을 넘어야 판정이 안정됩니다.
+    </div>
+  </div>
+
+</div>
+
+<script>
+(function () {
+  "use strict";
+  var KEY = "nuri_compat_v1";
+  var RESINS = ["PET","PETG","PP","HDPE","LDPE","AS·SAN","ABS","PCR-PP","PCR-PET","아크릴","유리","기타"];
+  var PRODUCTS = ["토너·미스트","에센스·세럼","로션·에멀전","크림","오일·밤","클렌저·폼","선케어","색조","헤어·바디","기타"];
+  var FIELDS = ["date","customer","source","product","resin","outcome","ethanol","fragrance","surfactant","ph","molding","supplier","capping","route","days","note"];
+
+  var rows = load();
+
+  function load() {
+    try { var r = JSON.parse(localStorage.getItem(KEY)); return Array.isArray(r) ? r : []; }
+    catch (e) { return []; }
+  }
+  function save() {
+    try { localStorage.setItem(KEY, JSON.stringify(rows)); }
+    catch (e) { alert("저장에 실패했습니다. 브라우저 저장 공간이 가득 찼을 수 있습니다. CSV로 내보낸 뒤 일부를 삭제하십시오."); }
+  }
+  function $(s) { return document.querySelector(s); }
+  function el(t, c, txt) { var e = document.createElement(t); if (c) e.className = c; if (txt != null) e.textContent = txt; return e; }
+  function isFail(r) { return r.outcome && r.outcome !== "정상"; }
+
+  /* ---------- tabs ---------- */
+  Array.prototype.forEach.call(document.querySelectorAll(".tab"), function (t) {
+    t.addEventListener("click", function () {
+      Array.prototype.forEach.call(document.querySelectorAll(".tab"), function (x) { x.setAttribute("aria-selected", "false"); });
+      Array.prototype.forEach.call(document.querySelectorAll(".panel"), function (p) { p.classList.remove("on"); });
+      t.setAttribute("aria-selected", "true");
+      $("#" + t.dataset.p).classList.add("on");
+      render();
+    });
+  });
+
+  /* ---------- add ---------- */
+  $("#form").addEventListener("submit", function (e) {
+    e.preventDefault();
+    var fd = new FormData(e.target), rec = { id: Date.now() + "" + Math.floor(Math.random() * 1000) };
+    FIELDS.forEach(function (f) { rec[f] = (fd.get(f) || "").toString().trim(); });
+    rows.push(rec); save();
+    var msg = $("#saved");
+    msg.textContent = "저장됨 · 총 " + rows.length + "건";
+    setTimeout(function () { msg.textContent = ""; }, 2600);
+    e.target.reset();
+    render();
+  });
+
+  /* ---------- aggregation ---------- */
+  function agg(list) {
+    var n = list.length, f = list.filter(isFail).length;
+    return { n: n, f: f, rate: n ? f / n : null };
+  }
+  function grade(a) {
+    if (!a.n) return "n";
+    if (a.rate >= 0.30) return "x";
+    if (a.rate >= 0.10) return "c";
+    return "o";
+  }
+  function gradeLabel(g) {
+    return { x: "고위험", c: "주의", o: "양호", n: "데이터 없음" }[g];
+  }
+
+  /* ---------- stats ---------- */
+  function renderStats() {
+    var a = agg(rows);
+    $("#s-total").textContent = a.n;
+    $("#s-fail").textContent = a.f;
+    $("#s-rate").textContent = a.rate == null ? "—" : Math.round(a.rate * 100) + "%";
+    $("#s-mem").textContent = rows.filter(function (r) { return r.source === "기억"; }).length;
+    var solid = 0;
+    RESINS.forEach(function (rz) {
+      PRODUCTS.forEach(function (p) {
+        var s = rows.filter(function (r) { return r.resin === rz && r.product === p; });
+        if (s.length >= 3) solid++;
+      });
+    });
+    $("#s-cells").textContent = solid;
+  }
+
+  /* ---------- matrix ---------- */
+  var activeCell = null;
+  function renderMatrix() {
+    var wrap = $("#matrix-wrap");
+    wrap.textContent = "";
+    if (!rows.length) { wrap.appendChild(el("div", "empty", "이력을 입력하면 매트릭스가 생성됩니다.")); $("#cell-detail").textContent = ""; return; }
+
+    var usedR = RESINS.filter(function (rz) { return rows.some(function (r) { return r.resin === rz; }); });
+    var usedP = PRODUCTS.filter(function (p) { return rows.some(function (r) { return r.product === p; }); });
+
+    var tb = el("table"), thead = el("thead"), htr = el("tr");
+    htr.appendChild(el("th", "rowh", "수지 \\ 제형"));
+    usedP.forEach(function (p) { htr.appendChild(el("th", null, p)); });
+    thead.appendChild(htr); tb.appendChild(thead);
+
+    var body = el("tbody");
+    usedR.forEach(function (rz) {
+      var tr = el("tr");
+      tr.appendChild(el("th", "rowh", rz));
+      usedP.forEach(function (p) {
+        var sub = rows.filter(function (r) { return r.resin === rz && r.product === p; });
+        var a = agg(sub), g = grade(a);
+        var td = el("td");
+        var b = el("button", "cell c-" + g + (a.n > 0 && a.n < 3 ? " prov" : ""));
+        b.type = "button";
+        b.appendChild(el("span", "rate", a.rate == null ? "—" : Math.round(a.rate * 100) + "%"));
+        b.appendChild(el("span", "n", a.n ? "n=" + a.n : ""));
+        if (a.n) {
+          b.setAttribute("aria-label", rz + " " + p + " 실패율 " + Math.round(a.rate * 100) + "퍼센트, 근거 " + a.n + "건");
+          b.addEventListener("click", function () { activeCell = { rz: rz, p: p }; renderCellDetail(); });
+        } else { b.disabled = true; }
+        td.appendChild(b); tr.appendChild(td);
+      });
+      body.appendChild(tr);
+    });
+    tb.appendChild(body); wrap.appendChild(tb);
+    renderCellDetail();
+  }
+
+  function renderCellDetail() {
+    var box = $("#cell-detail"); box.textContent = "";
+    if (!activeCell) return;
+    var sub = rows.filter(function (r) { return r.resin === activeCell.rz && r.product === activeCell.p; });
+    if (!sub.length) { activeCell = null; return; }
+    var a = agg(sub), g = grade(a);
+    var card = el("div", "verdict v-" + g);
+    card.appendChild(el("div", "grade", activeCell.rz + " × " + activeCell.p + " — " + gradeLabel(g)));
+    card.appendChild(el("div", "basis", "실패율 " + Math.round(a.rate * 100) + "% · 근거 " + a.n + "건 (이상 " + a.f + "건)" + (a.n < 3 ? " · 참고값, 고객 제시 불가" : "")));
+    var sc = el("div", "scroller");
+    sc.appendChild(buildTable(sub, false));
+    card.appendChild(sc);
+    box.appendChild(card);
+  }
+
+  /* ---------- diagnosis ---------- */
+  var QMAP = { resin: "#q-resin", product: "#q-product", ethanol: "#q-ethanol", fragrance: "#q-fragrance", surfactant: "#q-surfactant", route: "#q-route" };
+  function fillQ() {
+    var rs = $("#q-resin"), ps = $("#q-product");
+    var rv = rs.value, pv = ps.value;
+    rs.textContent = ""; ps.textContent = "";
+    rs.appendChild(new Option("전체", ""));
+    RESINS.forEach(function (x) { rs.appendChild(new Option(x, x)); });
+    ps.appendChild(new Option("전체", ""));
+    PRODUCTS.forEach(function (x) { ps.appendChild(new Option(x, x)); });
+    rs.value = rv; ps.value = pv;
+  }
+  Object.keys(QMAP).forEach(function (k) {
+    document.addEventListener("change", function (e) {
+      if (e.target && e.target.matches(QMAP[k])) renderQuery();
+    });
+  });
+
+  function renderQuery() {
+    var box = $("#q-result"), alt = $("#q-alt");
+    box.textContent = ""; alt.textContent = "";
+    var q = {};
+    Object.keys(QMAP).forEach(function (k) { var v = $(QMAP[k]).value; if (v) q[k] = v; });
+    if (!Object.keys(q).length) { box.appendChild(el("div", "empty", "조건을 하나 이상 선택하십시오.")); return; }
+
+    var sub = rows.filter(function (r) {
+      return Object.keys(q).every(function (k) { return r[k] === q[k]; });
+    });
+    var a = agg(sub), g = grade(a);
+    var card = el("div", "verdict v-" + g);
+    card.appendChild(el("div", "grade", gradeLabel(g)));
+    if (!a.n) {
+      card.appendChild(el("div", "basis", "일치하는 이력 없음"));
+      card.appendChild(el("p", null, "이 조합은 아직 근거가 없습니다. 고객에게 안전하다고 말할 수 없고, 위험하다고도 말할 수 없습니다. 가혹시험 대상으로 올리십시오."));
+    } else {
+      card.appendChild(el("div", "basis", "실패율 " + Math.round(a.rate * 100) + "% · 근거 " + a.n + "건 (이상 " + a.f + "건)" + (a.n < 3 ? " · 참고값" : a.n < 10 ? " · 잠정" : " · 안정")));
+      var msg = a.n < 3
+        ? "근거가 " + a.n + "건뿐입니다. 내부 판단에만 쓰고 고객 자료에는 넣지 마십시오."
+        : g === "x" ? "이 조합은 과거 이력에서 이상 발생 비율이 높습니다. 대안 수지를 제시하고, 진행한다면 가혹시험을 조건으로 다십시오."
+        : g === "c" ? "이상 사례가 있습니다. 가혹시험을 권고하고 사전 고지 기록을 남기십시오."
+        : "과거 이력상 문제가 확인되지 않았습니다. 다만 응력 조건이 다르면 결과가 달라질 수 있습니다.";
+      card.appendChild(el("p", null, msg));
+      var sc = el("div", "scroller"); sc.appendChild(buildTable(sub, false)); card.appendChild(sc);
+    }
+    box.appendChild(card);
+
+    if (q.resin && q.product && (g === "x" || g === "c" || !a.n)) {
+      var others = RESINS.map(function (rz) {
+        if (rz === q.resin) return null;
+        var s = rows.filter(function (r) {
+          if (r.resin !== rz) return false;
+          return Object.keys(q).every(function (k) { return k === "resin" ? true : r[k] === q[k]; });
+        });
+        var aa = agg(s);
+        return aa.n >= 3 ? { rz: rz, a: aa } : null;
+      }).filter(Boolean).sort(function (x, y) { return x.a.rate - y.a.rate; });
+
+      if (others.length) {
+        var c2 = el("div", "card");
+        c2.appendChild(el("h2", null, "같은 조건에서 실적이 나은 수지"));
+        var sc2 = el("div", "scroller"), t2 = el("table");
+        var th2 = el("thead"), tr2 = el("tr");
+        ["수지", "실패율", "근거", "판정"].forEach(function (h) { tr2.appendChild(el("th", null, h)); });
+        th2.appendChild(tr2); t2.appendChild(th2);
+        var tb2 = el("tbody");
+        others.slice(0, 6).forEach(function (o) {
+          var tr = el("tr");
+          tr.appendChild(el("td", null, o.rz));
+          tr.appendChild(el("td", "mono", Math.round(o.a.rate * 100) + "%"));
+          tr.appendChild(el("td", "mono", "n=" + o.a.n));
+          var td = el("td"); var pill = el("span", "pill " + (grade(o.a) === "o" ? "ok" : "bad"), gradeLabel(grade(o.a)));
+          td.appendChild(pill); tr.appendChild(td);
+          tb2.appendChild(tr);
+        });
+        t2.appendChild(tb2); sc2.appendChild(t2); c2.appendChild(sc2);
+        alt.appendChild(c2);
+      }
+    }
+  }
+
+  /* ---------- list ---------- */
+  function buildTable(list, withDelete) {
+    var t = el("table"), thead = el("thead"), tr = el("tr");
+    var cols = ["시기", "고객사", "제형", "수지", "결과", "에탄올", "향료", "계면", "경로", "일수", "근거"];
+    if (withDelete) cols.push("");
+    cols.forEach(function (c) { tr.appendChild(el("th", null, c)); });
+    thead.appendChild(tr); t.appendChild(thead);
+    var tb = el("tbody");
+    list.slice().reverse().forEach(function (r) {
+      var x = el("tr");
+      x.appendChild(el("td", "mono", r.date || "—"));
+      x.appendChild(el("td", null, r.customer || "—"));
+      x.appendChild(el("td", null, r.product || "—"));
+      x.appendChild(el("td", null, r.resin || "—"));
+      var td = el("td");
+      td.appendChild(el("span", "pill " + (isFail(r) ? "bad" : "ok"), r.outcome || "—"));
+      x.appendChild(td);
+      x.appendChild(el("td", null, r.ethanol || "—"));
+      x.appendChild(el("td", null, r.fragrance || "—"));
+      x.appendChild(el("td", null, r.surfactant || "—"));
+      x.appendChild(el("td", null, r.route || "—"));
+      x.appendChild(el("td", "mono", r.days || "—"));
+      var ts = el("td"); ts.appendChild(el("span", "pill src", r.source || "—")); x.appendChild(ts);
+      if (withDelete) {
+        var dtd = el("td");
+        var b = el("button", "del", "삭제");
+        b.type = "button";
+        b.setAttribute("aria-label", "이 이력 삭제");
+        b.addEventListener("click", function () {
+          rows = rows.filter(function (z) { return z.id !== r.id; });
+          save(); activeCell = null; render();
+        });
+        dtd.appendChild(b); x.appendChild(dtd);
+      }
+      tb.appendChild(x);
+    });
+    t.appendChild(tb);
+    return t;
+  }
+
+  function renderList() {
+    var q = ($("#filter").value || "").toLowerCase();
+    var list = !q ? rows : rows.filter(function (r) {
+      return FIELDS.some(function (f) { return (r[f] || "").toLowerCase().indexOf(q) > -1; });
+    });
+    var w = $("#list-wrap"); w.textContent = "";
+    $("#list-count").textContent = list.length + " / " + rows.length + "건";
+    if (!list.length) { w.appendChild(el("div", "empty", rows.length ? "검색 결과가 없습니다." : "아직 입력된 이력이 없습니다.")); return; }
+    w.appendChild(buildTable(list, true));
+  }
+  $("#filter").addEventListener("input", renderList);
+
+  /* ---------- csv ---------- */
+  function esc(v) { v = (v == null ? "" : String(v)); return /[",\n]/.test(v) ? '"' + v.replace(/"/g, '""') + '"' : v; }
+  $("#export").addEventListener("click", function () {
+    if (!rows.length) { alert("내보낼 이력이 없습니다."); return; }
+    var lines = [FIELDS.join(",")];
+    rows.forEach(function (r) { lines.push(FIELDS.map(function (f) { return esc(r[f]); }).join(",")); });
+    var blob = new Blob(["﻿" + lines.join("\n")], { type: "text/csv;charset=utf-8" });
+    var a = document.createElement("a");
+    a.href = URL.createObjectURL(blob);
+    a.download = "nuri-compat-" + new Date().toISOString().slice(0, 10) + ".csv";
+    a.click(); URL.revokeObjectURL(a.href);
+  });
+  $("#import-btn").addEventListener("click", function () { $("#import").click(); });
+  $("#import").addEventListener("change", function (e) {
+    var file = e.target.files && e.target.files[0]; if (!file) return;
+    var fr = new FileReader();
+    fr.onload = function () {
+      try {
+        var text = String(fr.result).replace(/^﻿/, "");
+        var lines = text.split(/\r?\n/).filter(function (l) { return l.trim(); });
+        var head = parseLine(lines.shift());
+        var added = 0;
+        lines.forEach(function (l) {
+          var cells = parseLine(l), rec = { id: Date.now() + "" + Math.floor(Math.random() * 100000) };
+          head.forEach(function (h, i) { if (FIELDS.indexOf(h) > -1) rec[h] = cells[i] || ""; });
+          if (rec.resin && rec.product) { rows.push(rec); added++; }
+        });
+        save(); activeCell = null; render();
+        alert(added + "건을 불러왔습니다.");
+      } catch (err) { alert("CSV를 읽지 못했습니다. 내보내기로 만든 파일인지 확인하십시오."); }
+      e.target.value = "";
+    };
+    fr.readAsText(file);
+  });
+  function parseLine(line) {
+    var out = [], cur = "", q = false;
+    for (var i = 0; i < line.length; i++) {
+      var ch = line[i];
+      if (q) {
+        if (ch === '"') { if (line[i + 1] === '"') { cur += '"'; i++; } else q = false; }
+        else cur += ch;
+      } else {
+        if (ch === '"') q = true;
+        else if (ch === ",") { out.push(cur); cur = ""; }
+        else cur += ch;
+      }
+    }
+    out.push(cur); return out;
+  }
+
+  /* ---------- demo / clear ---------- */
+  $("#clear").addEventListener("click", function () {
+    if (!rows.length) return;
+    if (confirm("이력 " + rows.length + "건을 모두 삭제합니다. 되돌릴 수 없습니다. 계속할까요?")) {
+      rows = []; save(); activeCell = null; render();
+    }
+  });
+  $("#demo").addEventListener("click", function () {
+    if (!confirm("예시 데이터 40건은 실제 근거가 아닌 가상의 값입니다. 구조 확인용으로만 넣고, 실제 입력 전에 전체 삭제하십시오. 계속할까요?")) return;
+    var seed = [
+      ["PET","토너·미스트","30%+","없음","크랙"],["PET","토너·미스트","30%+","없음","크랙"],["PET","토너·미스트","30%+","시트러스·리모넨","크랙"],
+      ["PET","토너·미스트","10~30%","없음","정상"],["PET","토너·미스트","~10%","없음","정상"],["PET","토너·미스트","없음","없음","정상"],
+      ["PET","에센스·세럼","없음","플로럴","정상"],["PET","에센스·세럼","~10%","없음","정상"],["PET","에센스·세럼","없음","없음","정상"],
+      ["PP","토너·미스트","30%+","없음","정상"],["PP","토너·미스트","10~30%","없음","정상"],["PP","토너·미스트","없음","없음","정상"],
+      ["PP","크림","없음","시트러스·리모넨","크랙"],["PP","크림","없음","시트러스·리모넨","누액"],["PP","크림","없음","시트러스·리모넨","크랙"],
+      ["PP","크림","없음","플로럴","정상"],["PP","크림","없음","없음","정상"],["PP","크림","없음","없음","정상"],["PP","크림","없음","우디·허브","정상"],
+      ["PP","에센스·세럼","없음","없음","정상"],["PP","에센스·세럼","~10%","플로럴","정상"],
+      ["HDPE","클렌저·폼","없음","없음","누액"],["HDPE","클렌저·폼","없음","없음","크랙"],["HDPE","클렌저·폼","없음","플로럴","누액"],
+      ["HDPE","클렌저·폼","없음","없음","정상"],["HDPE","클렌저·폼","없음","없음","정상"],
+      ["HDPE","헤어·바디","없음","플로럴","정상"],["HDPE","헤어·바디","없음","없음","정상"],["HDPE","헤어·바디","없음","없음","정상"],
+      ["AS·SAN","크림","없음","시트러스·리모넨","백화"],["AS·SAN","크림","없음","없음","정상"],["AS·SAN","크림","~10%","없음","백화"],
+      ["PETG","에센스·세럼","없음","없음","정상"],["PETG","에센스·세럼","없음","시트러스·리모넨","변형"],["PETG","에센스·세럼","없음","없음","정상"],
+      ["PCR-PP","크림","없음","없음","정상"],["PCR-PP","크림","없음","시트러스·리모넨","크랙"],["PCR-PP","크림","없음","없음","크랙"],
+      ["PCR-PP","로션·에멀전","없음","없음","정상"],["PCR-PP","로션·에멀전","없음","없음","정상"]
+    ];
+    seed.forEach(function (s, i) {
+      rows.push({
+        id: "demo" + Date.now() + i, date: "2025-" + String((i % 12) + 1).padStart(2, "0"),
+        customer: "예시 " + String.fromCharCode(65 + (i % 8)), source: i % 3 === 0 ? "기록" : "기억",
+        product: s[1], resin: s[0], outcome: s[4], ethanol: s[2], fragrance: s[3],
+        surfactant: s[1] === "클렌저·폼" ? "고농도" : "없음", ph: "불명",
+        molding: s[0] === "HDPE" ? "블로우" : "사출", supplier: "", capping: i % 2 ? "자동" : "수동",
+        route: i % 5 === 0 ? "수출·해상" : "내수", days: s[4] === "정상" ? "" : String(20 + (i * 7) % 120),
+        note: "예시 데이터 — 실제 근거 아님"
+      });
+    });
+    save(); activeCell = null; render();
+  });
+
+  /* ---------- render ---------- */
+  function render() { renderStats(); renderMatrix(); fillQ(); renderQuery(); renderList(); }
+  render();
+})();
+</script>

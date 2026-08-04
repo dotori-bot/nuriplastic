@@ -1,0 +1,1253 @@
+<title>누리플라스틱 사업 전략 종합 보고서</title>
+<style>
+  :root {
+    --bg:#F4F6F5; --surface:#FFFFFF; --surface-2:#EAEEEC;
+    --ink:#171C1E; --ink-2:#454F51; --ink-3:#6B7679;
+    --rule:#D3DAD8; --rule-soft:#E3E8E6;
+    --accent:#0E6A64; --accent-2:#0A4F4A; --accent-wash:#DDECEA;
+    --field:#8A5A12; --field-wash:#F7EEDD; --field-rule:#DFC38A;
+    --fail:#A6301C; --fail-wash:#F6E1DC;
+    --warn:#96650F; --warn-wash:#F6EBD6;
+    --pass:#2F6A38; --pass-wash:#DFEDE0;
+    --font-sans:"Pretendard Variable",Pretendard,-apple-system,BlinkMacSystemFont,"Apple SD Gothic Neo","Malgun Gothic","Noto Sans KR",system-ui,sans-serif;
+    --font-mono:ui-monospace,SFMono-Regular,"SF Mono",Menlo,Consolas,"Liberation Mono",monospace;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg:#101413; --surface:#171C1B; --surface-2:#1E2523;
+      --ink:#E8EDEB; --ink-2:#B3BDBA; --ink-3:#8A9694;
+      --rule:#2C3634; --rule-soft:#232B2A;
+      --accent:#4FB5AC; --accent-2:#7FD0C8; --accent-wash:#12302E;
+      --field:#D8AB5C; --field-wash:#2B2113; --field-rule:#5A4520;
+      --fail:#E0785F; --fail-wash:#331B15;
+      --warn:#D6A344; --warn-wash:#2F2513;
+      --pass:#6FB077; --pass-wash:#172A19;
+    }
+  }
+  :root[data-theme="dark"] {
+    --bg:#101413; --surface:#171C1B; --surface-2:#1E2523;
+    --ink:#E8EDEB; --ink-2:#B3BDBA; --ink-3:#8A9694;
+    --rule:#2C3634; --rule-soft:#232B2A;
+    --accent:#4FB5AC; --accent-2:#7FD0C8; --accent-wash:#12302E;
+    --field:#D8AB5C; --field-wash:#2B2113; --field-rule:#5A4520;
+    --fail:#E0785F; --fail-wash:#331B15;
+    --warn:#D6A344; --warn-wash:#2F2513;
+    --pass:#6FB077; --pass-wash:#172A19;
+  }
+  :root[data-theme="light"] {
+    --bg:#F4F6F5; --surface:#FFFFFF; --surface-2:#EAEEEC;
+    --ink:#171C1E; --ink-2:#454F51; --ink-3:#6B7679;
+    --rule:#D3DAD8; --rule-soft:#E3E8E6;
+    --accent:#0E6A64; --accent-2:#0A4F4A; --accent-wash:#DDECEA;
+    --field:#8A5A12; --field-wash:#F7EEDD; --field-rule:#DFC38A;
+    --fail:#A6301C; --fail-wash:#F6E1DC;
+    --warn:#96650F; --warn-wash:#F6EBD6;
+    --pass:#2F6A38; --pass-wash:#DFEDE0;
+  }
+
+  body { background:var(--bg); color:var(--ink); font-family:var(--font-sans); font-size:16.5px; line-height:1.75; -webkit-font-smoothing:antialiased; word-break:keep-all; }
+  .wrap { max-width:48rem; margin:0 auto; padding:3.5rem 1.5rem 6rem; display:flex; flex-direction:column; gap:3rem; }
+
+  .masthead { display:flex; flex-direction:column; gap:1rem; }
+  .kicker { font-family:var(--font-mono); font-size:.72rem; letter-spacing:.16em; text-transform:uppercase; color:var(--accent); }
+  h1 { font-size:clamp(1.9rem,5.5vw,2.7rem); line-height:1.2; font-weight:700; letter-spacing:-.02em; text-wrap:balance; margin:0; }
+  .standfirst { font-size:1.05rem; color:var(--ink-2); max-width:38rem; }
+  .meta { display:flex; flex-wrap:wrap; gap:.5rem 1.5rem; font-family:var(--font-mono); font-size:.75rem; color:var(--ink-3); border-top:1px solid var(--rule); padding-top:1rem; }
+
+  /* TOC */
+  .toc { background:var(--surface); border:1px solid var(--rule); border-radius:3px; padding:1.4rem 1.6rem; display:flex; flex-direction:column; gap:.8rem; }
+  .toc h2 { margin:0; font-family:var(--font-mono); font-size:.72rem; letter-spacing:.14em; text-transform:uppercase; color:var(--ink-3); font-weight:500; }
+  .toc ol { margin:0; padding:0; list-style:none; display:flex; flex-direction:column; gap:.4rem; counter-reset:toc; }
+  .toc li { display:grid; grid-template-columns:2rem 1fr; gap:.6rem; font-size:.92rem; }
+  .toc .tn { font-family:var(--font-mono); font-size:.75rem; color:var(--accent); padding-top:.2rem; }
+  .toc a { color:var(--ink); text-decoration:none; border-bottom:1px solid transparent; }
+  .toc a:hover, .toc a:focus-visible { border-bottom-color:var(--accent); color:var(--accent); }
+
+  section { display:flex; flex-direction:column; gap:1.3rem; scroll-margin-top:1rem; }
+  .sec-head { display:flex; flex-direction:column; gap:.4rem; border-top:2px solid var(--ink); padding-top:.85rem; }
+  .sec-num { font-family:var(--font-mono); font-size:.72rem; letter-spacing:.14em; color:var(--accent); }
+  h2.sec-title { font-size:clamp(1.35rem,3.6vw,1.7rem); line-height:1.3; font-weight:680; letter-spacing:-.015em; margin:0; text-wrap:balance; }
+  h3 { font-size:1.05rem; font-weight:650; margin:.8rem 0 0; letter-spacing:-.005em; }
+  h4 { font-size:.78rem; font-family:var(--font-mono); font-weight:500; letter-spacing:.1em; text-transform:uppercase; color:var(--ink-3); margin:.4rem 0 0; }
+  p { margin:0; max-width:40rem; }
+  section > p, section > ul, section > ol { max-width:40rem; }
+  ul, ol { margin:0; padding-left:1.15rem; display:flex; flex-direction:column; gap:.45rem; }
+  li::marker { color:var(--ink-3); }
+  strong { font-weight:650; }
+  em { font-style:normal; background:var(--accent-wash); padding:.05em .3em; border-radius:2px; }
+
+  /* 현장 정보 — 사용자 제공 */
+  .field-block {
+    background:var(--field-wash); border:1px solid var(--field-rule); border-left:3px solid var(--field);
+    border-radius:2px; padding:1.05rem 1.25rem; display:flex; flex-direction:column; gap:.55rem;
+  }
+  .field-block .tag { font-family:var(--font-mono); font-size:.68rem; letter-spacing:.12em; text-transform:uppercase; color:var(--field); }
+  .field-block p, .field-block ul { max-width:none; }
+
+  .callout { background:var(--surface); border:1px solid var(--rule); border-left:3px solid var(--accent); border-radius:2px; padding:1.05rem 1.25rem; display:flex; flex-direction:column; gap:.55rem; }
+  .callout.alarm { border-left-color:var(--fail); }
+  .callout .label { font-family:var(--font-mono); font-size:.68rem; letter-spacing:.12em; text-transform:uppercase; color:var(--accent); }
+  .callout.alarm .label { color:var(--fail); }
+  .callout p { max-width:none; }
+
+  .formula { background:var(--surface-2); border:1px solid var(--rule-soft); border-radius:3px; padding:1.3rem 1.1rem;
+             display:flex; flex-wrap:wrap; align-items:center; justify-content:center; gap:.5rem .85rem; font-family:var(--font-mono); font-size:.85rem; }
+  .term { background:var(--surface); border:1px solid var(--rule); border-radius:2px; padding:.4rem .75rem; }
+  .term.miss { border-color:var(--fail); color:var(--fail); background:var(--fail-wash); }
+  .op { color:var(--ink-3); }
+
+  .scroller { overflow-x:auto; border:1px solid var(--rule); border-radius:3px; background:var(--surface); }
+  table { border-collapse:collapse; width:100%; font-size:.85rem; min-width:32rem; }
+  th,td { padding:.6rem .8rem; text-align:left; border-bottom:1px solid var(--rule-soft); vertical-align:top; }
+  thead th { font-family:var(--font-mono); font-size:.66rem; letter-spacing:.09em; text-transform:uppercase; color:var(--ink-3); font-weight:500; background:var(--surface-2); border-bottom:1px solid var(--rule); white-space:nowrap; }
+  tbody tr:last-child td { border-bottom:none; }
+  td.num, th.num { font-family:var(--font-mono); font-variant-numeric:tabular-nums; white-space:nowrap; }
+  .yes { color:var(--pass); font-weight:600; }
+  .no { color:var(--fail); font-weight:600; }
+
+  .roadmap { display:flex; flex-direction:column; border:1px solid var(--rule); border-radius:3px; overflow:hidden; }
+  .phase { display:grid; grid-template-columns:5rem 1fr; gap:1rem; padding:.95rem 1.15rem; background:var(--surface); border-bottom:1px solid var(--rule-soft); }
+  .phase:last-child { border-bottom:none; }
+  .phase .when { font-family:var(--font-mono); font-size:.71rem; color:var(--accent); padding-top:.15rem; }
+  .phase .what { display:flex; flex-direction:column; gap:.25rem; }
+  .phase .what b { font-weight:650; font-size:.94rem; }
+  .phase .what span { font-size:.85rem; color:var(--ink-2); }
+  .cost { font-family:var(--font-mono); font-size:.69rem; color:var(--ink-3); }
+
+  /* references */
+  .refs { display:flex; flex-direction:column; gap:1.3rem; }
+  .refgroup { display:flex; flex-direction:column; gap:.5rem; }
+  .refgroup h4 { margin:0; }
+  .refgroup ol { padding-left:1.6rem; gap:.4rem; font-size:.85rem; color:var(--ink-2); }
+  .refgroup li::marker { font-family:var(--font-mono); font-size:.78rem; color:var(--ink-3); }
+  a { color:var(--accent); text-decoration:none; border-bottom:1px solid var(--rule); }
+  a:hover, a:focus-visible { border-bottom-color:var(--accent); }
+  a:focus-visible { outline:2px solid var(--accent); outline-offset:2px; }
+  footer { border-top:1px solid var(--rule); padding-top:1.4rem; font-size:.82rem; color:var(--ink-3); display:flex; flex-direction:column; gap:.5rem; }
+</style>
+
+<div class="wrap">
+
+<header class="masthead">
+  <div class="kicker">누리플라스틱 · 종합 보고서</div>
+  <h1>중간 유통업자에서 판단을 파는 회사로</h1>
+  <p class="standfirst">
+    시장 진단부터 산업 구조, 핵심 페인포인트 분석, 데이터 구축 전략, 비대면 사업 모델,
+    그리고 2인 팀 기준 실행 로드맵까지 — 지금까지의 검토 전체를 하나로 정리한 문서입니다.
+  </p>
+  <div class="meta">
+    <span>2026-08-04</span>
+    <span>대상: 화장품 부자재 유통</span>
+    <span>추진 인력: 2인 (기획·디자인 / AI)</span>
+    <span>참고문헌 51건</span>
+  </div>
+</header>
+
+<nav class="toc">
+  <h2>목차</h2>
+  <ol>
+    <li><span class="tn">01</span><a href="#s1">전제 — 무엇을 알고 시작하는가</a></li>
+    <li><span class="tn">02</span><a href="#s2">시장 진단 — 규제와 수출</a></li>
+    <li><span class="tn">03</span><a href="#s3">산업 구조 — ODM · QDM · 부자재 유통</a></li>
+    <li><span class="tn">04</span><a href="#s4">포지션 진단 — 5배 격차의 정체</a></li>
+    <li><span class="tn">05</span><a href="#s5">핵심 페인포인트 — 화학적 상용성</a></li>
+    <li><span class="tn">06</span><a href="#s6">데이터 구축 전략 — 3층 구조</a></li>
+    <li><span class="tn">07</span><a href="#s7">사업 모델 — 비대면 자동화</a></li>
+    <li><span class="tn">08</span><a href="#s8">2인 팀 실행 방향</a></li>
+    <li><span class="tn">09</span><a href="#s9">통합 로드맵</a></li>
+    <li><span class="tn">10</span><a href="#s10">리스크와 미확인 사항</a></li>
+    <li><span class="tn">11</span><a href="#s11">참고문헌</a></li>
+  </ol>
+</nav>
+
+<!-- 01 -->
+<section id="s1">
+  <div class="sec-head"><div class="sec-num">01</div><h2 class="sec-title">전제 — 무엇을 알고 시작하는가</h2></div>
+
+  <div class="field-block">
+    <div class="tag">현장 정보 · 사장님 제공</div>
+    <ul>
+      <li>누리플라스틱은 <strong>용기 제조업체로부터 주문해 유통하는 중간 유통업자</strong>에 가깝다. 자체 제조 설비가 없다.</li>
+      <li>경쟁사 중 하나는 <strong>영동프라텍</strong>이다.</li>
+      <li>경쟁사들은 아모레퍼시픽·로레알 등 대기업에 직접 영업해 대량 판매하며, <strong>매출이 누리 대비 최대 5배</strong>까지 난다.</li>
+      <li>거래 성격이 소량·다건이라 <strong>실질적으로 B2C에 가깝다.</strong></li>
+      <li><strong>가장 큰 페인포인트는 화학적 반응을 예측할 수 없어 발생하는 클레임</strong>이다. 사전에 샘플을 제공해 고객이 테스트하도록 권장하지만, 실제로는 샘플과 달리 누수나 화학 반응으로 사용 불가가 되는 경우가 많다.</li>
+      <li>정리된 데이터 자료는 없으나 <strong>경험적 데이터는 있다.</strong></li>
+      <li>사업 추진 인력은 <strong>2명</strong> — 한 명은 디자인 전공 기획자, 한 명은 AI 전문가.</li>
+      <li>후가공까지는 이미 연결되어 있다.</li>
+    </ul>
+  </div>
+
+  <p>
+    이 여덟 가지가 이후 모든 판단의 전제입니다. 특히 마지막 두 항목 — <strong>2인 팀이고 제조 자산이 없다</strong> —
+    가 결론을 크게 바꿉니다. 같은 시장에서도 제조업 경로와 데이터·서비스 경로는 정반대의 선택을 요구하기 때문입니다.
+  </p>
+
+  <h3>이 문서가 답하는 질문</h3>
+  <ol>
+    <li>지금 화장품 용기 시장에서 무슨 일이 일어나고 있는가</li>
+    <li>인디브랜드는 누구를 통해 용기를 사는가, 유럽 수요는 실재하는가</li>
+    <li>누리의 5배 매출 격차는 좁힐 수 있는가</li>
+    <li>클레임을 예측 가능하게 만들 수 있는가</li>
+    <li>정리된 데이터가 없는 상태에서 무엇부터 하는가</li>
+    <li>2인으로 영업 없이 사업을 돌릴 수 있는가</li>
+  </ol>
+</section>
+
+<!-- 02 -->
+<section id="s2">
+  <div class="sec-head"><div class="sec-num">02</div><h2 class="sec-title">시장 진단 — 규제와 수출</h2></div>
+
+  <h3>국내 규제는 이미 조여졌습니다</h3>
+  <ul>
+    <li><strong>포장재 재활용 용이성 등급평가 기준</strong>이 2025년 1월 7일부터 시행 중이며, 평가축이 재질·구조에서 <strong>재질·색상·무게</strong>로 바뀌었습니다. 색상과 무게가 새로 들어온 것이 실무적 변화입니다.<sup>[2]</sup></li>
+    <li><strong>국내 화장품 용기의 62.6%가 "재활용 어려움" 등급</strong>입니다. 복합재질이거나 크기가 작아 선별장에서 그대로 버려집니다.<sup>[1]</sup></li>
+    <li>한국 1인당 플라스틱 폐기물은 103.9kg으로 OECD 2위, 연간 소비량 116kg으로 OECD 평균의 약 2배입니다.<sup>[1]</sup></li>
+  </ul>
+
+  <h3>EU PPWR — 정확한 사실관계</h3>
+  <p>
+    EU 포장 및 포장폐기물 규정(PPWR, EU 2025/40)은 2025년 2월 12일 발효되어
+    <strong>2026년 8월 12일부터 적용</strong>됩니다. 지침에서 규정으로 바뀌어 회원국 입법 없이 직접 적용되고,
+    수입 포장재·수입제품 포장에도 동일하게 적용됩니다.<sup>[4][5][18]</sup>
+  </p>
+  <p>
+    화장품이 <strong>최대 리스크 업종</strong>으로 꼽힙니다. 용기 본체뿐 아니라
+    <strong>캡, 스포이드, 펌프, 완충재, 외박스까지 부품마다 개별로 적합성을 입증</strong>해야 하고 PFAS 시험도 별도입니다.<sup>[3]</sup>
+    PCR 의무는 2030년 기준 기타 플라스틱 35%, PET 음료병 30%, 비PET 식품접촉 10%이며 2040년 25~65%로 올라갑니다.<sup>[4]</sup>
+  </p>
+
+  <div class="callout alarm">
+    <div class="label">초기 판단의 정정</div>
+    <p>
+      검토 초기에 PPWR을 최우선 사업 기회로 제시했으나, 두 가지가 부정확했습니다.
+    </p>
+    <p>
+      <strong>첫째, 누리는 PPWR 의무주체가 아닙니다.</strong> 의무는 EU 시장에 제품을 내놓는 주체
+      — EU 역내 제조업체·수입자·유통업체 — 에 부과됩니다. 한국 기업이 EU에 지점(Branch)만 두면
+      법적 인격이 없어 수입자로 인정조차 되지 않아 자회사 설립이나 공인대리인 지정이 필요합니다.<sup>[18]</sup>
+      한국 부자재 공급사는 공급망 상류라 규제 의무자가 아닙니다. <strong>"인증을 파는" 사업은 성립하지 않습니다.</strong>
+    </p>
+    <p>
+      <strong>둘째, 시급성이 과장되었습니다.</strong> 8월 12일은 적용 개시일이고 PCR 함량 의무는 2030년입니다.
+      PCR 때문에 당장 용기를 바꿔야 하는 브랜드는 없습니다. <strong>규제를 근거로 대규모 설비투자를 잡으면 안 됩니다.</strong>
+    </p>
+  </div>
+
+  <h3>유럽 수요는 실재하고, 예상보다 강합니다</h3>
+  <div class="scroller">
+    <table>
+      <thead><tr><th>지표</th><th class="num">수치</th><th>출처</th></tr></thead>
+      <tbody>
+        <tr><td>對EU 수출 (2022 → 2025)</td><td class="num">2.8억 → 11.3억 달러 (4배+)</td><td>[15]</td></tr>
+        <tr><td>유럽 5개국 (독·영·불·이·스), 3년</td><td class="num">1.61억 → 4.47억 달러 (+178%)</td><td>[15]</td></tr>
+        <tr><td>26년 상반기 화장품 수출 총액</td><td class="num">70억 달러 (+27.3%), 역대 최대</td><td>[17]</td></tr>
+        <tr><td>26년 상반기 중소기업 화장품</td><td class="num">50.7억 달러 (+30.7%)</td><td>[6]</td></tr>
+        <tr><td>유럽 기초화장품 (26년 상반기)</td><td class="num">7.34억 달러 = 유럽 전체의 48.1%</td><td>[15]</td></tr>
+        <tr><td>미국 / 중국 / 일본 (26년 상반기)</td><td class="num">14.5억(20.7%) / 10.1억 / 5.8억</td><td>[17]</td></tr>
+        <tr><td><strong>유럽 수출액, 미국 첫 추월</strong></td><td class="num">2026년 7월</td><td>[14]</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p>
+    주역은 대기업이 아니라 <strong>아누아·스킨1004·믹순·티르티르 같은 인디브랜드</strong>입니다.
+    유럽 유통 체인 Douglas 온라인몰의 K뷰티 상품은 4년 전 22개에서 650여 개가 되었고,
+    제품군도 마스크팩·색조에서 세럼·앰플·크림 같은 고단가로 올라섰습니다.<sup>[15][16]</sup>
+  </p>
+
+  <h3>소재 판도</h3>
+  <ul>
+    <li><strong>모노소재가 2026년 기준점</strong>입니다. 병·캡·펌프·라벨을 전부 같은 수지로 가는 all-PE 또는 all-PP 구성입니다. 국내 화장품 용기의 60%가 플라스틱이고 그중 30%가 PP라 PP 기반에 유리한 판입니다.<sup>[9][8]</sup></li>
+    <li><strong>PCR은 이미 화장품급 순도</strong>에 도달했습니다. 롯데케미칼 PCR-PP는 2020년 대비 2022년 상반기 약 40배 판매 성장을 기록했습니다.<sup>[7]</sup> rPET·모노소재를 쓰는 브랜드는 재구매율이 15~25% 높다는 보고도 있습니다.<sup>[9]</sup></li>
+    <li><strong>매장 리필은 아직 이릅니다.</strong> 미국 소비자의 약 70%가 매장 리필이 불편하다고 답했습니다. 반면 홈 리필형은 실적이 나옵니다 — Aveda가 2026년 2월 AeroFlexx와 내놓은 경량 리필은 기존 플라스틱 대비 70% 절감입니다.<sup>[9][10][8]</sup></li>
+  </ul>
+
+  <h3>유럽 진입장벽은 PPWR이 아니라 CPNP입니다</h3>
+  <p>
+    역외기업은 CPNP에 직접 등록할 수 없고 반드시 RP(규제준수책임자)를 통해야 합니다.
+    금지·제한 성분이 1,300개 이상이고, RP가 바뀌면 같은 제품도 재등록해야 합니다.<sup>[19]</sup>
+    다만 <strong>이건 내용물 규제지 용기 규제가 아니어서 누리가 팔 수 있는 지점은 아닙니다.</strong>
+  </p>
+</section>
+
+<!-- 03 -->
+<section id="s3">
+  <div class="sec-head"><div class="sec-num">03</div><h2 class="sec-title">산업 구조 — ODM · QDM · 부자재 유통</h2></div>
+
+  <h3>OEM과 ODM — 누가 설계를 소유하는가</h3>
+  <div class="scroller">
+    <table>
+      <thead><tr><th>구분</th><th>설계 주체</th><th>내용</th></tr></thead>
+      <tbody>
+        <tr><td><strong>OEM</strong></td><td>브랜드사</td><td>브랜드가 원료·포뮬러·패키징을 직접 결정하고 제조사에 맡겨 생산</td></tr>
+        <tr><td><strong>ODM</strong></td><td>제조사</td><td>제조사가 기획·처방·개발까지 하고 브랜드는 완성품을 일괄 구매해 상표 부착</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p>
+    ODM이 있어서 <strong>공장도 연구소도 없는 사람이 화장품 브랜드를 만들 수 있게 됐습니다.</strong>
+    이것이 인디브랜드 폭증의 원인이고, 인디브랜드 폭증이 곧 용기 수요 구조의 변화입니다.
+    코스맥스는 약 600개 브랜드, 한국콜마는 3,776개 브랜드의 제품을 만듭니다.<sup>[37][32][22]</sup>
+  </p>
+
+  <h3>QDM — 시사출 금형</h3>
+  <p>
+    전용 금형은 통째로 새로 깎지만 QDM은 <strong>기존 몰드 베이스를 재활용하고 코어·캐비티만 새로 가공</strong>해
+    금형비와 기간을 대폭 줄입니다.<sup>[11]</sup> 기성용기와 전용 금형 사이의 중간 지대입니다.
+  </p>
+  <div class="scroller">
+    <table>
+      <thead><tr><th></th><th>기성용기</th><th>QDM</th><th>전용 금형</th></tr></thead>
+      <tbody>
+        <tr><td>금형비</td><td>없음</td><td>중간</td><td>높음</td></tr>
+        <tr><td>MOQ</td><td>낮거나 없음</td><td>중간</td><td>용기 2,000~3,000개+, ODM 10,000개+</td></tr>
+        <tr><td>납기</td><td>1~2주</td><td>중간</td><td>김</td></tr>
+        <tr><td>차별화</td><td>불가</td><td>부분 가능</td><td>완전</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p>
+    인디브랜드가 자체 금형으로 가지 않는 이유는 규제가 아니라 <strong>금형 경제학</strong>입니다.<sup>[11][20]</sup>
+    실제 구도는 <em>기성용기로 시작 → 히트하면 전용 금형</em>이고, QDM이 그 사이를 메웁니다.
+  </p>
+
+  <h3>부자재 유통이란 무엇인가</h3>
+  <p>
+    부자재는 벌크(내용물)를 제외한 전부입니다 — 병·자·튜브, 캡, 펌프·디스펜서·스포이드, 이너캡, 라벨, 단상자, 완충재.
+    제품 하나를 만들려면 브랜드는 병은 A사, 펌프는 B사, 캡은 C사에서 사야 하는데,
+    제조사는 각자 한 카테고리만 잘 만듭니다. <strong>각각의 MOQ를 다 맞추는 건 불가능합니다.</strong>
+  </p>
+  <div class="scroller">
+    <table>
+      <thead><tr><th>유통업자가 파는 기능</th><th>내용</th><th>제조사가 못 하는 이유</th></tr></thead>
+      <tbody>
+        <tr><td><strong>구색</strong></td><td>여러 제조사 카탈로그를 한 곳에</td><td>자기 제품만 팜</td></tr>
+        <tr><td><strong>재고</strong></td><td>즉시 출고</td><td>주문 받고 생산 (리드타임)</td></tr>
+        <tr><td><strong>분할</strong></td><td>MOQ 10,000개를 500개 단위로 쪼갬</td><td>라인 세우고 소량 못 돌림</td></tr>
+        <tr><td><strong>지식</strong></td><td>이 펌프가 저 병에 맞는가, 이 내용물에 이 재질이 견디는가</td><td>자기 부품 밖은 모름</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p>
+    <strong>"중간 유통업자"라는 것은 약점 서술이 아니라 이 네 기능을 파는 회사라는 뜻입니다.</strong>
+    그중 네 번째 "지식"이 이 문서 전체의 결론으로 이어집니다.
+  </p>
+
+  <h3>부자재는 누가 발주하는가</h3>
+  <div class="scroller">
+    <table>
+      <thead><tr><th>방식</th><th>부자재 결정·발주</th><th>누리의 고객</th></tr></thead>
+      <tbody>
+        <tr><td><strong>OEM</strong></td><td>브랜드사가 패키징을 직접 결정</td><td><strong>브랜드사</strong> (직접 영업)</td></tr>
+        <tr><td><strong>ODM</strong></td><td>제조사가 설계부터 생산까지 주도</td><td><strong>ODM</strong> (벤더 등록 필요)</td></tr>
+        <tr><td><strong>ODM 원스톱</strong></td><td>생산계획에 따라 원·부자재 소요량 산출·발주, 입고 시 품질검사</td><td><strong>ODM 구매부서</strong></td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p>
+    <strong>양쪽 다 존재하며 영업은 이중 트랙이 불가피합니다.</strong><sup>[32][33][31]</sup>
+    다만 <strong>상용성 데이터는 ODM 쪽에서 더 강하게 먹힙니다</strong> —
+    ODM은 입고 부자재에 품질검사를 수행하는 주체이므로, 검증 데이터를 함께 주는 공급사를 구조적으로 선호합니다.
+  </p>
+
+  <h3>원가 구조 — 냉정하게 읽어야 할 숫자</h3>
+  <div class="scroller">
+    <table>
+      <thead><tr><th>항목</th><th class="num">수치</th><th>해석</th></tr></thead>
+      <tbody>
+        <tr><td>부자재 원가 비중</td><td class="num">약 10%</td><td><strong>원료(5%)의 2배</strong>. 제조원가 25% 중 최대 항목</td></tr>
+        <tr><td>원료 원가 비중</td><td class="num">약 5%</td><td>—</td></tr>
+        <tr><td>ODM/OEM 성장률 (15~23)</td><td class="num">10.2%</td><td>밸류체인 내 최고</td></tr>
+        <tr><td>원료 성장률</td><td class="num">6.6%</td><td>—</td></tr>
+        <tr><td><strong>부자재 성장률</strong></td><td class="num">5.7%</td><td><strong>ODM의 절반 수준</strong></td></tr>
+        <tr><td>대형 브랜드 성장률</td><td class="num">2.6%</td><td>—</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p>
+    부자재는 원가에서 가장 큰 항목이면서 성장률은 하위권입니다.<sup>[31]</sup>
+    원가 비중이 크다는 건 곧 <strong>고객이 가장 먼저 깎으려 드는 항목</strong>이라는 뜻이고,
+    낮은 성장률은 그 압박이 실제로 작동해 왔다는 증거입니다.
+    <strong>물량으로 경쟁하면 이 압박을 정면으로 맞습니다.</strong>
+  </p>
+</section>
+
+<!-- 04 -->
+<section id="s4">
+  <div class="sec-head"><div class="sec-num">04</div><h2 class="sec-title">포지션 진단 — 5배 격차의 정체</h2></div>
+
+  <h3>격차는 노력 부족이 아니라 구조입니다</h3>
+  <p>
+    대기업 직납이 요구하는 건 셋입니다 — <strong>물량 담보 능력, 제조 자산 또는 독점 공급권, 수년치 벤더 등록 이력.</strong>
+    누리는 셋 다 없습니다. 영업을 더 해서 좁힐 수 있는 격차가 아닙니다.
+  </p>
+
+  <h3>그 게임을 따라가면 안 되는 이유 — 연우 사례</h3>
+  <p>
+    한국콜마가 2022년 약 2,864~2,900억에 인수한 용기 전문업체 <strong>연우</strong>는
+    2025년 매출 약 2,500억(-9%)에 <strong>가동률 50% 미만</strong>으로 무너졌습니다.
+    영업이익은 보도에 따라 3억(-77.8%) 또는 영업손실 32억 적자전환으로 엇갈립니다(연결/별도 차이로 보입니다).<sup>[12][13]</sup>
+  </p>
+  <p>원인이 정확히 이 논의의 핵심입니다.</p>
+  <ul>
+    <li>대형 고객사(아모레·LG생건) 편중, 그 고객들의 내수 부진</li>
+    <li>글로벌 인디브랜드 확보 실패</li>
+    <li><strong>인디브랜드가 요구하는 소량 다품종·빠른 개발·생산량 조절 유연성에 적응 실패</strong></li>
+  </ul>
+  <p>
+    반대로 <strong>펌텍코리아</strong>는 같은 시장에서 성장했습니다 —
+    고객사 내 인디브랜드 비중이 2025년 1분기 57%에서 2026년 1분기 <strong>64%</strong>로 올랐고,
+    펌프사업부 인디향 매출은 1,225억(23) → 1,461억(24) → 1,679억(25)으로 늘었습니다.<sup>[21]</sup>
+  </p>
+
+  <div class="callout alarm">
+    <div class="label">가장 중요한 시사점</div>
+    <p>
+      <strong>K뷰티 호황은 용기업체 모두를 띄우지 않았습니다. 인디 대응 유연성을 갖춘 곳만 띄웠습니다.</strong>
+      누리가 부러워하는 대기업 직납 포지션이, 지금 시장에서 실패하고 있는 포지션입니다.
+      그리고 가동률 50%면 어떤 시장 전망도 의미가 없습니다.
+    </p>
+  </div>
+
+  <h3>약점의 재해석</h3>
+  <div class="scroller">
+    <table>
+      <thead><tr><th>약점처럼 보이는 것</th><th>실제 의미</th></tr></thead>
+      <tbody>
+        <tr><td>공장이 없다</td><td><strong>가동률 리스크 0.</strong> 연우를 죽인 고정비가 없음</td></tr>
+        <tr><td>소량 주문 위주</td><td>성장 세그먼트(인디)와 정확히 일치</td></tr>
+        <tr><td>여러 제조사에서 사온다</td><td><strong>여러 제조사 부품을 섞을 수 있음</strong> — 제조사는 구조적으로 불가</td></tr>
+        <tr><td>B2C에 가깝다</td><td>정확히는 <strong>롱테일 B2B.</strong> 영업사원 직납보다 고객확보비용이 낮음</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h3>경쟁사 — 영동프라텍</h3>
+  <p>
+    경기 화성시 소재, <strong>화장품용기·스프레이·디스펜서 제조/유통</strong>이고
+    업계에 <strong>"화장품용기 전문 쇼핑몰, 다품종 소량"</strong>으로 소개되어 있습니다.<sup>[23][24]</sup>
+    매출 규모는 공개자료로 확인되지 않았습니다.
+  </p>
+  <p>
+    불편한 사실 둘. 첫째, <strong>영동프라텍은 제조도 합니다.</strong> 누리는 안 합니다.
+    둘째, <strong>"다품종 소량 온라인"은 이미 영동프라텍이 하고 있습니다.</strong>
+    프리몰드닷넷·코팩코리아·프리코스·허브스프레이도 같은 자리에 있습니다.
+    <strong>"우리도 소량 팝니다"는 차별화가 아닙니다.</strong> 그 길은 최저가 경쟁이고 제조 자산이 있는 쪽이 이깁니다.
+  </p>
+
+  <h3>ODM 벤더 등록 판단</h3>
+  <p>국내 대기업 협력사 신규 등록은 통상 이걸 요구합니다.<sup>[34][35][36]</sup></p>
+  <div class="scroller">
+    <table>
+      <thead><tr><th>요구 항목</th><th>누리의 상태</th></tr></thead>
+      <tbody>
+        <tr><td>거래업체실태조사서 — 조직도, <strong>생산품목·생산설비·계측기</strong></td><td class="no">제조 자산 없음</td></tr>
+        <tr><td>직전 사업연도 재무제표</td><td class="yes">가능</td></tr>
+        <tr><td>ISO 9001 등 인증서</td><td class="no">없음</td></tr>
+        <tr><td>화장품 ISO 22716 (EU harmonized standard, 17개 요구사항)</td><td class="no">없음</td></tr>
+        <tr><td>정기 품질감사 대응</td><td class="no">인력 없음</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="callout alarm">
+    <div class="label">권고</div>
+    <p>
+      <strong>ODM 벤더 등록은 지금 하지 마십시오.</strong> 실태조사서가 생산설비와 계측기를 묻습니다 —
+      애초에 제조사를 전제로 설계된 심사입니다. 인증 체계 구축은 문서화·내부심사·유지가 상시로 도는 일이라
+      2인이 부업으로 할 규모가 아닙니다. 통과해도 3,776개 브랜드를 상대하는 구매부서의 단가 압박 최전선입니다.
+      무엇보다 <strong>이 경로는 두 사람의 강점을 전혀 쓰지 않습니다.</strong>
+    </p>
+    <p>
+      <strong>ODM 벤더는 목표가 아니라 결과입니다.</strong> 상용성 데이터를 6개월 쌓은 뒤
+      품질검사 주체인 ODM에게 "우리 부자재는 검증 데이터가 붙습니다"로 접근하면,
+      생산설비가 없어도 협상할 근거가 생깁니다.
+    </p>
+  </div>
+</section>
+
+<!-- 05 -->
+<section id="s5">
+  <div class="sec-head"><div class="sec-num">05</div><h2 class="sec-title">핵심 페인포인트 — 화학적 상용성</h2></div>
+
+  <div class="field-block">
+    <div class="tag">현장 정보 · 사장님 제공</div>
+    <p>
+      가장 큰 페인포인트는 화학적 반응을 예측할 수 없어 클레임이 들어오는 것.
+      사전에 샘플로 고객사가 테스트하도록 권장하고 샘플을 제공·판매하지만,
+      <strong>실제로는 샘플과 달리 누수 또는 화학 반응으로 사용할 수 없게 되는 경우가 많다.</strong>
+      이것을 데이터로 예측하고 제시할 수 있으면 좋겠다.
+    </p>
+  </div>
+
+  <h3>이 현상에는 이름이 있습니다</h3>
+  <p>
+    <strong>환경응력균열(ESC, Environmental Stress Cracking)</strong>입니다.
+    표면활성물질이 응력을 받고 있는 폴리머에 침투·확산하면서 고분자 사슬의 이동을 윤활시켜 균열을 만듭니다.
+    학계 추정으로 <strong>서비스 중 플라스틱 부품 파손의 약 15~30%</strong>가 여기 해당합니다.<sup>[28][29]</sup>
+    <strong>누리의 품질 관리 실패가 아니라 플라스틱 산업 전체의 구조적 실패 유형입니다.</strong>
+  </p>
+
+  <h3>왜 샘플은 통과하고 양산은 터지는가</h3>
+  <p>ESC는 세 가지가 <em>동시에</em> 있어야 발생합니다.</p>
+  <div class="formula">
+    <span class="term">화학물질</span><span class="op">+</span>
+    <span class="term miss">응력</span><span class="op">+</span>
+    <span class="term miss">시간</span><span class="op">→</span>
+    <span class="term">균열 · 누액</span>
+  </div>
+  <div class="callout alarm">
+    <div class="label">샘플 테스트가 놓치는 것</div>
+    <p>
+      고객이 샘플로 시험할 때 재현되는 건 <strong>화학물질뿐</strong>입니다.
+      붉게 표시된 응력과 시간이 빠져 있습니다.
+      <strong>고객의 시험이 부실해서가 아니라, 시험 설계가 이 메커니즘을 반영하지 않아서입니다.</strong>
+    </p>
+  </div>
+
+  <h4>양산품에만 존재하는 응력</h4>
+  <ul>
+    <li><strong>성형 잔류응력</strong> — 사출·블로우 성형 시 냉각 속도 차이로 남는 내부 응력. 샘플과 양산 로트가 다를 수 있습니다.</li>
+    <li><strong>캡 체결 토크</strong> — 자동 캡핑기의 토크는 손으로 잠근 샘플보다 훨씬 높고 일정합니다. 넥 부위에 지속 응력을 겁니다.</li>
+    <li><strong>적재 하중</strong> — 팔레트 적재 단수만큼 하부 용기에 압축 응력이 걸립니다.</li>
+    <li><strong>운송 진동과 열이력</strong> — 컨테이너 내부 온도, 특히 수출 시 적도 통과 구간.</li>
+  </ul>
+
+  <h3>같은 "향료"가 5배 차이를 만듭니다</h3>
+  <p>
+    고결정성 폴리프로필렌(HCPP) ESC 연구에서 <strong>리모넨의 확산계수가 라벤더유의 약 5배</strong>로 측정됐고
+    그만큼 용기 수명이 짧아졌습니다.<sup>[27]</sup> 그런데 두 물질 모두 발주서에는 <em>"향료 함유"</em>로만 적힙니다.
+  </p>
+  <div class="callout">
+    <div class="label">사업 기회의 정확한 위치</div>
+    <p>
+      업계는 "향료가 들어갔다" 수준으로만 정보를 주고받습니다.
+      누리가 <strong>어떤 향료인지</strong>까지 기록하면 경쟁사가 못 하는 예측을 하게 됩니다.
+      <strong>설비 투자가 아니라 기록 양식의 문제입니다.</strong>
+    </p>
+  </div>
+
+  <h3>데이터 모델 — 세 축</h3>
+  <div class="scroller">
+    <table>
+      <thead><tr><th>축</th><th>기록 항목</th><th>왜 필요한가</th></tr></thead>
+      <tbody>
+        <tr><td><strong>내용물</strong></td><td>제형 유형 · 에탄올 함량 · 향료 종류(리모넨 계열 여부) · 계면활성제 · pH · 오일상</td><td>ESC를 유발하는 화학 인자</td></tr>
+        <tr><td><strong>용기</strong></td><td>수지 · 성형 방식 · 두께 · 제조사 · 로트 · 재생원료 함량</td><td>같은 PP라도 성형법에 따라 잔류응력이 다름</td></tr>
+        <tr><td><strong>응력</strong></td><td>캡 체결 토크 · 적재 단수 · 유통 경로 · 보관 온도 · 경과 기간</td><td><strong>지금 아무도 기록하지 않는, 그래서 차별화되는 축</strong></td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h3>가혹시험 프로토콜 — 응력을 걸고 시험한다</h3>
+  <p>
+    식약처 「화장품 안정성시험 가이드라인」은 장기보존시험·가속시험·가혹시험 체계를 제시합니다.<sup>[30]</sup>
+    누리가 권할 시험은 여기에 <strong>응력 항목을 추가한</strong> 형태여야 합니다.
+  </p>
+  <div class="scroller">
+    <table>
+      <thead><tr><th>항목</th><th>기존 샘플 제공</th><th>제안 프로토콜</th></tr></thead>
+      <tbody>
+        <tr><td>충전</td><td>내용물 담아 보관</td><td>실제 충전량·헤드스페이스 동일하게</td></tr>
+        <tr><td><strong>체결</strong></td><td>손으로 잠금</td><td><strong>양산 규정 토크로 체결</strong></td></tr>
+        <tr><td><strong>하중</strong></td><td>없음</td><td><strong>적재 단수 상당 하중 부가</strong></td></tr>
+        <tr><td>온도</td><td>상온</td><td>가속 45℃ · 가혹 온도 사이클 병행</td></tr>
+        <tr><td>기간</td><td>수일~수주</td><td>최소 4주, 수출 건 8주</td></tr>
+        <tr><td>판정</td><td>육안</td><td>중량 감소율·크랙·누액·변형·토크 유지</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h3>사업화 경로</h3>
+  <div class="scroller">
+    <table>
+      <thead><tr><th class="num">단계</th><th>형태</th><th>누리가 얻는 것</th></tr></thead>
+      <tbody>
+        <tr><td class="num">1</td><td>클레임 방어 — 사전 경고 기록으로 책임 소재 명확화</td><td>클레임 비용 감소, 데이터 축적 시작</td></tr>
+        <tr><td class="num">2</td><td>무료 사전 진단 — 견적 시 위험 등급 자동 표시</td><td>수주 전환율 상승, 경쟁 차별화</td></tr>
+        <tr><td class="num">3</td><td>유료 가혹시험 대행 — 프로토콜 기반 리포트</td><td>신규 수익원, 제형 데이터 확보</td></tr>
+        <tr><td class="num">4</td><td>호환성 보증 세트 — 검증된 조합에 한해 품질 보증</td><td>가격 방어력</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="callout">
+    <div class="label">전략적 의미</div>
+    <p>
+      4단계에 도달하면 누리가 파는 것은 용기가 아니라 <strong>"이 조합은 터지지 않는다"는 확신</strong>입니다.
+      병 제조사는 자기 병만, 펌프사는 자기 펌프만 압니다.
+      <strong>여러 제조사에서 사오는 유통업자만이 조합을 검증할 수 있습니다.</strong>
+      공장이 없다는 것이 여기서는 자격 요건이 됩니다.
+    </p>
+  </div>
+</section>
+
+<!-- 06 -->
+<section id="s6">
+  <div class="sec-head"><div class="sec-num">06</div><h2 class="sec-title">데이터 구축 전략 — 3층 구조</h2></div>
+
+  <div class="field-block">
+    <div class="tag">현장 정보 · 사장님 제공</div>
+    <p>정리된 데이터 자료는 없지만 <strong>경험적 데이터는 있다.</strong> 이것으로 구축해보려 한다.</p>
+  </div>
+
+  <h3>데이터가 없는 게 아니라 흩어져 있습니다</h3>
+  <div class="scroller">
+    <table>
+      <thead><tr><th>소재</th><th>있는 곳</th><th>담고 있는 정보</th></tr></thead>
+      <tbody>
+        <tr><td>거래명세서·세금계산서</td><td>회계 시스템</td><td>누구에게·언제·무엇을·얼마나 (세법상 보존 의무)</td></tr>
+        <tr><td>발주서·견적서</td><td>영업 파일</td><td>수지·규격·제조사·수량</td></tr>
+        <tr><td>카톡·메일 이력</td><td>담당자 단말</td><td>클레임 정황, 고객이 보낸 사진</td></tr>
+        <tr><td>담당자 기억</td><td>사람</td><td><strong>어떤 조합이 터졌는지</strong> — 가장 중요하고 가장 휘발성이 높음</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p>
+    거래 이력은 반드시 남아 있습니다. 빠진 건 <strong>"그래서 그 건은 어떻게 됐는가"라는 결과 라벨</strong>뿐이고
+    그게 담당자 머릿속에 있습니다. 따라서 작업은 신규 조사가 아니라 <strong>결합</strong>입니다.
+  </p>
+
+  <h3>경험 인출 세션 — 2시간, 1회</h3>
+  <p>영업·CS 담당자를 모아 진행합니다. <strong>혼자 하지 마십시오.</strong> 한 사람이 잊은 건을 다른 사람이 기억합니다.</p>
+  <ol>
+    <li><strong>자유 회상 (30분)</strong> — 목록만 만듭니다. 판단·평가 금지. 평가가 들어가면 말을 아끼기 시작합니다.</li>
+    <li><strong>건별 상세화 (60분)</strong> — 입력 폼으로 채웁니다. 기억나지 않는 항목은 반드시 <strong>불명</strong>으로.</li>
+    <li><strong>거래 이력 대조 (30분)</strong> — 회계·영업 자료로 교정하고 근거를 <em>기억</em>에서 <em>기록</em>으로 올립니다.</li>
+  </ol>
+  <h4>기억을 되살리는 질문</h4>
+  <ul>
+    <li>반품받은 건은? 고객이 사진 보내온 건은? 재납품해 준 건은?</li>
+    <li>거래가 끊긴 고객의 마지막 건은 무엇이었나?</li>
+    <li>여름에 터진 건, 수출 나간 뒤 터진 건은?</li>
+    <li><strong>"그 제조사 물건은 조심하라"고 서로 말하던 것이 있나?</strong></li>
+  </ul>
+  <p>
+    마지막 질문이 가장 값집니다. 그런 경고는 이미 여러 번의 실패에서 만들어진 집단 학습이고,
+    아직 문장으로만 존재하는 데이터입니다.
+  </p>
+
+  <div class="callout alarm">
+    <div class="label">이 단계를 건너뛰면 시스템이 작동하지 않습니다</div>
+    <p>
+      <strong>정상 건을 반드시 소급 입력해야 합니다.</strong> 실패만 모으면 나오는 결론은 "전부 위험하다" 하나뿐입니다.
+      실패율에는 분모가 필요합니다. 최근 2년치 거래명세서에서 클레임 목록에 없는 건은 전부 <em>정상</em>으로 입력하십시오.
+      개별 확인은 불필요합니다 — 클레임이 안 들어왔다는 것 자체가 근거입니다.
+      단, "기억나는 것만" 넣으면 기억 편향이 그대로 들어가니 기간이나 고객으로 자르고 그 안에서는 전 건을 넣으십시오.
+    </p>
+  </div>
+
+  <div class="field-block">
+    <div class="tag">아이디어 · 사장님 제안</div>
+    <p>
+      화해 같은 앱에는 화장품 <strong>전성분이 공개된 제품</strong>들이 있다.
+      이 경우 <strong>플라스틱 용기 재질만 별도 조사</strong>하면,
+      현재 데이터 없이도 안정성을 어느 정도 구축할 수 있지 않을까.
+    </p>
+  </div>
+
+  <h3>이 발상의 평가 — 얻는 것과 못 얻는 것</h3>
+  <p>
+    머신러닝으로 보면 이 데이터는 <strong>X(내용물 조성)만 주고 Y(터졌는지 여부)는 주지 않습니다.</strong>
+    그리고 <strong>시중에 팔리는 제품은 정의상 전부 "안 터진" 제품</strong>입니다.
+    터진 조합은 리뉴얼되거나 단종되어 사라졌습니다. 생존 편향이라 실패율을 계산하면 100% 성공으로 나옵니다.
+  </p>
+  <p>
+    <strong>그런데 이것이 정확히 위에서 말한 빈 칸입니다.</strong>
+    자사 클레임이 <strong>분자(실패)</strong>를 주고, 시중 제품 조합이 <strong>분모(정상)</strong>를 줍니다.
+    그것도 자사 거래분이 아니라 시장 전체 규모로. <strong>2인 팀에게는 손으로 옮기는 것보다 훨씬 효율적입니다.</strong>
+  </p>
+
+  <h3>더 강력한 활용 — 부재의 증거</h3>
+  <p>
+    5,000개 제품을 훑었는데 "에탄올 30%+ 토너를 PET에 담은 제품"이 <strong>0건</strong>이라면,
+    그 0이 강력한 증거입니다. <strong>업계의 집단 학습이 이미 제품 구성 안에 인코딩되어 있습니다.</strong>
+  </p>
+  <div class="scroller">
+    <table>
+      <thead><tr><th>조합 빈도</th><th>해석</th></tr></thead>
+      <tbody>
+        <tr><td>높음</td><td>업계가 반복 검증한 표준 조합</td></tr>
+        <tr><td>낮음</td><td>특수 용도이거나 리스크 감수</td></tr>
+        <tr><td><strong>0건</strong></td><td><strong>아무도 안 씀 — 위험하거나 비경제적</strong></td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p>
+    "왜 안 되는지"는 모르지만 <strong>"무엇이 표준인지"는 정확히</strong> 알 수 있습니다.
+    그리고 견적 단계에서 이 문장이 나갑니다 — <em>"이 조합을 쓰는 제품이 시장에 0건입니다."</em>
+  </p>
+
+  <h3>재질 조사 — 예상보다 쉽고, 예상보다 한계가 있습니다</h3>
+  <p>
+    <strong>쉬운 쪽:</strong> 분리배출표시는 법정 의무입니다. 삼각형 마크 아래에
+    <strong>몸체·뚜껑·라벨의 소재를 각각 표시</strong>하게 되어 있고, 크기도 가로세로 8mm 이상,
+    위치도 바코드 주변으로 정해져 있습니다.<sup>[45][46]</sup> <strong>제품 사진에 이미 찍혀 있어</strong>
+    이미지에서 읽어내는 건 AI 전문가가 바로 할 수 있습니다.
+  </p>
+  <p>
+    <strong>한계:</strong> 분리배출표시상 플라스틱은 HDPE/LDPE/PP/PS/PVC/OTHER로 구분되고 PET만 '페트'로 따로 표시됩니다.
+    OTHER는 복합소재로 재활용 대상이 아닙니다.<sup>[45][47]</sup>
+  </p>
+  <div class="scroller">
+    <table>
+      <thead><tr><th>매트릭스의 수지</th><th>분리배출표시로 식별</th></tr></thead>
+      <tbody>
+        <tr><td>PET, PP, HDPE, LDPE</td><td class="yes">가능</td></tr>
+        <tr><td><strong>PETG, AS·SAN, ABS, 아크릴</strong></td><td class="no">전부 OTHER로 뭉개짐</td></tr>
+        <tr><td>PCR 함량</td><td class="no">표시 없음</td></tr>
+        <tr><td>성형 방식</td><td class="no">없음</td></tr>
+        <tr><td>체결 토크·적재·유통 경로</td><td class="no">없음</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p>
+    7개 수지 중 3개가 소실되고, ESC 3요소 중 화학물질만 얻습니다.
+    <strong>응력과 시간은 자사 데이터로만 채울 수 있습니다.</strong>
+  </p>
+
+  <div class="callout alarm">
+    <div class="label">화해를 직접 긁지 마십시오 — 그럴 필요도 없습니다</div>
+    <p>
+      화해(버드뷰)는 사기업이라 대량 크롤링은 <strong>이용약관 위반</strong>이 될 수 있고,
+      한국 저작권법은 <strong>데이터베이스제작자의 권리</strong>를 보호합니다.
+      화해의 자산은 성분 정보 자체가 아니라 <strong>그걸 모아 정리한 것</strong>이고, 그 정리가 보호 대상입니다.
+    </p>
+    <p>
+      <strong>그런데 전성분 표시는 화장품법상 법정 의무입니다.</strong> 화해 독점 정보가 아닙니다 —
+      제품 뒷면, 브랜드 자사몰, 올리브영 상세페이지에 전부 있습니다.
+      그리고 <strong>더 나은 소스가 이미 공개되어 있습니다.</strong>
+    </p>
+  </div>
+
+  <div class="scroller">
+    <table>
+      <thead><tr><th>공개 소스</th><th>내용</th><th>비고</th></tr></thead>
+      <tbody>
+        <tr><td>식약처 화장품 <strong>원료성분정보</strong> API<sup>[48]</sup></td><td>표준명, 영문명, <strong>CAS No</strong>, 기원 및 정의</td><td>공식 API, JSON/XML</td></tr>
+        <tr><td>식약처 화장품 <strong>규제정보</strong> API<sup>[49]</sup></td><td>성분 표준명, 금지국가, 제한국가</td><td>수출 대응에 직결</td></tr>
+        <tr><td>식약처 화장품 <strong>관련 정보</strong><sup>[50]</sup></td><td>심사품목, 보고품목, 책임판매업</td><td>브랜드 리스트 확보</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p>
+    <strong>CAS 번호가 붙어 있다는 게 결정적입니다.</strong> 화해에도 없는 정보이고,
+    CAS는 분자 구조로 연결되는 키입니다. Hansen 용해도 파라미터나 logP로 확장하면
+    <strong>성분명 문자열 매칭이 아니라 화학적 성질 기반 예측</strong>이 가능해집니다.
+  </p>
+
+  <h3>결론 — 3층 구조</h3>
+  <div class="scroller">
+    <table>
+      <thead><tr><th>층</th><th>소스</th><th>주는 것</th><th>합법성</th></tr></thead>
+      <tbody>
+        <tr><td><strong>1층</strong></td><td>식약처 공공데이터 API</td><td>성분 사전, CAS, 규제</td><td>완전 공개</td></tr>
+        <tr><td><strong>2층</strong></td><td>제품 이미지 분리배출표시 + 브랜드 자사몰</td><td>시장 조합 빈도 (분모)</td><td>소스별 robots.txt 확인 필요</td></tr>
+        <tr><td><strong>3층</strong></td><td>자사 클레임 이력</td><td><strong>실패 라벨 (유일한 진짜 Y)</strong></td><td>자사 자산</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p><strong>1·2층이 콜드스타트를 해결하고 3층이 예측력을 만듭니다.</strong> 3층은 여전히 누리만 가질 수 있습니다 — 이게 방어선입니다.</p>
+
+  <div class="callout">
+    <div class="label">뜻밖의 이득 — 법적 책임이 가벼워집니다</div>
+    <p>
+      이 접근은 주장의 성격을 바꿉니다.
+      <strong>"이 조합은 안전합니다"</strong>는 품질 보증이라 책임이 발생하지만,
+      <strong>"이 조합을 쓰는 제품이 시장에 0건입니다"</strong>는 검증 가능한 사실 진술입니다.
+      그러면서도 고객에게는 첫 번째만큼, 또는 그 이상으로 설득력이 있습니다.
+      <strong>확신을 팔면서 책임은 지지 않는 구조</strong>를 만들 수 있습니다.
+    </p>
+  </div>
+
+  <h3>판정 기준과 목표 수량</h3>
+  <div class="scroller">
+    <table>
+      <thead><tr><th>근거 건수</th><th>상태</th><th>사용 범위</th></tr></thead>
+      <tbody>
+        <tr><td class="num">n &lt; 3</td><td>참고</td><td>내부 판단만. 고객 자료 사용 금지</td></tr>
+        <tr><td class="num">3 ≤ n &lt; 10</td><td>잠정</td><td>내부 경고·가혹시험 권고 근거</td></tr>
+        <tr><td class="num">n ≥ 10</td><td>안정</td><td>고객 제시 가능</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p>
+    실패율 30% 이상 고위험, 10~30% 주의, 10% 미만 양호. 목표는 1주 30~60건, 1개월 200~400건, 6개월 600건+입니다.
+    <strong>600건은 큰 수가 아닙니다</strong> — 2년치 거래명세서를 옮기면 대부분 채워집니다.
+    참고로 폴리머 과학 분야의 실험 데이터셋은 통상 100개 미만이며, 이것이 ML 적용의 알려진 병목입니다.<sup>[38][39]</sup>
+  </p>
+</section>
+
+<!-- 07 -->
+<section id="s7">
+  <div class="sec-head"><div class="sec-num">07</div><h2 class="sec-title">사업 모델 — 비대면 자동화</h2></div>
+
+  <div class="field-block">
+    <div class="tag">아이디어 · 사장님 제안</div>
+    <p>
+      아파트멘터리 인테리어 회사처럼 <strong>100% CS와 판매를 비대면으로 진행하는 자동화된 시스템</strong>을 만들고 싶다.
+      인력을 절감하고, <strong>영업을 하지 않아도 마케팅으로 고객 유입</strong>을 만들고 싶다.
+    </p>
+  </div>
+
+  <h3>아파트멘터리가 실제로 판 것</h3>
+  <p>
+    인테리어 업계 최초로 <strong>가격 정찰제</strong>를 도입하고, 매니저와 실시간 소통하는 앱을 만들고,
+    서비스를 규격화했습니다. 총 매출 성장률 376.3%, 연평균 68.3%로 '대한민국 성장 챔피언 2024' 56위입니다.<sup>[40]</sup>
+  </p>
+  <p>
+    <strong>핵심은 정찰제가 아니라 정찰제를 가능하게 한 것입니다.</strong>
+    인테리어 고객의 진짜 불안은 "돈 내고 나면 어떻게 나올지 모른다"였고 그래서 만나야 했습니다.
+    표준화와 시각화로 그 불안을 없앴고, <strong>그래서 만날 이유가 사라졌습니다.</strong>
+  </p>
+
+  <h3>구조가 정확히 겹칩니다</h3>
+  <p>
+    부자재 영업에서 고객이 만나자고 하는 이유가 무엇입니까.
+    <strong>"이거 우리 제품에 써도 괜찮을까요?"</strong> 입니다.
+  </p>
+  <div class="scroller">
+    <table>
+      <thead><tr><th></th><th>아파트멘터리</th><th>누리플라스틱</th></tr></thead>
+      <tbody>
+        <tr><td>고객의 불안</td><td>어떻게 나올지 모른다</td><td><strong>터질지 모른다</strong></td></tr>
+        <tr><td>해소 장치</td><td>3D 시뮬레이션 + 정찰제</td><td><strong>상용성 진단 + 규격 정찰제</strong></td></tr>
+        <tr><td>결과</td><td>안 만나도 계약</td><td><strong>안 만나도 발주</strong></td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p>
+    <strong>상용성 데이터베이스가 아파트멘터리의 3D 시뮬레이터 자리에 정확히 들어갑니다.</strong>
+    우연이 아니라, 비대면화의 조건이 원래 "만나야 하는 이유를 제거하는 것"이기 때문입니다.
+  </p>
+  <p>
+    시장 데이터도 이 방향을 지지합니다. <strong>B2B 구매자의 70% 이상이 셀프서비스 구매가 더 효율적</strong>이라고 응답합니다.<sup>[43]</sup>
+    심지어 철강도 이미 갔습니다 — 포스코 이스틸포유, 현대제철 에이치코어 스토어가 온라인 직거래로
+    <strong>소규모 업체도 쉽게 사도록</strong> 전환 중입니다.<sup>[41]</sup>
+    규격이 부자재보다 복잡한 산업재가 갔다면 부자재가 못 갈 이유가 없습니다.<sup>[42][44]</sup>
+  </p>
+
+  <h3>자동화 파이프라인</h3>
+  <div class="scroller">
+    <table>
+      <thead><tr><th>단계</th><th>자동화 내용</th><th>담당</th></tr></thead>
+      <tbody>
+        <tr><td><strong>유입</strong></td><td>검색 콘텐츠 + 무료 진단 도구 공개</td><td>기획자</td></tr>
+        <tr><td><strong>진단</strong></td><td>전성분표 붙여넣기 → 위험 인자 추출 → 판정</td><td>AI</td></tr>
+        <tr><td><strong>견적</strong></td><td>규격 선택 → MOQ·단가·납기 자동 산출</td><td>AI</td></tr>
+        <tr><td><strong>발주</strong></td><td>카드·계좌 결제, 세금계산서 자동 발행</td><td>외부 솔루션</td></tr>
+        <tr><td><strong>CS</strong></td><td>진단 근거·규격 데이터가 이미 문서로 존재</td><td>시스템</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p>
+    <strong>5단계가 핵심입니다.</strong> CS 문의의 대부분은 "이거 맞나요"인데,
+    진단 결과와 근거가 처음부터 문서로 남아 있으면 문의 자체가 발생하지 않습니다.
+    <strong>CS를 잘 대응하는 게 아니라 CS가 생기지 않게 하는 것</strong>이 아파트멘터리 방식입니다.
+  </p>
+
+  <h3>영업 없이 유입을 만드는 법 — 플라이휠</h3>
+  <p>
+    인디브랜드 창업자는 "화장품 용기 MOQ", "토너 용기 추천", "PET 에탄올" 같은 걸 검색합니다.
+    지금 시장의 답은 전부 카탈로그이거나 "문의 주세요"입니다.
+  </p>
+  <p>
+    <strong>누리는 매트릭스 한 칸으로 글 한 편을 씁니다.</strong>
+    "에탄올 30% 토너를 PET에 담으면 안 되는 이유 — 납품 이력 n건 분석" 같은 글은 세상에 없고,
+    검색에 걸리고, 읽는 순간 신뢰가 생깁니다. 영업사원 한 명보다 강합니다.
+  </p>
+  <div class="formula">
+    <span class="term">데이터</span><span class="op">→</span>
+    <span class="term">진단 도구</span><span class="op">→</span>
+    <span class="term">콘텐츠·유입</span><span class="op">→</span>
+    <span class="term">사용자가 제형 입력</span><span class="op">↺</span>
+  </div>
+  <p>
+    무료 진단 도구를 공개하면 세 가지가 <strong>동시에</strong> 일어납니다 —
+    마케팅 유입, 리드 수집, 그리고 데이터 수집.
+    사용자가 진단을 받으려면 제형 정보를 입력해야 하므로,
+    <strong>팔지 않고도 "시장에 지금 어떤 제형이 나오는지"를 수집</strong>합니다.
+    마케팅 비용이 데이터 수집 비용과 같아집니다.
+  </p>
+
+  <h3>원스톱 구성 — 롱테일을 어떻게 감당할 것인가</h3>
+  <p>후가공은 이미 연결되어 있으니, 남은 건 단가는 낮고 부피는 큰 품목입니다. 세 등급으로 나누십시오.</p>
+  <div class="scroller">
+    <table>
+      <thead><tr><th>등급</th><th>품목</th><th>취급 방식</th><th>재고 부담</th></tr></thead>
+      <tbody>
+        <tr><td><strong>A</strong></td><td>용기·펌프·캡·스포이드·이너캡</td><td>직접 재고. <strong>검증 세트에 들어가는 규격만 깊게</strong></td><td>있음 — 핵심 자산</td></tr>
+        <tr><td><strong>B</strong></td><td>단상자·라벨·후가공</td><td>제휴 직배송. 견적서엔 함께 올리되 재고는 파트너가 보유</td><td>없음</td></tr>
+        <tr><td><strong>C</strong></td><td>완충재·에어캡·테이프·택배박스</td><td>범용품. 규격 안내 + 외부 구매 경로 제공</td><td>없음</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p>
+    참고로 후가공 단가는 공개되어 있습니다 — 실크인쇄 1도 80~150원, 라벨 인쇄 100~200원,
+    라벨 부착 자동 50~100원. <strong>소량 다품종엔 디지털 인쇄가 초기비용이 낮고 납기가 빠릅니다.</strong><sup>[25]</sup>
+  </p>
+  <p><strong>원스톱의 실제 무기는 재고가 아니라 견적서 한 장입니다.</strong> 소유하지 않고 매개하는 것이 유통업의 본래 형태입니다.</p>
+
+  <h3>쿠팡파트너스 — 검토 결과</h3>
+  <p><strong>주력 수익원으로는 부적합하고, 보조 장치로는 쓸 만합니다.</strong></p>
+  <div class="scroller">
+    <table>
+      <thead><tr><th>항목</th><th>평가</th></tr></thead>
+      <tbody>
+        <tr><td>수익 규모</td><td>제휴 수수료는 판매가의 한 자릿수 %. 부자재 유통 마진과 자릿수가 다름</td></tr>
+        <tr><td>고객 성격</td><td>누리 고객은 사업자 — 세금계산서·대량구매·정기납품 필요. 개인 소비자용 커머스와 불일치</td></tr>
+        <tr><td>브랜드 리스크</td><td>B2B 공급사가 외부 쇼핑몰을 안내하면 전문성 인식이 깎임</td></tr>
+        <tr><td>이탈 위험</td><td><strong>한 번 외부로 보내면 다음 구매도 거기서 함. 원스톱 목적과 정면 충돌</strong></td></tr>
+      </tbody>
+    </table>
+  </div>
+  <ul>
+    <li><strong>콘텐츠 부산물로만.</strong> "화장품 창업 부자재 체크리스트" 같은 자료의 범용 소모품 항목에만 링크. 견적서·주문 화면에는 넣지 않습니다.</li>
+    <li><strong>A·B 등급에는 절대 걸지 않습니다.</strong> 본업 잠식입니다.</li>
+    <li><strong>수익보다 데이터를 보십시오.</strong> 어떤 링크가 눌리는지가 <em>고객이 아직 누리에서 못 사고 있는 것</em>의 목록입니다. 클릭이 몰리는 품목은 B등급 승격 후보입니다.</li>
+  </ul>
+  <p>정리하면 <strong>매출 계획이 아니라 수요 탐지기</strong>로 쓰는 것이 맞습니다.</p>
+
+  <div class="callout alarm">
+    <div class="label">자동화하면 안 되는 것</div>
+    <p>
+      <strong>정찰제를 전 고객에 적용하지 마십시오.</strong> 부자재 업계는 고객·물량별 단가 차등이 관행이라
+      전면 공개하면 기존 대형 거래처가 즉시 항의합니다. <strong>세그먼트를 분리하십시오</strong> —
+      온라인은 소량·정찰제, 대량은 별도 견적. 아파트멘터리도 표준 패키지 밖은 별도 협의입니다.
+    </p>
+    <p>
+      <strong>B2B 필수 요건을 빠뜨리면 첫 주문부터 막힙니다.</strong> 세금계산서 자동 발행, 사업자 확인,
+      여신(외상) 처리, 다건 배송. 일반 쇼핑몰 솔루션은 B2B 여신을 지원하지 않는 경우가 많습니다.
+    </p>
+    <p>
+      <strong>진단 문구는 절대 자동으로 "안전"이라 쓰지 마십시오.</strong> "과거 이력상 이상 사례 없음"까지입니다.
+      자동화될수록 이 문구가 수천 번 반복되므로 책임 노출도 그만큼 커집니다.
+    </p>
+  </div>
+</section>
+
+<!-- 08 -->
+<section id="s8">
+  <div class="sec-head"><div class="sec-num">08</div><h2 class="sec-title">2인 팀 실행 방향</h2></div>
+
+  <div class="field-block">
+    <div class="tag">현장 정보 · 사장님 제공</div>
+    <p>사업 추진 인력은 2명 — <strong>한 명은 디자인 전공 기획자, 한 명은 AI 전문가.</strong></p>
+  </div>
+
+  <p>
+    <strong>이건 제조업 팀이 아니라 소프트웨어·서비스 팀입니다.</strong>
+    그래서 제조업 경로(벤더 등록, 설비 투자)로 가면 최악의 조합이고,
+    데이터·지식 경로로 가면 최적의 조합입니다.
+  </p>
+
+  <h3>AI 전문가 축</h3>
+  <ul>
+    <li><strong>① 능동학습(Active Learning)으로 시험 예산 최소화.</strong> 소량 데이터 문제의 정석 해법입니다. 모델이 "다음에 어떤 조합을 시험하면 정보 이득이 가장 큰지"를 골라줍니다. 시험 횟수가 제한적일수록 가치가 커집니다.<sup>[39]</sup></li>
+    <li><strong>② 문헌 마이닝으로 콜드스타트 해결 — 지금 당장 가능.</strong> 폴리머 상용성 ML 연구의 표준 방법이 관련 문헌에서 데이터를 채굴해 DB를 만드는 것이고, 그렇게 만든 모델이 분자 구조와 배합만으로 75% 이상의 정확도를 냅니다.<sup>[38]</sup> <strong>경험 인출 세션과 병렬로 진행할 수 있습니다.</strong></li>
+    <li><strong>③ 전성분표 자동 파싱 — 가장 빨리 실용화될 것.</strong> 브랜드가 주는 전성분 리스트를 LLM으로 읽어 위험 인자(리모넨 계열, 에탄올 함량, 계면활성제)로 자동 변환. 오늘 만들 수 있습니다.</li>
+    <li><strong>④ 분리배출표시 이미지 판독.</strong> 제품 사진에서 몸체·뚜껑 재질을 읽어 2층 데이터를 자동 수집합니다.</li>
+    <li><strong>⑤ 구조 기반 확장.</strong> CAS 번호 → Hansen 용해도 파라미터로 확장하면 <strong>한 번도 안 팔아본 신규 제형도 예측</strong>할 수 있습니다.</li>
+  </ul>
+
+  <h3>디자이너·기획자 축</h3>
+  <ul>
+    <li><strong>⑥ 누리 준전용 규격 (가장 큰 기회).</strong> 기성용기의 근본 약점은 "남들과 같은 용기"라 브랜드가 크면 떠난다는 것입니다. QDM은 금형비를 크게 낮춥니다. <strong>디자이너가 있으면 누리 고유 규격을 설계할 수 있습니다</strong> — 여러 브랜드가 데코만 바꿔 쓰는 준전용 금형. <strong>유통업자가 자기 브랜드력을 갖는 유일한 경로</strong>이고, 경쟁사가 디자인 역량 없이는 못 따라옵니다.</li>
+    <li><strong>⑦ 진단 결과의 문서화.</strong> "이 조합은 위험합니다"를 브랜드가 이해하고 자기 EU 수입자에게 넘길 수 있는 형태로 만드는 건 데이터 문제가 아니라 디자인 문제입니다.</li>
+    <li><strong>⑧ 인디브랜드 대상 디자인 번들.</strong> 창업기 브랜드는 디자인 역량이 없습니다. 용기 + 데코 시안을 묶어 팔면 객단가가 오르고 경쟁사가 못 파는 것이 됩니다.</li>
+  </ul>
+
+  <h3>두 축의 결합</h3>
+  <div class="callout">
+    <div class="label">2인이 만들 수 있는 최대치</div>
+    <p>
+      <strong>⑨ 용기 선택 웹 서비스.</strong> 브랜드가 전성분표를 넣으면 → AI가 위험 인자를 추출하고 →
+      안전한 용기 조합을 판정하고 → 디자인 시안까지 나오는 서비스입니다.
+      <strong>AI가 판정하고 디자이너가 결과물을 만드는 구조</strong>라 두 사람의 역할이 정확히 나뉩니다.
+    </p>
+    <p>
+      완성되면 누리는 용기를 파는 회사가 아니라 <strong>용기를 고르게 해주는 회사</strong>가 됩니다.
+      경쟁사의 5배 매출과 다른 축에서 경쟁하게 됩니다.
+    </p>
+  </div>
+
+  <h3>브랜드 성장 패키지</h3>
+  <p>
+    5배 격차를 좁힐 유일한 경로는 <strong>지금 작은 고객이 커질 때 함께 커지는 것</strong>입니다.
+    실제로 유럽을 뚫은 게 아누아·티르티르이고, 경쟁사는 MOQ가 안 맞아 이들의 창업기에 관심이 없었습니다.
+  </p>
+  <div class="scroller">
+    <table>
+      <thead><tr><th>단계</th><th>누리가 제공</th><th>누리가 얻는 것</th></tr></thead>
+      <tbody>
+        <tr>
+          <td><strong>시드</strong><br>창업기</td>
+          <td>상용성 사전 진단(무료), 검증 세트 추천, 부자재 체크리스트, 후가공 연결</td>
+          <td>제형 데이터, 첫 거래 선점, 성장 후보 조기 식별</td>
+        </tr>
+        <tr>
+          <td><strong>그로스</strong><br>히트 직후</td>
+          <td>QDM 금형 설계·제조사 매칭, 유료 가혹시험 리포트, 안전재고</td>
+          <td>객단가 상승, 금형 귀속에 따른 전환비용, 시험 수수료</td>
+        </tr>
+        <tr>
+          <td><strong>스케일</strong><br>수출기</td>
+          <td>재질·PCR 자료 패키지, 등급평가 대응 규격, 전용 금형 관리</td>
+          <td>장기 계약, 레퍼런스 브랜드, 수출 역량 자산화</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <p>
+    <strong>시드를 무료로 열되 그로스부터 유료</strong>로 전환합니다.
+    시드에서 받는 건 돈이 아니라 제형 데이터입니다.
+    그 데이터가 매트릭스를 채우고, 매트릭스가 다음 고객의 클레임을 막습니다.
+  </p>
+  <div class="callout alarm">
+    <div class="label">수출 자료의 경계</div>
+    <p>
+      스케일 단계의 수출 자료는 <strong>인증 대행이 아닙니다.</strong>
+      누리가 제공하는 것은 <strong>브랜드가 자기 EU 수입자에게 넘길 재질·함량 자료</strong>입니다.
+      이 선을 넘어 "인증해 드린다"고 말하는 순간 감당할 수 없는 책임이 생깁니다.
+    </p>
+  </div>
+</section>
+
+<!-- 09 -->
+<section id="s9">
+  <div class="sec-head"><div class="sec-num">09</div><h2 class="sec-title">통합 로드맵</h2></div>
+
+  <div class="roadmap">
+    <div class="phase">
+      <span class="when">즉시</span>
+      <span class="what">
+        <b>클레임 기록 양식 도입 + 정상 건 동시 기록</b>
+        <span>접수 양식만 바꾸면 됩니다. 오늘부터 쌓이는 건이 학습 데이터입니다. 실패만 모으면 분모가 없어 아무것도 계산되지 않습니다.</span>
+        <span class="cost">비용 0원 · 최우선</span>
+      </span>
+    </div>
+    <div class="phase">
+      <span class="when">즉시</span>
+      <span class="what">
+        <b>AI · 문헌 데이터셋 + 전성분표 파서 착수</b>
+        <span>자사 데이터를 기다릴 필요가 없습니다. 식약처 API 3종 연동과 문헌 마이닝은 오늘 시작됩니다.</span>
+        <span class="cost">비용 0원 · 병렬</span>
+      </span>
+    </div>
+    <div class="phase">
+      <span class="when">1주</span>
+      <span class="what">
+        <b>경험 인출 세션 (2시간)</b>
+        <span>영업·CS 담당자 소집. 목표 30~60건.</span>
+        <span class="cost">비용 0원</span>
+      </span>
+    </div>
+    <div class="phase">
+      <span class="when">1개월</span>
+      <span class="what">
+        <b>거래명세서 2년치 소급 입력 · 기존 고객 성장 분석</b>
+        <span>지난 2년간 주문이 늘어난 고객이 누구였는지가 시드 대상 정의입니다.</span>
+        <span class="cost">비용 0원 · 내부 데이터</span>
+      </span>
+    </div>
+    <div class="phase">
+      <span class="when">1~3개월</span>
+      <span class="what">
+        <b>가혹시험 프로토콜 정립 · 무료 진단 도구 웹 공개</b>
+        <span>규정 토크 + 하중 + 45℃. 진단 도구는 판매 없이 먼저 공개해 유입과 데이터를 모읍니다.</span>
+        <span class="cost">소액 · 항온기 수준</span>
+      </span>
+    </div>
+    <div class="phase">
+      <span class="when">2~4개월</span>
+      <span class="what">
+        <b>매트릭스 기반 콘텐츠 발행</b>
+        <span>검색 유입은 축적에 시간이 걸리므로 판매보다 먼저 시작합니다.</span>
+        <span class="cost">인건비만</span>
+      </span>
+    </div>
+    <div class="phase">
+      <span class="when">3~6개월</span>
+      <span class="what">
+        <b>호환성 검증 세트 10~20종 출시 · 온라인 주문 개시</b>
+        <span>전 품목이 아니라 상용성이 검증된 규격만. 보증 문구는 데이터가 뒷받침하는 범위 안에서만.</span>
+        <span class="cost">소액 · 재고 일부</span>
+      </span>
+    </div>
+    <div class="phase">
+      <span class="when">6개월+</span>
+      <span class="what">
+        <b>ODM 벤더 등록 추진 · 결제·세금계산서 자동화</b>
+        <span>축적된 상용성 데이터를 벤더 심사 자료로 사용합니다. 이 시점 이전의 등록 시도는 근거가 부족합니다.</span>
+        <span class="cost">중간</span>
+      </span>
+    </div>
+    <div class="phase">
+      <span class="when">이후</span>
+      <span class="what">
+        <b>재고·설비 투자 판단</b>
+        <span>앵커 고객 확보 전 설비 투자는 권하지 않습니다 — 가동률 50% 미만은 곧 적자입니다.</span>
+        <span class="cost">큼 · 조건부</span>
+      </span>
+    </div>
+  </div>
+
+  <div class="callout">
+    <div class="label">순서가 전략입니다</div>
+    <p>
+      <strong>쇼핑몰을 먼저 만들면 아무도 안 옵니다.</strong>
+      진단 도구와 콘텐츠로 유입을 먼저 만들고, 그다음에 살 수 있게 하는 것이 아파트멘터리가 한 순서입니다.
+      그리고 이 모델을 택하면 <strong>대형 고객 직납은 사실상 포기하는 선택</strong>이 됩니다 —
+      그건 이미 경쟁사가 5배로 이기고 있는 영역이고,
+      <strong>버리는 게 아니라 애초에 이길 수 없던 판을 정리하는 것</strong>입니다.
+    </p>
+  </div>
+</section>
+
+<!-- 10 -->
+<section id="s10">
+  <div class="sec-head"><div class="sec-num">10</div><h2 class="sec-title">리스크와 미확인 사항</h2></div>
+
+  <h3>구조적 리스크</h3>
+  <ul>
+    <li><strong>영업 인력이 없습니다.</strong> 2인 중 누구도 영업이 아닙니다. 비대면 모델에서는 이것이 전제가 되지만, <strong>기존 누리 영업 조직과 어떻게 연결되는지가 실제 성패</strong>입니다. 도구를 만들어도 쓸 사람이 없으면 죽습니다. <strong>첫 사용자를 사내 영업 담당자로 잡으십시오.</strong></li>
+    <li><strong>화학 도메인 전문가가 없습니다.</strong> 디자이너와 AI 전문가만으로는 판정을 검증할 수 없습니다. 외부 자문이나 시험기관과 검증 채널을 초기에 만드십시오. 비용이 큰 항목은 아니지만 없으면 안 됩니다.</li>
+    <li><strong>AI 판정의 법적 책임.</strong> 모델이 "안전"이라 했는데 터지면 클레임이 아니라 소송입니다. 초기에는 절대 보증하지 말고 "과거 이력상 이상 사례 없음"까지만 쓰십시오. <strong>문구 하나 차이지만 책임 범위가 완전히 다릅니다.</strong></li>
+    <li><strong>부자재 성장률 5.7%.</strong> 물량 경쟁으로는 구조적 단가 압박을 정면으로 맞습니다. 부가가치로 올라서는 것이 선택이 아니라 필수입니다.</li>
+    <li><strong>소량 온라인은 이미 경쟁 포화.</strong> 영동프라텍을 포함해 여러 곳이 있습니다. <strong>상용성 데이터 없이는 최저가 경쟁</strong>이 되고, 그 싸움은 제조 자산이 있는 쪽이 이깁니다.</li>
+  </ul>
+
+  <h3>확인이 더 필요한 항목</h3>
+  <ul>
+    <li><strong>영동프라텍 매출 규모</strong> — 공개자료로 확인되지 않았습니다. 신용평가 리포트 등 유료 자료가 필요합니다.</li>
+    <li><strong>주요 ODM의 부자재 벤더 등록 요건</strong> — 코스맥스·한국콜마 구매부서 직접 문의가 필요합니다.</li>
+    <li><strong>2층 데이터 수집 대상 사이트의 이용약관·robots.txt</strong> — 소스별로 개별 확인해야 합니다.</li>
+    <li><strong>자사 매출총이익률과 재고회전율</strong> — <strong>매출 5배 비교 자체가 잘못된 지표입니다.</strong> 대량 직납은 단가가 눌립니다. 5배 매출이 5배 이익이 아닐 가능성이 높고, 이걸 측정하기 전엔 전략 판단이 불가능합니다.</li>
+  </ul>
+
+  <h3>조사 방법의 한계</h3>
+  <p>
+    이 문서의 근거는 업계·언론·정부·학술 공개자료입니다.
+    검토 과정에서 커뮤니티 실시간 여론(레딧·X·유튜브)은 작업 환경의 네트워크 정책으로 수집하지 못했습니다.
+    소비자 반응이나 업계 종사자의 비공식 의견이 필요한 판단에는 별도 조사가 필요합니다.
+  </p>
+</section>
+
+<!-- 11 -->
+<section id="s11">
+  <div class="sec-head"><div class="sec-num">11</div><h2 class="sec-title">참고문헌</h2></div>
+
+  <div class="refs">
+
+    <div class="refgroup">
+      <h4>국내 규제 · 시장</h4>
+      <ol>
+        <li><a href="https://www.dailyt.co.kr/newsView/dlt202605290003">"화장품 용기 62.6%가 재활용 어려움"…예쁜 디자인에 가려진 플라스틱의 역설 — 데일리환경</a></li>
+        <li><a href="https://www.law.go.kr/admRulLsInfoP.do?admRulId=2074445&efYd=0">포장재 재활용 용이성 등급평가 기준 — 국가법령정보센터</a></li>
+        <li><a href="https://www.cosinkorea.com/news/article.html?no=57644">유럽 PPWR, 화장품이 리스크 최고 — 코스인코리아</a></li>
+        <li><a href="https://www.kctdi.or.kr/kctdi/research/research11.do?mode=view&articleNo=5550">[현장 특파원] "포장 때문에 유럽 수출 못 한다" 8월 12일 시행 EU 포장재 규정 PPWR — 관세무역개발원</a></li>
+        <li><a href="https://elementkorea.kr/eu%EC%9C%A0%EB%9F%BD-%EC%88%98%EC%B6%9C-%ED%95%84%EC%88%98-%EA%B4%80%EB%AC%B8-ppwr-%EC%99%84%EB%B2%BD-%EA%B0%80%EC%9D%B4%EB%93%9C/">EU 유럽 수출 필수 관문, PPWR 완벽 가이드 — Element Korea</a></li>
+      </ol>
+    </div>
+
+    <div class="refgroup">
+      <h4>수출 · 소재 동향</h4>
+      <ol start="6">
+        <li><a href="https://wowtale.net/2026/07/23/261862/">26년 상반기 중기 수출, 첫 600억 달러 돌파…K뷰티 날았다 — 와우테일</a></li>
+        <li><a href="https://www.lottechem.com/ko/media/news/566/view.do">롯데케미칼 재생플라스틱 소재(PCR-PP), 국내 및 글로벌 적용 확대</a></li>
+        <li><a href="https://www.industrytoday.co.kr/news/articleView.html?idxno=12631">2026 글로벌 화장품 시장, '기술·환경·소비경험'이 경쟁력 좌우한다 — INDUSTRY TODAY</a></li>
+        <li><a href="https://beautymatter.com/articles/the-beauty-packaging-trends-set-to-define-2026">The Beauty Packaging Trends Set to Define 2026 — BeautyMatter</a></li>
+        <li><a href="https://apackaginggroup.com/blogs/news/why-is-refillable-cosmetic-packaging-the-biggest-trend-in-2026">Why is refillable cosmetic packaging the biggest trend in 2026? — APG Packaging</a></li>
+      </ol>
+    </div>
+
+    <div class="refgroup">
+      <h4>산업 구조 · 기업 사례</h4>
+      <ol start="11">
+        <li><a href="https://paper-program.com/blog-insight/?bmode=view&idx=168401226">스타트업을 위한 소량생산 가이드: MOQ부터 시사출 금형(QDM)까지 — 페이퍼프로그램</a></li>
+        <li><a href="https://www.bloter.net/news/articleViewAmp.html?idxno=665180">인디 브랜드는 한국콜마엔 날개, 연우엔 숙제…K뷰티 호황의 '온도차' — 블로터</a></li>
+        <li><a href="https://www.businesspost.co.kr/BP?command=article_view&num=422342">연우 공장 가동률 50% 못 미쳐, 한국콜마 화장품 수직계열화의 '아픈 손가락' — 비즈니스포스트</a></li>
+        <li><a href="https://www.hankyung.com/article/2026072788861">화장품 유럽 수출액, 美 첫 추월 — 한국경제</a></li>
+        <li><a href="https://www.dt.co.kr/article/12054469">K-뷰티, EU 수출 3년 새 4배… 유럽 시장 급부상 — 디지털타임스</a></li>
+        <li><a href="https://v.daum.net/v/qabrOHMUSV">대기업? No!…인디 브랜드가 키웠다 [유럽 시장 사로잡은 K뷰티]</a></li>
+        <li><a href="https://www.korea.kr/news/policyNewsView.do?newsId=148967608">올 상반기 화장품 수출 70억 달러…'역대 최대' 달성 — 대한민국 정책브리핑</a></li>
+        <li><a href="https://www.lawtimes.co.kr/news/articleView.html?idxno=219127">EU 포장 및 포장 폐기물 규정(PPWR) 해석 지침 발표 — 법률신문 / 법무법인 화우</a></li>
+        <li><a href="https://dream.kotra.or.kr/kotranews/cms/news/actionKotraBoardDetail.do?SITE_NO=3&MENU_ID=90&CONTENTS_NO=1&bbsSn=244&pNttSn=169902">화장품 유럽 진출의 필수 관문, CPNP 등록 A to Z — KOTRA</a></li>
+        <li><a href="https://othilapak.com/ko/blogs/manufacturing-cost/how-to-choose-a-cosmetic-jar-supplier-a-buyers-checklist/">화장품 용기 공급업체 선정 방법: 구매자 체크리스트 — 오틸라팍</a></li>
+        <li><a href="https://www.greened.kr/news/articleView.html?idxno=342122">"펌텍코리아, 인디 브랜드 수출 호조 수혜…증설 효과 본격화" — 녹색경제신문</a></li>
+        <li><a href="https://news.bizwatch.co.kr/article/consumer/2026/05/13/0029">한국콜마·코스맥스, '인디 브랜드' 타고 질주 — 비즈워치</a></li>
+      </ol>
+    </div>
+
+    <div class="refgroup">
+      <h4>경쟁사 · 부자재 유통 · 후가공</h4>
+      <ol start="23">
+        <li><a href="https://www.ydplatech.com/">영동프라텍 — 화장품용기·스프레이·디스펜서 제조/유통</a></li>
+        <li><a href="http://www.kc-oem.net/xe/98930">[부자재] 영동프라텍, 화장품용기 전문 쇼핑몰, 다품종 소량</a></li>
+        <li><a href="https://branit.kr/account/contents/insight/beauty-column/f41e21d6-9f7b-4ef0-8dfa-28c72f512467">화장품 브랜드 창업 전에 꼭 알아야 할 용기 &amp; 후가공 단가 총정리 — 브랜잇</a></li>
+        <li><a href="https://brunch.co.kr/@8fc7802a8c8a4c3/15">화장품 사업하겠다는 대표님 뜯어말린 썰 — 브런치</a></li>
+      </ol>
+    </div>
+
+    <div class="refgroup">
+      <h4>환경응력균열 · 안정성 시험</h4>
+      <ol start="27">
+        <li><a href="https://www.sciencedirect.com/science/article/abs/pii/S0142941815002378">Observation and modeling of environmental stress cracking behaviors of high crystalline polypropylene due to scent oils — Polymer Testing (ScienceDirect)</a></li>
+        <li><a href="https://www.prestogroup.com/articles/environmental-stress-crack-resistance-escr-testing-of-plastics/">Environmental Stress Crack Resistance (ESCR) Testing of Plastics — Presto Group</a></li>
+        <li><a href="https://www.ineos.com/globalassets/ineos-group/businesses/ineos-olefins-and-polymers-usa/products/technical-information--patents/ineos-environmental-stress-crack-resistance-of-pe.pdf">Environmental Stress Crack Resistance of Polyethylene — INEOS</a></li>
+        <li><a href="https://www.korea.kr/archive/expDocView.do?docId=27986">화장품 안정성시험 가이드라인 — 식품의약품안전처</a></li>
+      </ol>
+    </div>
+
+    <div class="refgroup">
+      <h4>ODM · 밸류체인 · 벤더 등록</h4>
+      <ol start="31">
+        <li><a href="https://www.pwc.com/kr/ko/insights/industry-focus/samilpwc_k-beauty-guidebook.pdf">K-뷰티 산업 현황 및 회계·세무 Guide Book — 삼일PwC</a></li>
+        <li><a href="https://branit.kr/account/contents/insight/trend-info/6eac4408-d3f7-4ce0-8521-464bf75e5fba">초보 사장님을 위한 화장품 ODM OEM 가이드 — 브랜잇</a></li>
+        <li><a href="https://www.cosmax.com/new/beautiful/sub_beauty_01_business.asp">COSMAX ONE-STOP SOLUTION — 코스맥스</a></li>
+        <li><a href="https://www.hyundai-mseat.com/ko/sustainability/growth-guide-register.asp">협력사 신규등록 및 운용 가이드라인 — 현대엠시트</a></li>
+        <li><a href="https://kaicert.co.kr/blog/iso-22716-cosmetics-gmp/">ISO 22716 화장품 GMP — 우수화장품 제조지침의 핵심 요구사항, KAI인증원</a></li>
+        <li><a href="https://www.sgs.com/ko-kr/services/iso-22716-certification-cosmetics-gmp">ISO 22716 인증 — 화장품 GMP, SGS Korea</a></li>
+        <li><a href="https://www.beautynury.com/news/view/105635/cat/10">[창간특집] K-뷰티의 든든한 지원군 ODM사들 — 뷰티누리</a></li>
+      </ol>
+    </div>
+
+    <div class="refgroup">
+      <h4>머신러닝 · 소량 데이터</h4>
+      <ol start="38">
+        <li><a href="https://www.cell.com/cell-reports-physical-science/fulltext/S2666-3864(22)00212-0">Machine-learning exploration of polymer compatibility — Cell Reports Physical Science</a></li>
+        <li><a href="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC6818118/">Prediction and optimization of epoxy adhesive strength from a small dataset through active learning — PMC</a></li>
+      </ol>
+    </div>
+
+    <div class="refgroup">
+      <h4>비대면 · B2B 이커머스</h4>
+      <ol start="40">
+        <li><a href="https://besuccess.com/%EC%9D%B8%ED%85%8C%EB%A6%AC%EC%96%B4-%EC%84%9C%EB%B9%84%EC%8A%A4-%EC%95%84%ED%8C%8C%ED%8A%B8%EB%A9%98%ED%84%B0%EB%A6%AC-%ED%95%9C%EA%B5%AD%EA%B2%BD%EC%A0%9C%EC%8B%A0%EB%AC%B8%EC%82%AC-%EC%A3%BC/">인테리어 서비스 '아파트멘터리', 한국경제신문사 주최 '대한민국 성장 챔피언 2024' 선정 — beSUCCESS</a></li>
+        <li><a href="https://www.hankyung.com/article/202310094958i">플라스틱 폴리머부터 철강까지…온라인 쇼핑 시대 — 한국경제</a></li>
+        <li><a href="https://bcgblog.kr/hybrid-digital-sales-model/">비대면 B2B 영업 시대 – 포스트 팬데믹, 이제는 과거의 영업방식을 잊어야 할 때 — 보스턴컨설팅그룹(BCG)</a></li>
+        <li><a href="https://www.dhl.com/discover/ko-kr/b2b-advice/b2b-e-commerce-advice/2026-b2b-ecommerce-trend">2026년 주목해야 할 5가지 B2B 이커머스 트렌드 — DHL</a></li>
+        <li><a href="https://www.sap.com/korea/resources/ai-ecommerce-use-cases">전자 상거래의 AI 사용 사례: B2B 판매자가 디지털 성장을 재고하는 방법 — SAP</a></li>
+      </ol>
+    </div>
+
+    <div class="refgroup">
+      <h4>분리배출표시 · 공공데이터</h4>
+      <ol start="45">
+        <li><a href="https://www.cosmorning.com/news/article.html?no=37835">"포장재 재질&amp;분리배출 방법 함께 표시" — 코스모닝</a></li>
+        <li><a href="https://portal.budamgum.or.kr/cmb/portal/epr/system/eprSstmGdce.do?tp=04">분리배출 도안가이드 — 한국환경공단 자원순환통합징수</a></li>
+        <li><a href="https://gscaltexmediahub.com/esg/plastic_recycling_symbols/">"플라스틱도 다 같은 플라스틱이 아냐!" 숫자 확인법 — GS칼텍스 미디어허브</a></li>
+        <li><a href="https://www.data.go.kr/data/15111774/openapi.do">식품의약품안전처_화장품 원료성분정보 — 공공데이터포털</a></li>
+        <li><a href="https://www.data.go.kr/data/15111773/openapi.do">식품의약품안전처_화장품 규제정보 — 공공데이터포털</a></li>
+        <li><a href="https://www.data.go.kr/data/15020628/openapi.do">식품의약품안전처_화장품 관련 정보 — 공공데이터포털</a></li>
+        <li><a href="https://data.mfds.go.kr/">식의약 데이터 포털 — 식품의약품안전처</a></li>
+      </ol>
+    </div>
+
+  </div>
+</section>
+
+<footer>
+  <div>이 보고서는 2026년 8월 4일 기준 공개자료를 근거로 작성되었습니다. 사장님이 제공하신 현장 정보와 아이디어는 본문에 별도 표시했습니다.</div>
+  <div>관련 산출물 — 상용성 데이터베이스 도구(<span style="font-family:var(--font-mono)">tools/compat-db.html</span>), 경험 데이터 인출 프로토콜(<span style="font-family:var(--font-mono)">docs/data-collection-protocol.md</span>)</div>
+</footer>
+
+</div>

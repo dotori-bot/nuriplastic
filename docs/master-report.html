@@ -114,6 +114,23 @@
   .phase .what span { font-size:.85rem; color:var(--ink-2); }
   .cost { font-family:var(--font-mono); font-size:.69rem; color:var(--ink-3); }
 
+  /* figures */
+  figure { margin:0; display:flex; flex-direction:column; gap:.6rem; }
+  .figbox { background:var(--surface); border:1px solid var(--rule); border-radius:3px; padding:1.2rem 1rem; overflow-x:auto; }
+  .figbox svg { display:block; margin:0 auto; max-width:100%; height:auto; }
+  figcaption { font-size:.82rem; color:var(--ink-3); max-width:40rem; }
+  figcaption b { color:var(--ink-2); font-weight:600; }
+  .svg-line   { stroke:var(--ink-3); fill:none; stroke-width:1.4; }
+  .svg-part   { stroke:var(--ink-2); fill:var(--surface-2); stroke-width:1.4; }
+  .svg-fill   { fill:var(--accent-wash); stroke:var(--accent); stroke-width:1.4; }
+  .svg-key    { fill:var(--accent); stroke:var(--accent-2); stroke-width:1.2; }
+  .svg-bad    { fill:var(--fail-wash); stroke:var(--fail); stroke-width:1.4; }
+  .svg-label  { font-family:var(--font-mono); font-size:10px; fill:var(--ink-2); }
+  .svg-label-k{ font-family:var(--font-mono); font-size:10px; fill:var(--accent); font-weight:600; }
+  .svg-label-b{ font-family:var(--font-mono); font-size:10px; fill:var(--fail); font-weight:600; }
+  .svg-title  { font-family:var(--font-sans); font-size:11.5px; fill:var(--ink); font-weight:650; }
+  .svg-dim    { stroke:var(--ink-3); stroke-width:1; stroke-dasharray:3 3; fill:none; }
+
   /* references */
   .refs { display:flex; flex-direction:column; gap:1.3rem; }
   .refgroup { display:flex; flex-direction:column; gap:.5rem; }
@@ -139,7 +156,7 @@
     <span>2026-08-04</span>
     <span>대상: 화장품 부자재 유통</span>
     <span>추진 인력: 2인 (기획·디자인 / AI)</span>
-    <span>참고문헌 51건</span>
+    <span>참고문헌 68건</span>
   </div>
 </header>
 
@@ -156,7 +173,8 @@
     <li><span class="tn">08</span><a href="#s8">2인 팀 실행 방향</a></li>
     <li><span class="tn">09</span><a href="#s9">통합 로드맵</a></li>
     <li><span class="tn">10</span><a href="#s10">리스크와 미확인 사항</a></li>
-    <li><span class="tn">11</span><a href="#s11">참고문헌</a></li>
+    <li><span class="tn">11</span><a href="#s11">소비자 목소리 — 잔량 · 개스킷 · 리필</a></li>
+    <li><span class="tn">12</span><a href="#s12">참고문헌</a></li>
   </ol>
 </nav>
 
@@ -1133,7 +1151,266 @@
 
 <!-- 11 -->
 <section id="s11">
-  <div class="sec-head"><div class="sec-num">11</div><h2 class="sec-title">참고문헌</h2></div>
+  <div class="sec-head"><div class="sec-num">11</div><h2 class="sec-title">소비자 목소리 — 잔량 · 개스킷 · 리필</h2></div>
+
+  <p>
+    앞선 장들이 규제와 산업 구조를 다뤘다면, 이 장은 <strong>최종 소비자가 실제로 무엇에 불만인지</strong>를 봅니다.
+    커뮤니티 원문(실제 댓글)은 수집하지 못했고, 대신 소비자원 조사·학술 연구·언론 보도를 근거로 삼았습니다.
+    <strong>정량 수치가 나온다는 점에서 근거로는 오히려 더 단단합니다.</strong>
+  </p>
+
+  <h3>불만 1 — 잔량. 가장 크고 가장 정량화되어 있습니다</h3>
+
+  <div class="scroller">
+    <table>
+      <thead><tr><th>토출 방식</th><th class="num">제품 잔존율</th><th>출처</th></tr></thead>
+      <tbody>
+        <tr><td>펌프 디스펜서</td><td class="num"><strong>최대 26%</strong></td><td>[53]</td></tr>
+        <tr><td>자(jar) · 에어리스</td><td class="num">1% 미만</td><td>[53]</td></tr>
+        <tr><td>바디로션 (국내 보도)</td><td class="num">표기량의 20% 잔존</td><td>[52]</td></tr>
+        <tr><td>에어리스 배출률</td><td class="num">충전량의 최대 95%</td><td>[55]</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <p>
+    소비자들은 이미 자구책을 만들어 공유하고 있습니다 — <strong>용기를 거꾸로 세워 하루 두기</strong>,
+    <strong>펌프를 완전히 뽑고 용기를 눌러 짜내기</strong>.<sup>[52]</sup>
+    불만이 체념 단계를 지나 노하우가 된 상태입니다.
+  </p>
+  <p>
+    반대편 지표도 명확합니다. 소비자 <strong>70%가 에어리스를 더 혁신적으로 인식</strong>하고,
+    에어리스를 도입한 브랜드는 제품 폐기가 <strong>25% 감소</strong>했습니다.
+    한 중견 스킨케어 브랜드는 오염과 낭비 클레임이 반복되자 자에서 에어리스로 전환했습니다.<sup>[55][54]</sup>
+  </p>
+
+  <h4>에어리스 두 방식 — 피스톤형과 백인보틀형</h4>
+
+  <figure>
+    <div class="figbox">
+      <svg viewBox="0 0 640 260" role="img" aria-label="일반 펌프, 피스톤형 에어리스, 백인보틀형 에어리스의 구조와 잔량 비교 단면도">
+        <!-- 1. 일반 펌프 -->
+        <text x="30" y="20" class="svg-title">① 일반 펌프</text>
+        <rect x="55" y="34" width="14" height="16" class="svg-part" rx="2"/>
+        <rect x="40" y="50" width="44" height="12" class="svg-part" rx="2"/>
+        <rect x="35" y="62" width="54" height="150" class="svg-part" rx="4"/>
+        <!-- 딥튜브 -->
+        <line x1="62" y1="62" x2="62" y2="196" class="svg-line"/>
+        <!-- 내용물 -->
+        <path d="M39 120 h46 v88 a4 4 0 0 1 -4 4 h-38 a4 4 0 0 1 -4 -4 z" class="svg-fill"/>
+        <!-- 잔량 영역 -->
+        <path d="M39 196 h46 v12 a4 4 0 0 1 -4 4 h-38 a4 4 0 0 1 -4 -4 z" class="svg-bad"/>
+        <text x="96" y="203" class="svg-label-b">잔량</text>
+        <text x="96" y="215" class="svg-label-b">최대 26%</text>
+        <text x="35" y="235" class="svg-label">딥튜브가 바닥·벽면</text>
+        <text x="35" y="247" class="svg-label">내용물에 못 닿음</text>
+
+        <!-- 2. 피스톤형 에어리스 -->
+        <text x="245" y="20" class="svg-title">② 피스톤형 에어리스</text>
+        <rect x="270" y="34" width="14" height="16" class="svg-part" rx="2"/>
+        <rect x="255" y="50" width="44" height="12" class="svg-part" rx="2"/>
+        <rect x="250" y="62" width="54" height="150" class="svg-part" rx="4"/>
+        <!-- 내용물 -->
+        <path d="M254 120 h46 v66 h-46 z" class="svg-fill"/>
+        <!-- 피스톤 -->
+        <rect x="254" y="186" width="46" height="10" class="svg-key" rx="2"/>
+        <text x="311" y="193" class="svg-label-k">피스톤</text>
+        <!-- 상승 화살표 -->
+        <path d="M277 178 l0 -12 m-4 4 l4 -4 l4 4" class="svg-line"/>
+        <!-- 공기 유입구 -->
+        <path d="M277 212 l0 8 m-4 -4 l4 4 l4 -4" class="svg-line"/>
+        <text x="290" y="222" class="svg-label">공기</text>
+        <text x="250" y="235" class="svg-label">바닥 원판이 진공에</text>
+        <text x="250" y="247" class="svg-label">밀려 올라옴 · 잔량 5% 내외</text>
+
+        <!-- 3. 백인보틀형 -->
+        <text x="460" y="20" class="svg-title">③ 백인보틀 (파우치형)</text>
+        <rect x="485" y="34" width="14" height="16" class="svg-part" rx="2"/>
+        <rect x="470" y="50" width="44" height="12" class="svg-part" rx="2"/>
+        <rect x="465" y="62" width="54" height="150" class="svg-part" rx="4"/>
+        <!-- 이너백: 쪼그라든 형태 -->
+        <path d="M492 66 c-18 6 -22 22 -14 34 c-10 10 -6 26 4 32 c-12 8 -8 26 2 32 c-8 10 -4 24 8 28 c12 -4 16 -18 8 -28 c10 -6 14 -24 2 -32 c10 -6 14 -22 4 -32 c8 -12 4 -28 -14 -34 z" class="svg-key"/>
+        <text x="524" y="120" class="svg-label-k">이너백</text>
+        <text x="524" y="132" class="svg-label-k">(스스로</text>
+        <text x="524" y="144" class="svg-label-k">쪼그라듦)</text>
+        <text x="465" y="235" class="svg-label">유연한 주머니가 접히며</text>
+        <text x="465" y="247" class="svg-label">공기 완전 차단 · 잔량 최소</text>
+      </svg>
+    </div>
+    <figcaption>
+      사장님이 말씀하신 <b>"실리콘처럼 스스로 줄어들며 진공으로 밀어올리는 용기"</b>가 ③번
+      <b>백인보틀(Bag-in-Bottle)</b>입니다. 국내에서는 <b>파우치형 에어리스</b> 또는
+      <b>이너백 방식</b>으로 부릅니다. 병 안에 유연한 주머니가 들어 있고, 펌프 압력으로
+      내용물이 빠지면 주머니가 스스로 접혀 들어가 공기 자리를 남기지 않습니다.
+    </figcaption>
+  </figure>
+
+  <div class="scroller">
+    <table>
+      <thead><tr><th>구분</th><th>피스톤형 (Piston)</th><th>백인보틀 (Bag-in-Bottle)</th></tr></thead>
+      <tbody>
+        <tr><td>작동 원리</td><td>바닥의 밀폐 원판이 토출할 때마다 상승</td><td>내부 파우치가 스스로 접히며 수축</td></tr>
+        <tr><td>공기 접촉</td><td>차단 (피스톤 하단으로만 공기 유입)</td><td><strong>완전 차단</strong></td></tr>
+        <tr><td>적용</td><td>크림·세럼·로션. 스킨케어 표준</td><td>병·자 모두 가능. 고점도 대응 유리</td></tr>
+        <tr><td>보급도</td><td>가장 흔함</td><td>상대적으로 적음 — <strong>차별화 여지</strong></td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p>
+    참고로 <strong>에어리스 용기의 일반 단가는 외관을 뺀 필수 구성품 기준 700~1,000원</strong> 수준으로 형성되어 있습니다.<sup>[25]</sup>
+    잔량 26%를 줄이는 대가로 감당할 만한 금액인지가 브랜드의 판단 기준이 됩니다.
+  </p>
+
+  <h3>불만 2 — 배송 중 누액. 그리고 개스킷</h3>
+
+  <div class="callout alarm">
+    <div class="label">브랜드에겐 생존 문제</div>
+    <p>
+      "비싼 화장품이 택배 배송 중에 단 한 방울이라도 새면 그날로 끝입니다.
+      악성 리뷰가 바로 달리고 <strong>전량 반품 사태</strong>가 벌어집니다."
+    </p>
+  </div>
+  <p>
+    누액 원인으로 지목되는 것들이 정확히 부품 조합 문제입니다 —
+    <strong>개스킷 손상, 나사 마개 풀림, 압착 불량, 펌프 본체 균열, 병목 파손.</strong>
+  </p>
+
+  <h4>개스킷이란</h4>
+  <p>
+    <strong>개스킷(gasket)은 병 입구와 캡 사이에 끼워 틈을 메우는 얇은 링 또는 원판 부재</strong>입니다.
+    캡을 잠그면 병 입구의 평평한 윗면(넥 실링면)에 눌려 압착되면서 밀폐가 만들어집니다.
+    현장에서는 <em>패킹</em>, <em>라이너</em>로도 부르며 엄밀히는 조금씩 다르지만 실무에서는 혼용됩니다.
+  </p>
+
+  <figure>
+    <div class="figbox">
+      <svg viewBox="0 0 620 250" role="img" aria-label="개스킷의 위치와 정상 압착 상태 및 압착 불량으로 누액이 발생하는 상태의 단면 비교">
+        <!-- 좌: 정상 -->
+        <text x="20" y="20" class="svg-title">정상 압착 — 밀폐</text>
+        <!-- 캡 -->
+        <path d="M50 40 h150 v14 h-8 v46 h-134 v-46 h-8 z" class="svg-part"/>
+        <text x="205" y="52" class="svg-label">캡</text>
+        <!-- 나사산 -->
+        <path d="M66 62 h10 M66 72 h10 M66 82 h10 M174 62 h10 M174 72 h10 M174 82 h10" class="svg-line"/>
+        <text x="205" y="78" class="svg-label">나사산</text>
+        <!-- 개스킷 (압착됨) -->
+        <rect x="76" y="54" width="98" height="8" class="svg-key" rx="1"/>
+        <text x="205" y="64" class="svg-label-k">개스킷</text>
+        <!-- 병 넥 -->
+        <path d="M76 62 h-12 v50 h-14 v70 h150 v-70 h-14 v-50 h-12" class="svg-part"/>
+        <text x="205" y="120" class="svg-label">병 넥</text>
+        <!-- 내용물 -->
+        <rect x="52" y="130" width="146" height="50" class="svg-fill" rx="2"/>
+        <!-- 압착 화살표 -->
+        <path d="M125 44 l0 8 m-4 -4 l4 4 l4 -4" class="svg-line"/>
+        <text x="60" y="205" class="svg-label-k">체결 토크로 개스킷이 눌려</text>
+        <text x="60" y="217" class="svg-label-k">넥 실링면에 밀착 → 누액 없음</text>
+
+        <!-- 우: 불량 -->
+        <text x="350" y="20" class="svg-title">압착 불량 — 누액</text>
+        <path d="M380 34 h150 v14 h-8 v46 h-134 v-46 h-8 z" class="svg-part"/>
+        <path d="M396 56 h10 M396 66 h10 M396 76 h10 M504 56 h10 M504 66 h10 M504 76 h10" class="svg-line"/>
+        <!-- 개스킷 (변형/이격) -->
+        <rect x="406" y="48" width="98" height="6" class="svg-bad" rx="1"/>
+        <!-- 틈 -->
+        <path d="M406 60 h98" class="svg-dim"/>
+        <text x="536" y="58" class="svg-label-b">틈</text>
+        <!-- 병 넥 -->
+        <path d="M406 62 h-12 v50 h-14 v70 h150 v-70 h-14 v-50 h-12" class="svg-part"/>
+        <rect x="382" y="130" width="146" height="50" class="svg-fill" rx="2"/>
+        <!-- 누액 방울 -->
+        <path d="M394 64 c0 6 -6 8 -6 14 a6 6 0 0 0 12 0 c0 -6 -6 -8 -6 -14 z" class="svg-bad"/>
+        <path d="M390 96 c0 4 -4 6 -4 10 a4 4 0 0 0 8 0 c0 -4 -4 -6 -4 -10 z" class="svg-bad"/>
+        <text x="350" y="205" class="svg-label-b">토크 부족 · 개스킷 재질 부적합 ·</text>
+        <text x="350" y="217" class="svg-label-b">화학적 팽윤·경화 → 밀폐 실패</text>
+        <text x="350" y="234" class="svg-label">과도한 토크는 반대로 병목 크랙을 유발합니다</text>
+      </svg>
+    </div>
+    <figcaption>
+      개스킷은 <b>소모품이 아니라 밀폐 성능 그 자체</b>입니다. 재질(PE 폼·실리콘·고무·PTFE)이
+      내용물과 맞지 않으면 <b>팽윤하거나 딱딱해져</b> 압착력을 잃습니다. 특히 에탄올과 시트러스 계열
+      향료는 개스킷을 공격합니다 — 5장에서 다룬 환경응력균열이 병뿐 아니라 <b>개스킷에도 똑같이
+      적용된다</b>는 뜻입니다.
+    </figcaption>
+  </figure>
+
+  <div class="callout">
+    <div class="label">데이터 모델에 반영해야 할 점</div>
+    <p>
+      상용성 데이터베이스를 화학적 반응(ESC) 중심으로 설계했지만,
+      소비자 불만을 보면 <strong>물리적 호환성 문제가 최소한 그만큼 큽니다.</strong>
+      입력 항목에 <strong>토출 방식</strong>(일반 펌프 / 피스톤 에어리스 / 백인보틀 / 디스크캡 / 스포이드 / 스프레이)과
+      <strong>개스킷 재질</strong>을 추가해야 잔량과 누액의 원인을 역추적할 수 있습니다.
+    </p>
+    <p>
+      업계에는 이미 <em>"펌프-클로저 호환성 개선으로 뷰티 패키징 클레임 줄이기"</em>라는 담론이 있습니다.<sup>[54]</sup>
+      <strong>누리가 하려는 일에 시장이 이미 이름을 붙여둔 셈입니다.</strong>
+    </p>
+  </div>
+
+  <h3>불만 3 — "예쁜 쓰레기". 소비자가 원인까지 알고 있습니다</h3>
+  <p>
+    <strong>한국소비자원이 상위 15개사 대표 제품 294개를 조사한 결과 62.6%(184개)가 '재활용 어려움'</strong> 등급이었습니다.<sup>[56]</sup>
+    2장에서 인용한 62.6%의 원 출처가 이 조사입니다.
+  </p>
+  <p>
+    주목할 것은 인식의 수준입니다. 소비자는 <strong>"내가 씻어서 분리배출해도 복합재질이라 선별장에서 버려진다"</strong>는
+    사실을 알고 있고, <strong>그 원인이 심미성 때문에 복합재질을 쓰기 때문</strong>이라는 것까지 알고 있습니다.<sup>[57][58]</sup>
+    시민 캠페인은 화장품 포장재의 90%가 재활용되지 않는다고 주장합니다.<sup>[59]</sup>
+  </p>
+  <p>
+    업계도 반응했습니다 — 로레알코리아·아모레퍼시픽·LG생활건강이 <strong>2030 화장품 플라스틱 이니셔티브</strong>로
+    '재활용 어려움' 제품 생산 중단과 플라스틱 30% 감축을 약속했습니다.<sup>[58]</sup>
+  </p>
+
+  <h3>불만 4 — 리필. 한국은 실패했고, 이유가 용기입니다</h3>
+
+  <div class="scroller">
+    <table>
+      <thead><tr><th>지표</th><th class="num">수치</th><th>출처</th></tr></thead>
+      <tbody>
+        <tr><td>리필 화장품 인지율 (한국)</td><td class="num">약 50% <span style="color:var(--ink-3)">(영국 75%, 미국 63%)</span></td><td>[63]</td></tr>
+        <tr><td>리필스테이션 불만 1위 — 유통기한 등 정보 확인 불가</td><td class="num">24.3%</td><td>[61]</td></tr>
+        <tr><td><strong>표준 용기가 필요하다</strong></td><td class="num"><strong>600명 중 74%</strong></td><td>[62]</td></tr>
+        <tr><td>향후 이용 의향</td><td class="num">81.3%</td><td>[61]</td></tr>
+        <tr><td>리필 매장 가격</td><td class="num">본품 대비 40% 저렴</td><td>[64]</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <p>
+    <strong>한때 유행하던 리필스테이션이 대부분 사라졌습니다.</strong><sup>[60]</sup>
+    실패 원인은 가격이 아닙니다 — 40% 싼데도 실패했습니다.
+    <strong>위생과 용기</strong>였습니다. 소비자가 직접 빈 용기를 세척해야 하는 것이 진입장벽이었고,
+    조제관리사가 있어야 리필이 가능하다는 규제도 걸렸습니다(규제 샌드박스로 일부 완화).<sup>[63]</sup>
+  </p>
+
+  <div class="callout">
+    <div class="label">'누리 준전용 규격' 아이디어에 대한 직접 증거</div>
+    <p>
+      <strong>"표준 용기가 필요하다 — 소비자 600명 중 74%"</strong>는
+      8장에서 제안한 <strong>누리 고유 준전용 규격</strong> 구상의 수요 근거가 됩니다.
+      소비자가 표준화를 명시적으로 원한다고 답한 자료는 흔치 않습니다.
+      게다가 이용 의향은 81.3%로 남아 있어, <strong>수요가 사라진 게 아니라 용기 문제로 막혀 있는 상태</strong>입니다.
+    </p>
+  </div>
+
+  <h3>콘텐츠 소재 — 7장 플라이휠에 바로 투입</h3>
+  <p>이 장의 수치들은 그대로 검색 유입용 콘텐츠가 됩니다. 지금 시장에 이런 글이 없습니다.</p>
+  <ul>
+    <li>"펌프 용기는 최대 26%를 못 씁니다 — 브랜드가 잃는 원가"</li>
+    <li>"리필스테이션이 실패한 진짜 이유: 소비자 74%가 표준 용기를 원했다"</li>
+    <li>"배송 누액 전량 반품, 개스킷 규격부터 확인하십시오"</li>
+    <li>"에어리스 피스톤형과 백인보틀, 무엇을 골라야 하나"</li>
+  </ul>
+  <p>
+    카탈로그가 아니라 <strong>판단 근거를 주는 글</strong>이고, 인디브랜드 창업자가 실제로 검색하는 질문에 답합니다.
+  </p>
+</section>
+
+<!-- 12 -->
+<section id="s12">
+  <div class="sec-head"><div class="sec-num">12</div><h2 class="sec-title">참고문헌</h2></div>
 
   <div class="refs">
 
@@ -1239,6 +1516,47 @@
         <li><a href="https://www.data.go.kr/data/15111773/openapi.do">식품의약품안전처_화장품 규제정보 — 공공데이터포털</a></li>
         <li><a href="https://www.data.go.kr/data/15020628/openapi.do">식품의약품안전처_화장품 관련 정보 — 공공데이터포털</a></li>
         <li><a href="https://data.mfds.go.kr/">식의약 데이터 포털 — 식품의약품안전처</a></li>
+      </ol>
+    </div>
+
+    <div class="refgroup">
+      <h4>소비자 불만 — 잔량 · 누액 · 에어리스</h4>
+      <ol start="52">
+        <li><a href="https://news.sbs.co.kr/news/endPage.do?news_id=N1000855270">펌프형 용기, 20% 손해…끝까지 눌러 써도 남아 — SBS 뉴스</a></li>
+        <li><a href="https://ideas.repec.org/a/gam/jsusta/v17y2025i3p1056-d1578706.html">Product Waste Resulting from Insufficient Emptiability of Cosmetic Packaging and Its Economic and Environmental Implications — Sustainability (2025)</a></li>
+        <li><a href="https://www.thepinnaclelist.com/articles/reducing-beauty-packaging-complaints-through-better-pump-and-closure-compatibility/">Reducing Beauty Packaging Complaints Through Better Pump and Closure Compatibility — The Pinnacle List</a></li>
+        <li><a href="https://www.cosmopacks.com/what-is-an-airless-pump-bottle-and-why-are-skincare-brands-switching-to-it/">What Is an Airless Pump Bottle, and Why Are Skincare Brands Switching to It? — Cosmopacks</a></li>
+      </ol>
+    </div>
+
+    <div class="refgroup">
+      <h4>소비자 인식 — 재활용 · 예쁜 쓰레기</h4>
+      <ol start="56">
+        <li><a href="https://www.kca.go.kr/smartconsumer/board/download.do?menukey=7301&fno=10038238&bid=00000146&did=1003486069">화장품 용기 소비자문제 조사 — 한국소비자원</a></li>
+        <li><a href="https://www.allurekorea.com/2024/03/19/%ED%99%94%EC%9E%A5%ED%92%88-%EC%9E%AC%ED%99%9C%EC%9A%A9%EC%9D%98-%EC%A7%84%EC%8B%A4-%ED%99%94%EC%9E%A5%ED%92%88%EC%9D%80-%EB%AA%A8%EB%91%90-%EC%98%88%EC%81%9C-%EC%93%B0%EB%A0%88%EA%B8%B0%EA%B0%80/">화장품 재활용의 진실, 화장품은 모두 예쁜 쓰레기가 된다? — 얼루어 코리아</a></li>
+        <li><a href="https://www.newspenguin.com/news/articleView.html?idxno=4350">화장품 업계에 부는 새바람 "굿바이 예쁜 쓰레기" — 뉴스펭귄</a></li>
+        <li><a href="https://campaigns.do/campaigns/290">[화장품 어택] 화장품 포장재 90% 재활용 안 되는 예쁜 쓰레기 — 빠띠 캠페인즈</a></li>
+      </ol>
+    </div>
+
+    <div class="refgroup">
+      <h4>리필 — 소비자 반응과 실패 원인</h4>
+      <ol start="60">
+        <li><a href="https://v.daum.net/v/37w5dSKpwy">싸고 친환경이라더니? 리필스테이션이 불편한 진짜 이유 — 데일리</a></li>
+        <li><a href="https://cosmorning.com/news/article.html?no=44910">"리필스테이션 가고 싶지만 정보 부족" — 코스모닝</a></li>
+        <li><a href="https://www.beautynury.com/news/view/100166/cat/20">리필 샴푸 가격 저렴, 용기·매장 접근성은 불편 — 뷰티누리</a></li>
+        <li><a href="https://www.vogue.co.kr/2023/07/03/%EB%A6%AC%ED%95%84-%ED%99%94%EC%9E%A5%ED%92%88%EA%B3%BC-%EC%A7%80%EC%86%8D-%EA%B0%80%EB%8A%A5%EC%84%B1%EC%9D%98-%EC%83%81%EA%B4%80-%EA%B4%80%EA%B3%84/">리필 화장품과 지속 가능성의 상관관계? — 보그 코리아</a></li>
+        <li><a href="https://www.hankyung.com/article/202202105306g">"본품보다 40% 싸게 판다"…화장품 '리필 매장' 가봤더니 — 한국경제</a></li>
+      </ol>
+    </div>
+
+    <div class="refgroup">
+      <h4>에어리스 구조 — 피스톤형 · 백인보틀</h4>
+      <ol start="65">
+        <li><a href="https://www.eurovetrocap.com/en/airless-bottle-what-it-is-and-how-it-works/">Airless bottle: what it is and how it works — Eurovetrocap</a></li>
+        <li><a href="https://www.beautypackaging.com/harnessing-the-advantages-of-airless-packaging/">Harnessing the Advantages of Airless Packaging — Beauty Packaging</a></li>
+        <li><a href="https://lumson.com/en/airless/">Airless Packaging Solutions for Cosmetics — Lumson</a></li>
+        <li><a href="https://www.beautynury.com/news/view/34326/cat/10">화장품 용기 '에어리스 시스템' 사용 확산 — 뷰티누리</a></li>
       </ol>
     </div>
 

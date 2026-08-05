@@ -214,6 +214,7 @@
               <option value="변형">변형 · 수축 팽윤</option>
               <option value="백화">백화 · 흐림</option>
               <option value="헛돎">캡 헛돎 · 체결 불량</option>
+              <option value="잔량과다">잔량 과다 · 다 못 씀</option>
               <option value="변색">변색 · 이취</option>
               <option value="기타이상">기타 이상</option>
             </select></div>
@@ -227,6 +228,10 @@
           <div class="f"><label>pH</label>
             <select name="ph"><option>불명</option><option>산성 (4 미만)</option><option>약산성 (4~6)</option><option>중성 (6~8)</option><option>알칼리 (8+)</option></select></div>
 
+          <div class="f"><label>토출 방식</label>
+            <select name="dispenser"><option>불명</option><option>일반 펌프</option><option>에어리스 · 피스톤형</option><option>에어리스 · 백인보틀</option><option>디스크캡</option><option>스포이드</option><option>스프레이</option><option>튜브</option><option>자 · 개방형</option></select></div>
+          <div class="f"><label>개스킷 재질</label>
+            <select name="gasket"><option>불명</option><option>없음</option><option>PE 폼</option><option>실리콘</option><option>고무</option><option>PTFE</option><option>유도실링 (알루미늄)</option></select></div>
           <div class="f"><label>성형 방식</label>
             <select name="molding"><option>불명</option><option>사출</option><option>블로우</option><option>압출블로우</option><option>사출블로우</option></select></div>
           <div class="f"><label>용기 제조사</label><input type="text" name="supplier" placeholder="선택 입력"></div>
@@ -275,6 +280,8 @@
         <div class="f"><label>에탄올</label><select id="q-ethanol"><option value="">무관</option><option>없음</option><option>~10%</option><option>10~30%</option><option>30%+</option></select></div>
         <div class="f"><label>향료</label><select id="q-fragrance"><option value="">무관</option><option>없음</option><option>시트러스·리모넨</option><option>플로럴</option><option>우디·허브</option><option>기타 향료</option></select></div>
         <div class="f"><label>계면활성제</label><select id="q-surfactant"><option value="">무관</option><option>없음</option><option>있음</option><option>고농도</option></select></div>
+        <div class="f"><label>토출 방식</label><select id="q-dispenser"><option value="">무관</option><option>일반 펌프</option><option>에어리스 · 피스톤형</option><option>에어리스 · 백인보틀</option><option>디스크캡</option><option>스포이드</option><option>스프레이</option><option>튜브</option><option>자 · 개방형</option></select></div>
+        <div class="f"><label>개스킷 재질</label><select id="q-gasket"><option value="">무관</option><option>없음</option><option>PE 폼</option><option>실리콘</option><option>고무</option><option>PTFE</option><option>유도실링 (알루미늄)</option></select></div>
         <div class="f"><label>유통 경로</label><select id="q-route"><option value="">무관</option><option>내수</option><option>수출·해상</option><option>수출·항공</option></select></div>
       </div>
     </div>
@@ -328,7 +335,7 @@
   var KEY = "nuri_compat_v1";
   var RESINS = ["PET","PETG","PP","HDPE","LDPE","AS·SAN","ABS","PCR-PP","PCR-PET","아크릴","유리","기타"];
   var PRODUCTS = ["토너·미스트","에센스·세럼","로션·에멀전","크림","오일·밤","클렌저·폼","선케어","색조","헤어·바디","기타"];
-  var FIELDS = ["date","customer","source","product","resin","outcome","ethanol","fragrance","surfactant","ph","molding","supplier","capping","route","days","note"];
+  var FIELDS = ["date","customer","source","product","resin","outcome","ethanol","fragrance","surfactant","ph","dispenser","gasket","molding","supplier","capping","route","days","note"];
 
   var rows = load();
 
@@ -455,7 +462,7 @@
   }
 
   /* ---------- diagnosis ---------- */
-  var QMAP = { resin: "#q-resin", product: "#q-product", ethanol: "#q-ethanol", fragrance: "#q-fragrance", surfactant: "#q-surfactant", route: "#q-route" };
+  var QMAP = { resin: "#q-resin", product: "#q-product", ethanol: "#q-ethanol", fragrance: "#q-fragrance", surfactant: "#q-surfactant", dispenser: "#q-dispenser", gasket: "#q-gasket", route: "#q-route" };
   function fillQ() {
     var rs = $("#q-resin"), ps = $("#q-product");
     var rv = rs.value, pv = ps.value;
@@ -537,7 +544,7 @@
   /* ---------- list ---------- */
   function buildTable(list, withDelete) {
     var t = el("table"), thead = el("thead"), tr = el("tr");
-    var cols = ["시기", "고객사", "제형", "수지", "결과", "에탄올", "향료", "계면", "경로", "일수", "근거"];
+    var cols = ["시기", "고객사", "제형", "수지", "결과", "토출", "개스킷", "에탄올", "향료", "경로", "일수", "근거"];
     if (withDelete) cols.push("");
     cols.forEach(function (c) { tr.appendChild(el("th", null, c)); });
     thead.appendChild(tr); t.appendChild(thead);
@@ -551,9 +558,10 @@
       var td = el("td");
       td.appendChild(el("span", "pill " + (isFail(r) ? "bad" : "ok"), r.outcome || "—"));
       x.appendChild(td);
+      x.appendChild(el("td", null, r.dispenser || "—"));
+      x.appendChild(el("td", null, r.gasket || "—"));
       x.appendChild(el("td", null, r.ethanol || "—"));
       x.appendChild(el("td", null, r.fragrance || "—"));
-      x.appendChild(el("td", null, r.surfactant || "—"));
       x.appendChild(el("td", null, r.route || "—"));
       x.appendChild(el("td", "mono", r.days || "—"));
       var ts = el("td"); ts.appendChild(el("span", "pill src", r.source || "—")); x.appendChild(ts);
@@ -667,6 +675,8 @@
         customer: "예시 " + String.fromCharCode(65 + (i % 8)), source: i % 3 === 0 ? "기록" : "기억",
         product: s[1], resin: s[0], outcome: s[4], ethanol: s[2], fragrance: s[3],
         surfactant: s[1] === "클렌저·폼" ? "고농도" : "없음", ph: "불명",
+        dispenser: s[1] === "크림" ? (i % 3 === 0 ? "에어리스 · 피스톤형" : "자 · 개방형") : (s[1] === "클렌저·폼" ? "일반 펌프" : (s[1] === "에센스·세럼" ? "스포이드" : "일반 펌프")),
+        gasket: i % 4 === 0 ? "실리콘" : (i % 4 === 1 ? "PE 폼" : (i % 4 === 2 ? "없음" : "불명")),
         molding: s[0] === "HDPE" ? "블로우" : "사출", supplier: "", capping: i % 2 ? "자동" : "수동",
         route: i % 5 === 0 ? "수출·해상" : "내수", days: s[4] === "정상" ? "" : String(20 + (i * 7) % 120),
         note: "예시 데이터 — 실제 근거 아님"

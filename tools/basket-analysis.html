@@ -1,0 +1,629 @@
+<title>누리플라스틱 거래 조합 분석</title>
+<style>
+  :root {
+    --bg:#F4F6F5; --surface:#FFFFFF; --surface-2:#EAEEEC;
+    --ink:#171C1E; --ink-2:#454F51; --ink-3:#6B7679;
+    --rule:#D3DAD8; --rule-soft:#E3E8E6;
+    --accent:#0E6A64; --accent-ink:#FFFFFF; --accent-wash:#DDECEA;
+    --fail:#A6301C; --fail-wash:#F6E1DC;
+    --warn:#96650F; --warn-wash:#F6EBD6;
+    --pass:#2F6A38; --pass-wash:#DFEDE0;
+    --font-sans:"Pretendard Variable",Pretendard,-apple-system,BlinkMacSystemFont,"Apple SD Gothic Neo","Malgun Gothic","Noto Sans KR",system-ui,sans-serif;
+    --font-mono:ui-monospace,SFMono-Regular,"SF Mono",Menlo,Consolas,"Liberation Mono",monospace;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg:#101413; --surface:#171C1B; --surface-2:#1E2523;
+      --ink:#E8EDEB; --ink-2:#B3BDBA; --ink-3:#8A9694;
+      --rule:#2C3634; --rule-soft:#232B2A;
+      --accent:#4FB5AC; --accent-ink:#0B1413; --accent-wash:#12302E;
+      --fail:#E0785F; --fail-wash:#331B15;
+      --warn:#D6A344; --warn-wash:#2F2513;
+      --pass:#6FB077; --pass-wash:#172A19;
+    }
+  }
+  :root[data-theme="dark"] {
+    --bg:#101413; --surface:#171C1B; --surface-2:#1E2523;
+    --ink:#E8EDEB; --ink-2:#B3BDBA; --ink-3:#8A9694;
+    --rule:#2C3634; --rule-soft:#232B2A;
+    --accent:#4FB5AC; --accent-ink:#0B1413; --accent-wash:#12302E;
+    --fail:#E0785F; --fail-wash:#331B15;
+    --warn:#D6A344; --warn-wash:#2F2513;
+    --pass:#6FB077; --pass-wash:#172A19;
+  }
+  :root[data-theme="light"] {
+    --bg:#F4F6F5; --surface:#FFFFFF; --surface-2:#EAEEEC;
+    --ink:#171C1E; --ink-2:#454F51; --ink-3:#6B7679;
+    --rule:#D3DAD8; --rule-soft:#E3E8E6;
+    --accent:#0E6A64; --accent-ink:#FFFFFF; --accent-wash:#DDECEA;
+    --fail:#A6301C; --fail-wash:#F6E1DC;
+    --warn:#96650F; --warn-wash:#F6EBD6;
+    --pass:#2F6A38; --pass-wash:#DFEDE0;
+  }
+
+  body { background:var(--bg); color:var(--ink); font-family:var(--font-sans); font-size:15px; line-height:1.6; -webkit-font-smoothing:antialiased; word-break:keep-all; }
+  .app { max-width:66rem; margin:0 auto; padding:2rem 1.25rem 5rem; display:flex; flex-direction:column; gap:1.4rem; }
+
+  .hd { display:flex; flex-direction:column; gap:.5rem; }
+  .hd .eyebrow { font-family:var(--font-mono); font-size:.7rem; letter-spacing:.15em; text-transform:uppercase; color:var(--accent); }
+  .hd h1 { margin:0; font-size:clamp(1.5rem,4vw,2rem); font-weight:700; letter-spacing:-.02em; line-height:1.25; }
+  .hd p { margin:0; color:var(--ink-2); max-width:46rem; font-size:.94rem; }
+
+  .card { background:var(--surface); border:1px solid var(--rule); border-radius:4px; padding:1.1rem 1.15rem; display:flex; flex-direction:column; gap:.85rem; }
+  .card > h2 { margin:0; font-size:1rem; font-weight:650; display:flex; align-items:baseline; gap:.5rem; }
+  .card > h2 .step { font-family:var(--font-mono); font-size:.7rem; color:var(--accent); letter-spacing:.1em; }
+  .hint { margin:0; font-size:.84rem; color:var(--ink-3); }
+  .hint b { color:var(--ink-2); }
+
+  .grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(11rem,1fr)); gap:.7rem; }
+  .f { display:flex; flex-direction:column; gap:.25rem; }
+  .f label { font-family:var(--font-mono); font-size:.68rem; letter-spacing:.07em; text-transform:uppercase; color:var(--ink-3); }
+  .f label .req { color:var(--accent); }
+  .f select, .f input {
+    font-family:var(--font-sans); font-size:.88rem; color:var(--ink);
+    background:var(--bg); border:1px solid var(--rule); border-radius:3px; padding:.45rem .55rem; width:100%;
+  }
+  .f select:focus, .f input:focus { outline:2px solid var(--accent); outline-offset:-1px; border-color:var(--accent); }
+
+  .row { display:flex; flex-wrap:wrap; gap:.5rem; align-items:center; }
+  button.btn { appearance:none; font-family:var(--font-sans); font-size:.86rem; font-weight:600; cursor:pointer;
+    background:var(--accent); color:var(--accent-ink); border:1px solid var(--accent); border-radius:3px; padding:.5rem 1rem; }
+  button.btn.ghost { background:transparent; color:var(--ink-2); border-color:var(--rule); font-weight:500; }
+  button.btn.ghost:hover { color:var(--ink); border-color:var(--ink-3); }
+  button.btn:disabled { opacity:.45; cursor:not-allowed; }
+  button.btn:focus-visible { outline:2px solid var(--accent); outline-offset:2px; }
+
+  .stats { display:grid; grid-template-columns:repeat(auto-fit,minmax(8rem,1fr)); gap:.5rem; }
+  .stat { background:var(--surface); border:1px solid var(--rule); border-radius:3px; padding:.7rem .85rem; display:flex; flex-direction:column; gap:.15rem; }
+  .stat .v { font-family:var(--font-mono); font-size:1.3rem; font-variant-numeric:tabular-nums; line-height:1.1; }
+  .stat .k { font-size:.72rem; color:var(--ink-3); font-family:var(--font-mono); letter-spacing:.06em; }
+
+  .tabs { display:flex; gap:.25rem; border-bottom:1px solid var(--rule); flex-wrap:wrap; }
+  .tab { appearance:none; background:none; border:none; border-bottom:2px solid transparent; margin-bottom:-1px;
+         padding:.6rem .9rem; font-family:var(--font-sans); font-size:.88rem; font-weight:550; color:var(--ink-3); cursor:pointer; }
+  .tab:hover { color:var(--ink); }
+  .tab[aria-selected="true"] { color:var(--accent); border-bottom-color:var(--accent); }
+  .tab:focus-visible { outline:2px solid var(--accent); outline-offset:-2px; }
+  .panel { display:none; flex-direction:column; gap:1rem; }
+  .panel.on { display:flex; }
+
+  .scroller { overflow-x:auto; border:1px solid var(--rule); border-radius:4px; background:var(--surface); max-height:34rem; overflow-y:auto; }
+  table { border-collapse:collapse; width:100%; font-size:.82rem; }
+  th,td { padding:.5rem .65rem; text-align:left; border-bottom:1px solid var(--rule-soft); vertical-align:top; }
+  thead th { font-family:var(--font-mono); font-size:.65rem; letter-spacing:.07em; text-transform:uppercase; color:var(--ink-3);
+             font-weight:500; background:var(--surface-2); border-bottom:1px solid var(--rule); position:sticky; top:0; white-space:nowrap; z-index:1; }
+  tbody tr:last-child td { border-bottom:none; }
+  td.num, th.num { font-family:var(--font-mono); font-variant-numeric:tabular-nums; white-space:nowrap; text-align:right; }
+  td.rank { font-family:var(--font-mono); color:var(--ink-3); white-space:nowrap; }
+  .items { display:flex; flex-wrap:wrap; gap:.3rem; }
+  .chip { background:var(--surface-2); border:1px solid var(--rule); border-radius:2px; padding:.1rem .45rem; font-size:.78rem; white-space:nowrap; }
+  .pill { display:inline-block; padding:.1rem .45rem; border-radius:2px; font-family:var(--font-mono); font-size:.7rem; white-space:nowrap; }
+  .pill.hi { background:var(--pass-wash); color:var(--pass); }
+  .pill.mid { background:var(--warn-wash); color:var(--warn); }
+  .pill.lo { background:var(--surface-2); color:var(--ink-3); }
+  .pill.up { background:var(--pass-wash); color:var(--pass); }
+  .pill.down { background:var(--fail-wash); color:var(--fail); }
+
+  .callout { background:var(--surface); border:1px solid var(--rule); border-left:3px solid var(--accent); border-radius:2px;
+             padding:.9rem 1.1rem; display:flex; flex-direction:column; gap:.5rem; font-size:.86rem; }
+  .callout .label { font-family:var(--font-mono); font-size:.67rem; letter-spacing:.12em; text-transform:uppercase; color:var(--accent); }
+  .callout p { margin:0; color:var(--ink-2); }
+  .callout.warn { border-left-color:var(--warn); }
+  .callout.warn .label { color:var(--warn); }
+
+  .empty { padding:2.5rem 1rem; text-align:center; color:var(--ink-3); font-size:.88rem; }
+  .err { background:var(--fail-wash); border:1px solid var(--fail); color:var(--ink); border-radius:3px; padding:.7rem .9rem; font-size:.85rem; }
+  .hidden { display:none !important; }
+  code { font-family:var(--font-mono); font-size:.85em; background:var(--surface-2); padding:.1em .35em; border-radius:2px; }
+  @media (prefers-reduced-motion: reduce) { * { transition:none !important; animation:none !important; } }
+</style>
+
+<div class="app">
+
+  <header class="hd">
+    <div class="eyebrow">누리플라스틱 · 내부 도구</div>
+    <h1>거래 조합 분석</h1>
+    <p>
+      거래명세서 CSV에서 <strong>같은 고객이 같은 날 함께 산 품목</strong>을 세어, 시장이 이미 만들어 놓은 세트를 찾아냅니다.
+      조합을 발명하는 대신 발굴하기 위한 도구입니다. 파일은 브라우저 안에서만 처리되며 어디로도 전송되지 않습니다.
+    </p>
+  </header>
+
+  <!-- STEP 1 -->
+  <div class="card">
+    <h2><span class="step">STEP 1</span> CSV 불러오기</h2>
+    <p class="hint">
+      회계·판매 시스템에서 <b>거래명세서 명세(라인 단위)</b>를 CSV로 내보내십시오.
+      한 줄이 한 품목이어야 합니다. 한글 인코딩(UTF-8 / CP949)은 자동 판별합니다.
+    </p>
+    <div class="row">
+      <button class="btn" id="pick">CSV 파일 선택</button>
+      <input type="file" id="file" accept=".csv,text/csv" hidden>
+      <button class="btn ghost" id="demo">예시 데이터로 둘러보기</button>
+      <span class="hint" id="fileinfo"></span>
+    </div>
+    <div id="err" class="err hidden"></div>
+  </div>
+
+  <!-- STEP 2 -->
+  <div class="card hidden" id="mapcard">
+    <h2><span class="step">STEP 2</span> 열 매핑</h2>
+    <p class="hint">CSV의 어느 열이 무엇인지 지정하십시오. <b>고객사·일자·품목명</b>만 있으면 분석됩니다.</p>
+    <div class="grid">
+      <div class="f"><label>고객사 <span class="req">*</span></label><select id="m-customer"></select></div>
+      <div class="f"><label>일자 <span class="req">*</span></label><select id="m-date"></select></div>
+      <div class="f"><label>품목명 <span class="req">*</span></label><select id="m-item"></select></div>
+      <div class="f"><label>수량</label><select id="m-qty"></select></div>
+      <div class="f"><label>금액</label><select id="m-amount"></select></div>
+      <div class="f"><label>최소 동시구매 횟수</label><input type="number" id="minsup" value="2" min="1" step="1"></div>
+    </div>
+    <div class="row">
+      <button class="btn" id="run">분석 실행</button>
+      <span class="hint" id="preview"></span>
+    </div>
+  </div>
+
+  <!-- RESULTS -->
+  <div id="results" class="hidden">
+    <div class="stats" style="margin-bottom:1.4rem">
+      <div class="stat"><span class="v" id="s-rows">0</span><span class="k">거래 라인</span></div>
+      <div class="stat"><span class="v" id="s-baskets">0</span><span class="k">주문 건 (바구니)</span></div>
+      <div class="stat"><span class="v" id="s-items">0</span><span class="k">품목 종류</span></div>
+      <div class="stat"><span class="v" id="s-customers">0</span><span class="k">고객사</span></div>
+      <div class="stat"><span class="v" id="s-multi">0</span><span class="k">2품목 이상 주문</span></div>
+    </div>
+
+    <div class="tabs" role="tablist">
+      <button class="tab" role="tab" aria-selected="true" data-p="p-pairs">함께 산 두 품목</button>
+      <button class="tab" role="tab" aria-selected="false" data-p="p-sets">묶음 후보 (3품목+)</button>
+      <button class="tab" role="tab" aria-selected="false" data-p="p-items">품목 순위</button>
+      <button class="tab" role="tab" aria-selected="false" data-p="p-growth">성장 고객</button>
+    </div>
+
+    <div class="panel on" id="p-pairs" style="margin-top:1rem">
+      <div class="callout">
+        <div class="label">향상도를 먼저 보십시오</div>
+        <p>
+          <b>빈도</b>가 높은 조합은 그냥 둘 다 잘 팔리는 품목일 수 있습니다.
+          <b>향상도(Lift)</b>는 우연히 함께 팔릴 확률 대비 몇 배로 함께 팔리는지를 나타냅니다.
+          <b>1.0이면 무관, 2.0이면 우연의 두 배</b>입니다.
+          <b>빈도도 높고 향상도도 1.5 이상인 조합이 진짜 세트 후보</b>입니다.
+        </p>
+      </div>
+      <div class="row">
+        <span class="hint">정렬</span>
+        <select id="pairsort" style="font-family:var(--font-sans);font-size:.85rem;color:var(--ink);background:var(--bg);border:1px solid var(--rule);border-radius:3px;padding:.35rem .5rem">
+          <option value="lift">향상도 순</option>
+          <option value="count">빈도 순</option>
+          <option value="conf">신뢰도 순</option>
+        </select>
+        <button class="btn ghost" id="exp-pairs">CSV 내보내기</button>
+      </div>
+      <div class="scroller" id="pairs-wrap"></div>
+    </div>
+
+    <div class="panel" id="p-sets" style="margin-top:1rem">
+      <div class="callout">
+        <div class="label">그대로 키트가 됩니다</div>
+        <p>
+          세 품목 이상이 <b>같은 주문에서 반복해서 함께</b> 나온 조합입니다.
+          <b>서로 다른 고객사 수</b>가 많을수록 특정 고객의 습관이 아니라 시장의 패턴입니다.
+          12장 원칙대로 구성품은 <b>3종 이하</b>로 시작하십시오.
+        </p>
+      </div>
+      <div class="row"><button class="btn ghost" id="exp-sets">CSV 내보내기</button></div>
+      <div class="scroller" id="sets-wrap"></div>
+    </div>
+
+    <div class="panel" id="p-items" style="margin-top:1rem">
+      <div class="row"><button class="btn ghost" id="exp-items">CSV 내보내기</button></div>
+      <div class="scroller" id="items-wrap"></div>
+    </div>
+
+    <div class="panel" id="p-growth" style="margin-top:1rem">
+      <div class="callout warn">
+        <div class="label">성장 패키지의 시드 대상은 여기서 나옵니다</div>
+        <p>
+          기간을 절반으로 나눠 <b>후반기에 주문이 늘어난 고객</b>을 찾습니다.
+          <b>지금 작지만 커지고 있는 고객</b>이 8장 성장 사다리의 대상입니다.
+          주문 건수가 양쪽 모두 1건 이하인 고객은 판단 근거가 얇으니 참고만 하십시오.
+        </p>
+      </div>
+      <div class="row"><span class="hint" id="growth-period"></span><button class="btn ghost" id="exp-growth">CSV 내보내기</button></div>
+      <div class="scroller" id="growth-wrap"></div>
+    </div>
+  </div>
+</div>
+
+<script>
+(function () {
+  "use strict";
+
+  var raw = null, headers = [], rows = [], result = null;
+
+  function $(s) { return document.querySelector(s); }
+  function el(t, c, x) { var e = document.createElement(t); if (c) e.className = c; if (x != null) e.textContent = x; return e; }
+  function showErr(m) { var e = $("#err"); e.textContent = m; e.classList.remove("hidden"); }
+  function clearErr() { $("#err").classList.add("hidden"); }
+  function fmt(n) { return (n == null || isNaN(n)) ? "—" : n.toLocaleString("ko-KR"); }
+
+  /* ---------- CSV parsing ---------- */
+  function parseCSV(text) {
+    text = text.replace(/^\uFEFF/, "");
+    var out = [], row = [], cur = "", q = false, i;
+    for (i = 0; i < text.length; i++) {
+      var ch = text[i];
+      if (q) {
+        if (ch === '"') { if (text[i + 1] === '"') { cur += '"'; i++; } else q = false; }
+        else cur += ch;
+      } else if (ch === '"') q = true;
+      else if (ch === ",") { row.push(cur); cur = ""; }
+      else if (ch === "\n") { row.push(cur); out.push(row); row = []; cur = ""; }
+      else if (ch === "\r") { /* skip */ }
+      else cur += ch;
+    }
+    if (cur !== "" || row.length) { row.push(cur); out.push(row); }
+    return out.filter(function (r) { return r.some(function (c) { return c.trim() !== ""; }); });
+  }
+
+  function decode(buf) {
+    var utf = new TextDecoder("utf-8", { fatal: false }).decode(buf);
+    // 치환문자가 많으면 CP949로 재시도
+    var bad = (utf.match(/\uFFFD/g) || []).length;
+    if (bad > 3) {
+      try { return new TextDecoder("euc-kr").decode(buf); } catch (e) { return utf; }
+    }
+    return utf;
+  }
+
+  /* ---------- load ---------- */
+  $("#pick").addEventListener("click", function () { $("#file").click(); });
+  $("#file").addEventListener("change", function (e) {
+    var f = e.target.files && e.target.files[0]; if (!f) return;
+    clearErr();
+    var fr = new FileReader();
+    fr.onload = function () {
+      try {
+        var text = decode(fr.result);
+        var grid = parseCSV(text);
+        if (grid.length < 2) { showErr("데이터 행이 없습니다. 머리글과 최소 1개 행이 필요합니다."); return; }
+        loadGrid(grid, f.name + " · " + (grid.length - 1).toLocaleString("ko-KR") + "행");
+      } catch (err) { showErr("CSV를 읽지 못했습니다: " + err.message); }
+      e.target.value = "";
+    };
+    fr.readAsArrayBuffer(f);
+  });
+
+  function loadGrid(grid, info) {
+    headers = grid[0].map(function (h, i) { return h.trim() || ("열" + (i + 1)); });
+    raw = grid.slice(1);
+    $("#fileinfo").textContent = info;
+    var opts = function (sel, allowNone) {
+      sel.textContent = "";
+      if (allowNone) sel.appendChild(new Option("사용 안 함", ""));
+      headers.forEach(function (h, i) { sel.appendChild(new Option(h, String(i))); });
+    };
+    opts($("#m-customer")); opts($("#m-date")); opts($("#m-item"));
+    opts($("#m-qty"), true); opts($("#m-amount"), true);
+    guess("#m-customer", ["거래처", "고객", "업체", "customer", "client", "상호"]);
+    guess("#m-date", ["일자", "날짜", "date", "거래일"]);
+    guess("#m-item", ["품목", "품명", "제품", "item", "product", "규격"]);
+    guess("#m-qty", ["수량", "qty", "quantity", "개수"]);
+    guess("#m-amount", ["금액", "공급가", "amount", "합계", "단가"]);
+    $("#mapcard").classList.remove("hidden");
+    $("#preview").textContent = "머리글 " + headers.length + "개 인식";
+    $("#mapcard").scrollIntoView({ block: "nearest" });
+  }
+  function guess(sel, keys) {
+    var s = $(sel);
+    for (var i = 0; i < headers.length; i++) {
+      var h = headers[i].toLowerCase();
+      for (var k = 0; k < keys.length; k++) if (h.indexOf(keys[k].toLowerCase()) > -1) { s.value = String(i); return; }
+    }
+  }
+
+  /* ---------- date ---------- */
+  function parseDate(s) {
+    s = (s || "").trim();
+    var m = s.match(/(\d{4})\D?(\d{1,2})\D?(\d{1,2})/);
+    if (m) return new Date(+m[1], +m[2] - 1, +m[3]);
+    var d = new Date(s);
+    return isNaN(d.getTime()) ? null : d;
+  }
+  function num(s) {
+    if (s == null) return 0;
+    var v = parseFloat(String(s).replace(/[^0-9.\-]/g, ""));
+    return isNaN(v) ? 0 : v;
+  }
+
+  /* ---------- analyze ---------- */
+  $("#run").addEventListener("click", function () {
+    clearErr();
+    var ci = +$("#m-customer").value, di = +$("#m-date").value, ii = +$("#m-item").value;
+    var qi = $("#m-qty").value === "" ? -1 : +$("#m-qty").value;
+    var ai = $("#m-amount").value === "" ? -1 : +$("#m-amount").value;
+    var minSup = Math.max(1, parseInt($("#minsup").value, 10) || 2);
+    if (ci === di || ci === ii || di === ii) { showErr("고객사·일자·품목명은 서로 다른 열이어야 합니다."); return; }
+
+    rows = [];
+    raw.forEach(function (r) {
+      var cust = (r[ci] || "").trim(), date = (r[di] || "").trim(), item = (r[ii] || "").trim();
+      if (!cust || !date || !item) return;
+      rows.push({ c: cust, d: date, i: item, q: qi >= 0 ? num(r[qi]) : 0, a: ai >= 0 ? num(r[ai]) : 0 });
+    });
+    if (!rows.length) { showErr("유효한 행이 없습니다. 열 매핑을 확인하십시오."); return; }
+
+    // 바구니 = 고객 + 일자
+    var bmap = {};
+    rows.forEach(function (r) {
+      var k = r.c + " " + r.d;
+      if (!bmap[k]) bmap[k] = { c: r.c, d: r.d, set: {}, amt: 0 };
+      bmap[k].set[r.i] = true;
+      bmap[k].amt += r.a;
+    });
+    var baskets = Object.keys(bmap).map(function (k) {
+      var b = bmap[k]; b.items = Object.keys(b.set); return b;
+    });
+    var total = baskets.length;
+
+    // 품목 통계
+    var itemStat = {};
+    rows.forEach(function (r) {
+      var s = itemStat[r.i] || (itemStat[r.i] = { name: r.i, lines: 0, qty: 0, amt: 0, cust: {}, baskets: 0 });
+      s.lines++; s.qty += r.q; s.amt += r.a; s.cust[r.c] = true;
+    });
+    baskets.forEach(function (b) { b.items.forEach(function (it) { itemStat[it].baskets++; }); });
+
+    // 페어
+    var pairs = {};
+    baskets.forEach(function (b) {
+      var its = b.items.slice().sort();
+      if (its.length < 2 || its.length > 40) return;
+      for (var x = 0; x < its.length; x++) for (var y = x + 1; y < its.length; y++) {
+        var k = its[x] + " " + its[y];
+        var p = pairs[k] || (pairs[k] = { a: its[x], b: its[y], n: 0, cust: {} });
+        p.n++; p.cust[b.c] = true;
+      }
+    });
+    var pairList = Object.keys(pairs).map(function (k) { return pairs[k]; })
+      .filter(function (p) { return p.n >= minSup; })
+      .map(function (p) {
+        var na = itemStat[p.a].baskets, nb = itemStat[p.b].baskets;
+        var sup = p.n / total;
+        var confA = p.n / na, confB = p.n / nb;
+        var lift = sup / ((na / total) * (nb / total));
+        return { a: p.a, b: p.b, n: p.n, custN: Object.keys(p.cust).length,
+                 sup: sup, conf: Math.max(confA, confB), lift: lift };
+      });
+
+    // 3품목+ 세트 (빈발 품목으로 제한)
+    var freq = Object.keys(itemStat).filter(function (i) { return itemStat[i].baskets >= minSup; })
+      .sort(function (a, b) { return itemStat[b].baskets - itemStat[a].baskets; }).slice(0, 60);
+    var freqSet = {}; freq.forEach(function (i) { freqSet[i] = true; });
+    var sets = {};
+    baskets.forEach(function (b) {
+      var its = b.items.filter(function (i) { return freqSet[i]; }).sort();
+      if (its.length < 3 || its.length > 12) return;
+      for (var x = 0; x < its.length; x++) for (var y = x + 1; y < its.length; y++) for (var z = y + 1; z < its.length; z++) {
+        var k = its[x] + " " + its[y] + " " + its[z];
+        var s = sets[k] || (sets[k] = { items: [its[x], its[y], its[z]], n: 0, cust: {} });
+        s.n++; s.cust[b.c] = true;
+      }
+    });
+    var setList = Object.keys(sets).map(function (k) { return sets[k]; })
+      .filter(function (s) { return s.n >= minSup; })
+      .map(function (s) { return { items: s.items, n: s.n, custN: Object.keys(s.cust).length, sup: s.n / total }; })
+      .sort(function (a, b) { return b.custN - a.custN || b.n - a.n; });
+
+    // 성장
+    var dated = baskets.map(function (b) { return { b: b, t: parseDate(b.d) }; }).filter(function (x) { return x.t; });
+    var growth = [], periodTxt = "일자를 해석하지 못해 성장 분석을 건너뜁니다.";
+    if (dated.length > 3) {
+      var ts = dated.map(function (x) { return x.t.getTime(); });
+      var min = Math.min.apply(null, ts), max = Math.max.apply(null, ts), mid = (min + max) / 2;
+      var g = {};
+      dated.forEach(function (x) {
+        var c = x.b.c, o = g[c] || (g[c] = { c: c, n1: 0, n2: 0, a1: 0, a2: 0 });
+        if (x.t.getTime() < mid) { o.n1++; o.a1 += x.b.amt; } else { o.n2++; o.a2 += x.b.amt; }
+      });
+      growth = Object.keys(g).map(function (c) {
+        var o = g[c];
+        o.delta = o.n2 - o.n1;
+        o.rate = o.n1 > 0 ? (o.n2 / o.n1 - 1) : (o.n2 > 0 ? null : 0);
+        return o;
+      }).sort(function (a, b) { return b.delta - a.delta || b.n2 - a.n2; });
+      var f = function (t) { var d = new Date(t); return d.getFullYear() + "-" + String(d.getMonth() + 1).padStart(2, "0"); };
+      periodTxt = "전반기 " + f(min) + " ~ " + f(mid) + "  ·  후반기 " + f(mid) + " ~ " + f(max);
+    }
+
+    result = {
+      total: total, rows: rows.length, itemStat: itemStat, pairList: pairList,
+      setList: setList, growth: growth, periodTxt: periodTxt,
+      customers: Object.keys(rows.reduce(function (m, r) { m[r.c] = 1; return m; }, {})).length,
+      multi: baskets.filter(function (b) { return b.items.length > 1; }).length
+    };
+    render();
+    $("#results").classList.remove("hidden");
+    $("#results").scrollIntoView({ block: "nearest" });
+  });
+
+  /* ---------- render ---------- */
+  function render() {
+    var r = result;
+    $("#s-rows").textContent = fmt(r.rows);
+    $("#s-baskets").textContent = fmt(r.total);
+    $("#s-items").textContent = fmt(Object.keys(r.itemStat).length);
+    $("#s-customers").textContent = fmt(r.customers);
+    $("#s-multi").textContent = fmt(r.multi);
+    $("#growth-period").textContent = r.periodTxt;
+    renderPairs(); renderSets(); renderItems(); renderGrowth();
+  }
+
+  function table(cols, rowsData, wrapSel, emptyMsg) {
+    var w = $(wrapSel); w.textContent = "";
+    if (!rowsData.length) { w.appendChild(el("div", "empty", emptyMsg)); return; }
+    var t = el("table"), th = el("thead"), tr = el("tr");
+    cols.forEach(function (c) { var e = el("th", c.num ? "num" : null, c.h); tr.appendChild(e); });
+    th.appendChild(tr); t.appendChild(th);
+    var tb = el("tbody");
+    rowsData.forEach(function (d, idx) {
+      var x = el("tr");
+      cols.forEach(function (c) { x.appendChild(c.cell(d, idx)); });
+      tb.appendChild(x);
+    });
+    t.appendChild(tb); w.appendChild(t);
+  }
+  function liftPill(v) {
+    var cls = v >= 2 ? "hi" : (v >= 1.5 ? "mid" : "lo");
+    var td = el("td", "num"); td.appendChild(el("span", "pill " + cls, v.toFixed(2))); return td;
+  }
+
+  function sortedPairs() {
+    var k = $("#pairsort").value, l = result.pairList.slice();
+    l.sort(function (a, b) {
+      if (k === "count") return b.n - a.n || b.lift - a.lift;
+      if (k === "conf") return b.conf - a.conf || b.n - a.n;
+      return b.lift - a.lift || b.n - a.n;
+    });
+    return l.slice(0, 300);
+  }
+  function renderPairs() {
+    table([
+      { h: "#", cell: function (d, i) { return el("td", "rank", String(i + 1)); } },
+      { h: "품목 A", cell: function (d) { return el("td", null, d.a); } },
+      { h: "품목 B", cell: function (d) { return el("td", null, d.b); } },
+      { h: "함께 산 횟수", num: true, cell: function (d) { return el("td", "num", fmt(d.n)); } },
+      { h: "고객사 수", num: true, cell: function (d) { return el("td", "num", fmt(d.custN)); } },
+      { h: "지지도", num: true, cell: function (d) { return el("td", "num", (d.sup * 100).toFixed(1) + "%"); } },
+      { h: "신뢰도", num: true, cell: function (d) { return el("td", "num", (d.conf * 100).toFixed(0) + "%"); } },
+      { h: "향상도", num: true, cell: function (d) { return liftPill(d.lift); } }
+    ], sortedPairs(), "#pairs-wrap", "최소 동시구매 횟수를 넘는 조합이 없습니다. 기준을 낮춰 보십시오.");
+  }
+  $("#pairsort").addEventListener("change", renderPairs);
+
+  function renderSets() {
+    table([
+      { h: "#", cell: function (d, i) { return el("td", "rank", String(i + 1)); } },
+      { h: "구성 품목", cell: function (d) {
+          var td = el("td"), box = el("div", "items");
+          d.items.forEach(function (i) { box.appendChild(el("span", "chip", i)); });
+          td.appendChild(box); return td;
+        } },
+      { h: "함께 산 횟수", num: true, cell: function (d) { return el("td", "num", fmt(d.n)); } },
+      { h: "고객사 수", num: true, cell: function (d) { return el("td", "num", fmt(d.custN)); } },
+      { h: "지지도", num: true, cell: function (d) { return el("td", "num", (d.sup * 100).toFixed(1) + "%"); } }
+    ], result.setList.slice(0, 200), "#sets-wrap", "3품목 이상 반복 조합이 없습니다.");
+  }
+
+  function renderItems() {
+    var list = Object.keys(result.itemStat).map(function (k) {
+      var s = result.itemStat[k];
+      return { name: s.name, baskets: s.baskets, qty: s.qty, amt: s.amt, custN: Object.keys(s.cust).length };
+    }).sort(function (a, b) { return b.baskets - a.baskets; });
+    table([
+      { h: "#", cell: function (d, i) { return el("td", "rank", String(i + 1)); } },
+      { h: "품목", cell: function (d) { return el("td", null, d.name); } },
+      { h: "주문 건수", num: true, cell: function (d) { return el("td", "num", fmt(d.baskets)); } },
+      { h: "고객사 수", num: true, cell: function (d) { return el("td", "num", fmt(d.custN)); } },
+      { h: "수량", num: true, cell: function (d) { return el("td", "num", d.qty ? fmt(d.qty) : "—"); } },
+      { h: "금액", num: true, cell: function (d) { return el("td", "num", d.amt ? fmt(Math.round(d.amt)) : "—"); } }
+    ], list.slice(0, 400), "#items-wrap", "품목이 없습니다.");
+  }
+
+  function renderGrowth() {
+    table([
+      { h: "#", cell: function (d, i) { return el("td", "rank", String(i + 1)); } },
+      { h: "고객사", cell: function (d) { return el("td", null, d.c); } },
+      { h: "전반기 주문", num: true, cell: function (d) { return el("td", "num", fmt(d.n1)); } },
+      { h: "후반기 주문", num: true, cell: function (d) { return el("td", "num", fmt(d.n2)); } },
+      { h: "증감", num: true, cell: function (d) {
+          var td = el("td", "num");
+          var sign = d.delta > 0 ? "+" : "";
+          td.appendChild(el("span", "pill " + (d.delta > 0 ? "up" : (d.delta < 0 ? "down" : "lo")), sign + d.delta));
+          return td;
+        } },
+      { h: "증가율", num: true, cell: function (d) {
+          return el("td", "num", d.rate == null ? "신규" : (d.rate * 100).toFixed(0) + "%");
+        } },
+      { h: "후반기 금액", num: true, cell: function (d) { return el("td", "num", d.a2 ? fmt(Math.round(d.a2)) : "—"); } }
+    ], result.growth.slice(0, 300), "#growth-wrap", "일자를 해석할 수 없어 성장 분석을 표시할 수 없습니다.");
+  }
+
+  /* ---------- tabs ---------- */
+  Array.prototype.forEach.call(document.querySelectorAll(".tab"), function (t) {
+    t.addEventListener("click", function () {
+      Array.prototype.forEach.call(document.querySelectorAll(".tab"), function (x) { x.setAttribute("aria-selected", "false"); });
+      Array.prototype.forEach.call(document.querySelectorAll(".panel"), function (p) { p.classList.remove("on"); });
+      t.setAttribute("aria-selected", "true");
+      $("#" + t.dataset.p).classList.add("on");
+    });
+  });
+
+  /* ---------- export ---------- */
+  function esc(v) { v = (v == null ? "" : String(v)); return /[",\n]/.test(v) ? '"' + v.replace(/"/g, '""') + '"' : v; }
+  function download(name, lines) {
+    var blob = new Blob(["\uFEFF" + lines.join("\n")], { type: "text/csv;charset=utf-8" });
+    var a = document.createElement("a");
+    a.href = URL.createObjectURL(blob); a.download = name; a.click(); URL.revokeObjectURL(a.href);
+  }
+  $("#exp-pairs").addEventListener("click", function () {
+    var L = ["품목A,품목B,함께산횟수,고객사수,지지도,신뢰도,향상도"];
+    sortedPairs().forEach(function (d) {
+      L.push([esc(d.a), esc(d.b), d.n, d.custN, (d.sup * 100).toFixed(2), (d.conf * 100).toFixed(1), d.lift.toFixed(3)].join(","));
+    });
+    download("누리-함께산조합.csv", L);
+  });
+  $("#exp-sets").addEventListener("click", function () {
+    var L = ["품목1,품목2,품목3,함께산횟수,고객사수,지지도"];
+    result.setList.forEach(function (d) {
+      L.push([esc(d.items[0]), esc(d.items[1]), esc(d.items[2]), d.n, d.custN, (d.sup * 100).toFixed(2)].join(","));
+    });
+    download("누리-묶음후보.csv", L);
+  });
+  $("#exp-items").addEventListener("click", function () {
+    var L = ["품목,주문건수,고객사수,수량,금액"];
+    Object.keys(result.itemStat).map(function (k) { return result.itemStat[k]; })
+      .sort(function (a, b) { return b.baskets - a.baskets; })
+      .forEach(function (s) { L.push([esc(s.name), s.baskets, Object.keys(s.cust).length, s.qty, Math.round(s.amt)].join(",")); });
+    download("누리-품목순위.csv", L);
+  });
+  $("#exp-growth").addEventListener("click", function () {
+    var L = ["고객사,전반기주문,후반기주문,증감,증가율,후반기금액"];
+    result.growth.forEach(function (d) {
+      L.push([esc(d.c), d.n1, d.n2, d.delta, d.rate == null ? "신규" : (d.rate * 100).toFixed(0), Math.round(d.a2)].join(","));
+    });
+    download("누리-성장고객.csv", L);
+  });
+
+  /* ---------- demo ---------- */
+  $("#demo").addEventListener("click", function () {
+    var items = ["에어리스 30ml 백색", "에어리스 50ml 백색", "펌프 24/410 백색", "펌프 20/410 투명",
+                 "스포이드 30ml 갈색", "이너캡 24파이", "실리콘 개스킷 24파이", "PE폼 라이너 20파이",
+                 "단상자 30ml", "라벨 원형 40파이", "공병 100ml PET 투명", "공병 100ml PP 백색",
+                 "디스크캡 24/410", "스프레이 50ml", "튜브 50ml 백색"];
+    var kits = [[0,2,5],[0,2,6],[1,2,5],[10,3,7],[11,12,6],[4,8,9],[13,3,7],[0,2,8],[14,9,5]];
+    var custs = ["가온공방","달빛코스메틱","라온뷰티","모비스랩","베르가못아뜰리에","소울스킨","아르떼","윈터가든","제이스튜디오","케미스트리"];
+    var L = ["거래처명,거래일자,품목명,수량,공급가액"];
+    var seed = 7;
+    function rnd() { seed = (seed * 1103515245 + 12345) % 2147483648; return seed / 2147483648; }
+    for (var m = 0; m < 24; m++) {
+      var d = new Date(2024, m, 1);
+      var ym = d.getFullYear() + "-" + String(d.getMonth() + 1).padStart(2, "0");
+      var orders = 6 + Math.floor(rnd() * 6) + Math.floor(m / 6);
+      for (var o = 0; o < orders; o++) {
+        var cust = custs[Math.floor(rnd() * custs.length)];
+        var day = String(2 + Math.floor(rnd() * 26)).padStart(2, "0");
+        var date = ym + "-" + day;
+        var kit = kits[Math.floor(rnd() * kits.length)].slice();
+        if (rnd() > 0.6) kit.push(Math.floor(rnd() * items.length));
+        kit.filter(function (v, i, a) { return a.indexOf(v) === i; }).forEach(function (ix) {
+          var qty = 100 * (1 + Math.floor(rnd() * 20));
+          L.push([cust, date, items[ix], qty, qty * (120 + Math.floor(rnd() * 600))].join(","));
+        });
+      }
+    }
+    loadGrid(parseCSV(L.join("\n")), "예시 데이터 · " + (L.length - 1) + "행 (가상)");
+    clearErr();
+  });
+})();
+</script>

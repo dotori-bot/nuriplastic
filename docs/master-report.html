@@ -156,7 +156,7 @@
     <span>2026-08-04</span>
     <span>대상: 화장품 부자재 유통</span>
     <span>추진 인력: 2인 (기획·디자인 / AI)</span>
-    <span>참고문헌 109건</span>
+    <span>참고문헌 123건</span>
   </div>
 </header>
 
@@ -173,7 +173,7 @@
     <li><span class="tn">08</span><a href="#s8">2인 팀 실행 방향</a></li>
     <li><span class="tn">09</span><a href="#s9">통합 로드맵</a></li>
     <li><span class="tn">10</span><a href="#s10">리스크와 미확인 사항</a></li>
-    <li><span class="tn">11</span><a href="#s11">소비자 목소리와 대체 해법</a></li>
+    <li><span class="tn">11</span><a href="#s11">소비자·브랜드사 목소리와 대체 해법</a></li>
     <li><span class="tn">12</span><a href="#s12">인접 시장 — 공병 소매와 용도 전환 세그먼트</a></li>
     <li><span class="tn">13</span><a href="#s13">참고문헌</a></li>
   </ol>
@@ -1152,7 +1152,7 @@
 
 <!-- 11 -->
 <section id="s11">
-  <div class="sec-head"><div class="sec-num">11</div><h2 class="sec-title">소비자 목소리와 대체 해법</h2></div>
+  <div class="sec-head"><div class="sec-num">11</div><h2 class="sec-title">소비자·브랜드사 목소리와 대체 해법</h2></div>
 
   <p>
     앞선 장들이 규제와 산업 구조를 다뤘다면, 이 장은 <strong>최종 소비자가 실제로 무엇에 불만인지</strong>를 봅니다.
@@ -1548,6 +1548,93 @@
     Aptar 같은 글로벌 공급사 경로가 현실적일 수 있고, 그 경우 MOQ와 리드타임이 국내 조달과 크게 달라집니다.
     직접 문의가 필요합니다.
   </p>
+
+  <h3>그런데 누리의 고객은 소비자가 아닙니다 — 브랜드사 페인포인트</h3>
+
+  <p>
+    이 장의 앞부분은 <strong>최종 소비자</strong>의 불만을 다뤘습니다.
+    그러나 <strong>누리에게 발주하는 것은 브랜드사와 공방</strong>이고, 그들의 페인포인트는 다릅니다.
+    부자재 공급사가 실제로 평가받는 지점이 여기입니다.
+  </p>
+
+  <div class="scroller">
+    <table>
+      <thead><tr><th>페인포인트</th><th>내용</th><th>누리가 할 수 있는 것</th></tr></thead>
+      <tbody>
+        <tr>
+          <td><strong>리드타임</strong></td>
+          <td>런칭일이 정해지면 <strong>최소 6~8주 전 샘플 확정</strong> 필요. 리드타임은 샘플 확정 이후 시작되므로 그 전 단계가 길어지면 전체가 밀림. <strong>샘플 수정 반복이 지연의 주범</strong></td>
+          <td><strong>상용성 사전 진단으로 샘플 재수정 횟수를 줄임</strong></td>
+        </tr>
+        <tr>
+          <td>부자재 공급망</td>
+          <td>단상자·라벨·용기는 각각 별도 제작기간 → 병렬 준비 필요. 원부자재 입고 지연이 전체 리드타임에 영향</td>
+          <td>7장 원스톱 견적 — 한 곳에서 일정 동기화</td>
+        </tr>
+        <tr>
+          <td><strong>불량 관리</strong></td>
+          <td><strong>AQL 불량률 기준치</strong>(무상 교체 시작점), 불량 처리 절차 문서화, 그리고 <strong>불량 용기를 생산 배치·수지 로트·처리 날짜까지 추적하는 배치 추적성</strong></td>
+          <td><strong>6장 데이터베이스의 <code>supplier_lot</code> 필드가 곧 이 요구사항</strong></td>
+        </tr>
+        <tr>
+          <td>소통</td>
+          <td>전담 계정 관리자 없이 일반 문의 담당자만 연결되는 경우. 첫 주문 전 서면으로 기대사항 명확화 필요</td>
+          <td>7장 자동 진단 — 24시간 일관된 답</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <p>출처: 뷰티 실무자 조사<sup>[110]</sup>, 개발 프로세스 실무 가이드<sup>[111]</sup>, 구매자 체크리스트<sup>[20]</sup>, AQL 기준<sup>[112]</sup></p>
+
+  <div class="callout">
+    <div class="label">배치 추적성 — 이미 요구되고 있는데 대부분 못 하는 것</div>
+    <p>
+      구매자 체크리스트에 <strong>"불량 용기를 생산 배치, 수지 로트, 처리 날짜까지 추적할 수 있는가"</strong>가
+      명시적 항목으로 들어가 있습니다. 그런데 <strong>대부분의 유통사가 답하지 못합니다</strong> —
+      기록 체계가 없기 때문입니다.
+    </p>
+    <p>
+      <strong>6장에서 설계한 12개 필드가 정확히 이 요구를 충족합니다.</strong>
+      상용성 데이터베이스는 클레임 예측 도구이자 <strong>동시에 배치 추적 증빙</strong>이며,
+      후자는 오늘부터 바로 영업 논거가 됩니다.
+    </p>
+  </div>
+
+  <div class="callout alarm">
+    <div class="label">AQL을 먼저 문서화하십시오</div>
+    <p>
+      <strong>AQL(합격품질한계)</strong>은 샘플 검사에서 로트를 합격시킬 수 있는 최대 불량률 기준입니다.
+      AQL 0.65는 1,000개 중 6.5개 이하, AQL 4.0은 40개까지 허용하는 식으로 엄격도가 갈립니다.
+      연속 로트 합격 실적이 쌓이면 완화 검사로 전환해 검사 비용을 줄입니다.<sup>[112]</sup>
+    </p>
+    <p>
+      <strong>무상 교체가 시작되는 불량률 기준을 계약서에 명시하지 않으면, 클레임이 올 때마다 협상이 됩니다.</strong>
+      데이터가 쌓이기 전이라도 이 문서화는 오늘 할 수 있고, 클레임 비용을 즉시 줄입니다.
+    </p>
+  </div>
+
+  <h3>기술 트렌드 — 소재와 디지털</h3>
+  <ul>
+    <li>
+      <strong>CLC (Cross Linked Cellulose) 바이오 플라스틱.</strong>
+      목분·왕겨·전분 등 바이오매스로 만드는 천연 고분자 신소재로,
+      <strong>물성은 기존 플라스틱과 동등하면서 1kg 생산당 2.9kg의 탄소 저감</strong> 효과가 있고 사용 후 무독성 분해됩니다.
+      코스맥스가 어라운드블루와 화장품 용기를 개발 중이며, 브랜드 하트퍼센트의 립틴트 뚜껑에
+      CLC-F200이 이미 적용되고 있습니다.<sup>[113][114]</sup>
+      <strong>2장의 PCR·모노소재 흐름에 이어질 다음 소재 후보</strong>이며, 수출 자료 패키지의 근거로도 쓰입니다.
+    </li>
+    <li>
+      <strong>디지털 제품 패스포트(DPP).</strong> 상세 제품 정보를 디지털로 제공하고 AR·게이미피케이션 같은
+      인터랙티브 경험까지 연결하는 흐름입니다.<sup>[116]</sup>
+      <strong>2장의 EU PPWR과 이어지는 축</strong>으로, 재질·PCR 함량 정보를 요구하는 방향이므로
+      <strong>8장의 수출 자료 패키지가 결국 DPP 데이터가 됩니다.</strong>
+    </li>
+    <li>
+      <strong>폐루프(Closed-Loop) 제조 플랫폼.</strong> 제조–유통–사용–데이터 피드백을 연결하는 구조가
+      경쟁력의 축이 될 것으로 전망됩니다.<sup>[115]</sup>
+      누리의 상용성 데이터베이스가 이 그림에서 <strong>피드백 루프의 한 조각</strong>에 해당합니다.
+    </li>
+  </ul>
 
   <h3>콘텐츠 소재 — 7장 플라이휠에 바로 투입</h3>
   <p>이 장의 수치들은 그대로 검색 유입용 콘텐츠가 됩니다. 지금 시장에 이런 글이 없습니다.</p>
@@ -2021,6 +2108,139 @@
     그것이 누리만 볼 수 있는 데이터입니다.
   </p>
 
+  <h3>편집샵 모델 — 해외 소싱과 큐레이션</h3>
+
+  <p>
+    해외 박람회에서 국내에 없는 용기를 발굴해 소개하는 <strong>편집샵 포지션</strong>은
+    구조적으로 잘 맞습니다. <strong>공장이 없다는 것이 여기서는 "어디서든 소싱할 수 있다"가 되고,
+    디자이너가 있다는 것이 큐레이션 역량이 됩니다.</strong>
+    그리고 앞 절의 PB 전략과 하나의 경로로 이어집니다.
+  </p>
+
+  <div class="formula">
+    <span class="term">수입해서 판다</span><span class="op">→</span>
+    <span class="term">데이터로 수요 확인</span><span class="op">→</span>
+    <span class="term">국내 규격으로 만든다</span>
+  </div>
+  <p>
+    쿠팡이 <em>3P 셀러 판매 → 데이터 확인 → PB 전환</em>을 하는 것과 같은 구조입니다.
+    <strong>수입은 목적지가 아니라 발견 수단입니다.</strong>
+  </p>
+
+  <h4>박람회 일정</h4>
+  <div class="scroller">
+    <table>
+      <thead><tr><th>박람회</th><th>시기</th><th>성격</th></tr></thead>
+      <tbody>
+        <tr><td>PCD Paris / Paris Packaging Week</td><td><strong>2026년 2월 5~6일 (종료)</strong></td><td>세계 최대 뷰티 패키징, <strong>공급사 500곳+</strong>, 25주년</td></tr>
+        <tr><td><strong>Luxe Pack Monaco</strong></td><td><strong>2026년 9월 28~30일</strong></td><td>프리미엄 패키징, Grimaldi Forum</td></tr>
+        <tr><td>Cosmopack Bologna</td><td>—</td><td>소재·기술. 2026 테마: 소재 지속가능성, 기능적 디자인 혁신</td></tr>
+        <tr><td>interpack (독일)</td><td>—</td><td>산업 패키징 최대 규모, 밸류체인 전체</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p>출처: PCD Paris<sup>[117][118]</sup>, Luxe Pack<sup>[119][120]</sup>, 유럽 패키징 박람회 정리<sup>[121]</sup></p>
+
+  <div class="callout alarm">
+    <div class="label">박람회는 소싱 채널이 아니라 검증 채널입니다</div>
+    <p>
+      <strong>출품업체 리스트는 박람회 웹사이트에 공개됩니다.</strong>
+      온라인으로 후보를 먼저 좁히지 않고 가면, 500개 부스를 이틀에 훑다가
+      인상적인 몇 개만 기억하고 돌아옵니다. <strong>2인 팀에게 항공·숙박·시간은 큰 비용</strong>입니다.
+    </p>
+  </div>
+
+  <div class="scroller">
+    <table>
+      <thead><tr><th class="num">단계</th><th>잘못된 순서</th><th>권하는 순서</th></tr></thead>
+      <tbody>
+        <tr><td class="num">1</td><td>박람회 방문</td><td><strong>온라인으로 출품사 리스트 스크리닝</strong></td></tr>
+        <tr><td class="num">2</td><td>인상적인 것 발견</td><td>후보 20~30곳 압축, 사전 미팅 요청</td></tr>
+        <tr><td class="num">3</td><td>샘플 요청</td><td><strong>박람회에서 실물 확인 + 미팅</strong></td></tr>
+        <tr><td class="num">4</td><td>수입 검토</td><td>샘플만 소량 반입해 검증</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h4>수입의 리스크 — 두 가지가 치명적입니다</h4>
+  <p>
+    11장에서 확인한 브랜드사 페인포인트 1위가 <strong>리드타임</strong>,
+    그리고 <strong>불량 대응과 배치 추적성</strong>이었습니다.
+    <strong>수입은 이 두 가지를 정면으로 악화시킵니다.</strong>
+  </p>
+  <div class="scroller">
+    <table>
+      <thead><tr><th>리스크</th><th>내용</th></tr></thead>
+      <tbody>
+        <tr><td><strong>리드타임</strong></td><td>해상 운송 수개월 — <strong>브랜드사 최대 페인포인트를 키움</strong></td></tr>
+        <tr><td><strong>불량 대응</strong></td><td>해외 공급사는 교체가 느리거나 불가 — <strong>AQL 기준·배치 추적 요구를 못 지킴</strong></td></tr>
+        <tr><td>MOQ</td><td>해외는 소량 대응이 드물고 컨테이너 단위가 흔함</td></tr>
+        <tr><td>재고 선결제</td><td>현금이 묶임 → GMROI 파괴 (4장 연우 교훈)</td></tr>
+        <tr><td>복제</td><td>좋은 것을 찾아오면 국내 제조사가 카피. 금형 복제는 흔합니다</td></tr>
+        <tr><td>환율</td><td>마진이 환율에 좌우됨</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p>
+    <strong>따라서 편집샵 포지션은 맞지만, "재고를 들여와 파는 수입상"이 되면 안 됩니다.</strong>
+  </p>
+
+  <h4>재고 없는 편집샵 두 형태</h4>
+  <ul>
+    <li>
+      <strong>샘플 기반 중개</strong> — 재고 없이 <strong>카탈로그와 샘플만</strong> 보유하고 주문을 받아 발주합니다.
+      리드타임은 길지만 <strong>재고 리스크가 0</strong>이고, 고객에게는 "국내에 없는 것을 볼 수 있는 곳"이 됩니다.
+      급한 건은 기존 국내 재고로 받습니다.
+    </li>
+    <li>
+      <strong>수입으로 검증 → 국내 제조로 전환</strong> — 소량 수입해 수요를 확인하고,
+      팔리면 같은 규격을 국내 제조사에 발주합니다.
+      <strong>리드타임·불량 대응·MOQ 문제가 전부 해소되고, 앞 절 PB 2단계로 그대로 연결됩니다.</strong>
+    </li>
+  </ul>
+
+  <div class="callout">
+    <div class="label">편집샵의 진짜 자산은 "무엇을"이 아니라 "왜"입니다</div>
+    <p>
+      수입상과 편집샵의 차이는 물건이 아니라 <strong>선별 근거</strong>입니다.
+      단순 수입상은 <em>"유럽에서 인기 있는 제품입니다"</em>밖에 말할 수 없지만,
+      누리는 이렇게 말할 수 있습니다 —
+      <strong>"이 펌프는 에탄올 30% 조건에서 국내 제품 대비 실패율이 낮습니다."</strong>
+    </p>
+    <p>
+      <strong>큐레이션 기준을 공개하는 것 자체가 상품입니다.</strong>
+      7장 콘텐츠 플라이휠과도 맞물립니다 —
+      "Luxe Pack 2026에서 본 것 중 한국에 필요한 3가지" 같은 글은 지금 국내에 없고,
+      브랜드사가 반드시 읽습니다.
+    </p>
+  </div>
+
+  <h4>확인이 필요한 사항</h4>
+  <p>
+    <strong>빈 용기(부자재) 수입과 화장품 완제품 수입은 절차가 다릅니다.</strong>
+    한국의약품수출입협회 EDI 표준통관예정보고서 등의 절차는 <strong>완제품 기준</strong>이며<sup>[122][123]</sup>,
+    빈 용기에 그대로 적용되는지는 확인되지 않았습니다.
+    일반 수입 통관에 가까울 가능성이 높지만 <strong>관세사에게 HS코드 기준으로 확인</strong>해야 하고,
+    식품 접촉 용도가 섞이면 「기구 및 용기·포장의 기준 및 규격」이 별도로 걸립니다.
+  </p>
+
+  <h4>실행 순서</h4>
+  <div class="scroller">
+    <table>
+      <thead><tr><th>시점</th><th>할 일</th><th class="num">비용</th></tr></thead>
+      <tbody>
+        <tr><td><strong>지금</strong></td><td><strong>Luxe Pack Monaco 출품사 리스트 온라인 스크리닝</strong></td><td class="num">0원</td></tr>
+        <tr><td>~8주</td><td>후보 20~30곳 압축, 사전 미팅 요청 메일</td><td class="num">0원</td></tr>
+        <tr><td>9월 말</td><td>박람회 방문 — 실물 확인·미팅·샘플 수령</td><td class="num">항공·숙박</td></tr>
+        <tr><td>이후</td><td>샘플 소량 반입 → 상용성 검증 → 카탈로그 등재</td><td class="num">소액</td></tr>
+        <tr><td>반응 후</td><td>수요 확인된 것만 정식 수입 또는 <strong>국내 전환</strong></td><td class="num">조건부</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p>
+    <strong>"지금" 단계는 오늘 시작할 수 있고 비용이 0원이며, 그 스크리닝 자체가 콘텐츠가 됩니다.</strong>
+  </p>
+
   <h3>예술·패션 — 세 갈래를 구분해야 합니다</h3>
 
   <h4>갈래 1 — 도구로서의 용기 (가장 실질적)</h4>
@@ -2380,6 +2600,38 @@
         <li><a href="https://www.dailian.co.kr/news/view/1371398/">공정위, PB상품 '검색순위 조작' 쿠팡에 과징금 1400억 폭탄 — 데일리안</a></li>
         <li><a href="https://webzine.kacta.or.kr/news/articleView.html?idxno=20598">"PB 검색순위 조작" 쿠팡에 과징금 1천400억원 — 세무사신문</a></li>
         <li><a href="https://www.hankyung.com/article/202505018179i">PB상품 인위적 검색순위 조정, 檢 쿠팡 정조준 — 한국경제</a></li>
+      </ol>
+    </div>
+
+    <div class="refgroup">
+      <h4>브랜드사 페인포인트 · 품질 기준</h4>
+      <ol start="110">
+        <li><a href="https://business.hwahae.co.kr/insight/%EB%B7%B0%ED%8B%B0%EC%8B%A4%EB%AC%B4%EC%9E%90-100%EB%AA%85%EC%9D%98-%EA%B3%A0%EB%AF%BC">뷰티 실무자 100명의 고민 TOP5 — 화해 비즈니스 인사이트</a></li>
+        <li><a href="https://branit.kr/account/contents/insight/beauty-column/ba0e67d1-e07f-41a4-9b19-8a85769d56c7">화장품 개발 프로세스 실무 가이드 — 브랜잇</a></li>
+        <li><a href="https://staff.ai.kr/glossary/aql">AQL (합격 품질 한계) — 제조 용어사전</a></li>
+      </ol>
+    </div>
+
+    <div class="refgroup">
+      <h4>기술 트렌드 — 신소재 · 디지털</h4>
+      <ol start="113">
+        <li><a href="http://www.plastickorea.co.kr/news/articleView.html?idxno=22341">코스맥스, 어라운드블루와 친환경 바이오플라스틱 용기 개발 — 플라스틱코리아</a></li>
+        <li><a href="https://www.aroundblue.net/en/clc-tech">AROUND BLUE — CLC (Cross Linked Cellulose) Tech</a></li>
+        <li><a href="https://stories.amorepacific.com/2026-%EB%AF%B8%EB%9E%98-%EB%B7%B0%ED%8B%B0-%EC%82%B0%EC%97%85%EC%9D%98-%ED%9D%90%EB%A6%84/">2026 미래 뷰티 산업의 흐름 — 아모레퍼시픽 스토리</a></li>
+        <li><a href="https://www.gvpak.com/ko/blogs/5-most-creative-packaging-design-trends-2026-creative-directions-shaping-packaging-this-year">2026년 창의적인 패키징 디자인 트렌드 — GVPAK</a></li>
+      </ol>
+    </div>
+
+    <div class="refgroup">
+      <h4>해외 박람회 · 수입 절차</h4>
+      <ol start="117">
+        <li><a href="https://www.parispackagingweek.com/en/pcd/">PCD Paris — The future of perfume, cosmetics &amp; personal care packaging</a></li>
+        <li><a href="https://www.parispackagingweek.com/en/">Paris Packaging Week | What's On</a></li>
+        <li><a href="https://www.industries-cosmetiques.fr/en/luxury-pack-monaco-2026-the-professional-trade-show-for-premium-packaging/">Luxe Pack Monaco 2026 — Industries Cosmétiques</a></li>
+        <li><a href="https://www.luxepack.com/">LUXE PACK — the premier trade shows for creative packaging</a></li>
+        <li><a href="https://www.pack.ly/en/blog/post/packaging-fairs-2026-the-top-events">Packaging Trade Fairs 2026: key events across Europe — Packly</a></li>
+        <li><a href="https://www.kpta.or.kr/importC/cosmetics_guide">화장품 수입 가이드 — 한국의약품수출입협회</a></li>
+        <li><a href="https://www.tradlinx.com/blog/guide/%EC%9A%94%EC%A6%98-%EB%A7%8E%EC%9D%B4-%ED%95%98%EB%8A%94-%ED%99%94%EC%9E%A5%ED%92%88-%EC%88%98%EC%B6%9C-%EC%88%98%EC%9E%85%ED%95%98%EB%8A%94-%EB%B0%A9%EB%B2%95/">요즘 많이 하는 화장품 수출·수입 방법 — 트레드링스</a></li>
       </ol>
     </div>
 
